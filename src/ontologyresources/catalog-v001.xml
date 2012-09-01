@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1336514624078" name="duplicate:http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl" uri="ptyxiaki_v0.72.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1336514624078" name="duplicate:http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl" uri="ptyxiaki_v0.8.owl"/>
+    </group>
+</catalog>

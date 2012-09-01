@@ -1,0 +1,1460 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#"
+     xml:base="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:Guest="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Guest "
+     xmlns:Ontology1308067064597="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#"
+     xmlns:Play="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Play "
+     xmlns:ontologies="http://www.semanticweb.org/ontologies/"
+     xmlns:Ontology1307617220573="http://www.semanticweb.org/ontologies/2011/5/Ontology1307617220573.owl#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#propertyID"/>
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#individualName"/>
+    <owl:AnnotationProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#classID"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacencyKind -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacencyKind">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Adjacency Kind</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DeclarativeProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacentEast -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacentEast">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Eastwards Adjacent To</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacencyKind"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacentNorth -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacentNorth">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Northwards Adjacent To</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacencyKind"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacentOver -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacentOver">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Top-wards Adjacent To</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacencyKind"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacentSouth -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacentSouth">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Southwards Adjacent To</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacencyKind"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacentUnder -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacentUnder">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Bottom-wards Adjacent To</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacencyKind"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacentWest -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacentWest">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Westwards Adjacent To</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#AdjacencyKind"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DeclarativeProperty -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DeclarativeProperty"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DimensionComparisonKind -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DimensionComparisonKind">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dimension Comparison Kind</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DeclarativeProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DimensionSelfComparison -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DimensionSelfComparison">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dimension Self Comparison</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DeclarativeProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#EqualDimensionKind -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#EqualDimensionKind">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Equal Dimension To</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DeclarativeProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#EqualHeight -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#EqualHeight">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Equal Height To</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#EqualDimensionKind"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#EqualLength -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#EqualLength">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Equal Length To</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#EqualDimensionKind"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#EqualWidth -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#EqualWidth">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Equal Width To</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#EqualDimensionKind"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#HigherThan -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#HigherThan">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Higher Than</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DimensionComparisonKind"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#HigherThanLong -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#HigherThanLong">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Higher Than Long</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DimensionSelfComparison"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#HigherThanWide -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#HigherThanWide">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Higher Than Wide</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DimensionSelfComparison"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Long -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Long">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Long</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#RelativeDimension"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LongerThan -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LongerThan">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Longer Than</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DimensionComparisonKind"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LongerThanHigh -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LongerThanHigh">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Longer Than High</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DimensionSelfComparison"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LongerThanWide -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LongerThanWide">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Longer Than Wide</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DimensionSelfComparison"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LowerThan -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LowerThan">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lower Than</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DimensionComparisonKind"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#NarrowerThan -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#NarrowerThan">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Narrower Than</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DimensionComparisonKind"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#RelativeDimension -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#RelativeDimension">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Relative Dimension</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DeclarativeProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#ShorterThan -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#ShorterThan">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Shorter Than</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DimensionComparisonKind"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Tall -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Tall">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Tall</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#RelativeDimension"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Wide -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Wide">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Wide</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#RelativeDimension"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#WiderThan -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#WiderThan">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Wider Than</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DimensionComparisonKind"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#WiderThanHigh -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#WiderThanHigh">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Wider Than High</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DimensionSelfComparison"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#WiderThanLong -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#WiderThanLong">
+        <propertyID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Wider Than Long</propertyID>
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DimensionSelfComparison"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#hasRoom -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#hasRoom"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#hasSite -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#hasSite"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#GeometricProperty -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#GeometricProperty"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#hasFloors -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#hasFloors"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#hasH -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#hasH">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#GeometricProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#hasL -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#hasL">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#GeometricProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#hasW -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#hasW">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#GeometricProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#hasX -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#hasX">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#GeometricProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#hasY -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#hasY">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#GeometricProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#hasZ -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#hasZ">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#GeometricProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Bathroom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Bathroom">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Bathroom</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Room"/>
+        <classID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Bathroom</classID>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Bedroom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Bedroom">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Room"/>
+        <classID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Bedroom</classID>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Corridor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Corridor">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Corridor</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Room"/>
+        <classID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Corridor</classID>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DiningRoom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DiningRoom">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dining Room</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Room"/>
+        <classID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dining Room</classID>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Drone -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Drone"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Garage -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Garage">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Garage</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Room"/>
+        <classID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Garage</classID>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#GuestRoom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#GuestRoom">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Guest Room</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Room"/>
+        <classID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Guest Room</classID>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Hall -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Hall">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Hall</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Room"/>
+        <classID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Hall</classID>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#House -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#House"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Kitchen -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Kitchen">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Kitchen</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Room"/>
+        <classID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Kitchen</classID>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LivingRoom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LivingRoom">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Living Room</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Room"/>
+        <classID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Living Room</classID>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Office -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Office">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Office</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Room"/>
+        <classID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Office</classID>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#PlayRoom -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#PlayRoom">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Play Room</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Room"/>
+        <classID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Play Room</classID>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#ResidenceComponent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#ResidenceComponent"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Roof -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Roof">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#ResidenceComponent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Room -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Room">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Room</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#ResidenceComponent"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Site -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Site"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Storage -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Storage">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Storage</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Room"/>
+        <classID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Storage</classID>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#WC -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#WC">
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">WC</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Room"/>
+        <classID rdf:datatype="http://www.w3.org/2001/XMLSchema#string">WC</classID>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1044852825 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1044852825">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#House"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">trypani</individualName>
+        <hasSite rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1292682025"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1323758833"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-667058938"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1081238213"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1709682529"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1058671713 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1058671713">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Garage"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tsai me lemoni_Garage_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1084997874 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1084997874">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Bedroom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">den exw mia_Bedroom_02</individualName>
+        <AdjacentNorth rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-423143513"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1084997875 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1084997875">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Bedroom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">den exw mia_Bedroom_01</individualName>
+        <NarrowerThan rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1084997874"/>
+        <NarrowerThan rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#109836558"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1106283015 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1106283015">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#House"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">les re</individualName>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1145100172"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-715833503"/>
+        <hasSite rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1379574473"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1118239086 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1118239086">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Bedroom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">giannis taulhaus_Bedroom_02</individualName>
+        <EqualLength rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1118239087"/>
+        <AdjacentEast rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1118239087"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1118239087 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1118239087">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Bedroom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">giannis taulhaus_Bedroom_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1145100172 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1145100172">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LivingRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">les re_Living Room_01</individualName>
+        <AdjacentSouth rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-715833503"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1259003290 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1259003290">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Site"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Site Of den exw mia</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1292682025 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1292682025">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Site"/>
+        <hasX rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasX>
+        <hasFloors rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasFloors>
+        <hasZ rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasZ>
+        <hasY rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasY>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Site Of trypani</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1323758833 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1323758833">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Hall"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">trypani_Hall_01</individualName>
+        <Wide rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1415559989"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1415559989 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1415559989">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Drone"/>
+        <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Drone Individual</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1441935017 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1441935017">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#House"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">loreena tsitsonta</individualName>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1097786710"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1097786711"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#32814212"/>
+        <hasSite rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#633700999"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1587523509 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1587523509">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Office"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">argyro iliopoulou_Office_02</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1587523510 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1587523510">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Office"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">argyro iliopoulou_Office_01</individualName>
+        <AdjacentEast rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1587523509"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1598376203 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1598376203">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Site"/>
+        <hasX rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasX>
+        <hasFloors rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasFloors>
+        <hasY rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasY>
+        <hasZ rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasZ>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Site Of argyro iliopoulou</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1914213405 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1914213405">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#House"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">den me pairnei</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1931361485 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1931361485">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#PlayRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">argyro iliopoulou_Play Room_01</individualName>
+        <EqualLength rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1587523510"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1953978270 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1953978270">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Kitchen"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">re ta spaw_Kitchen_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1966066405 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1966066405">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LivingRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">giannis taulhaus_Living Room_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1995279830 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1995279830">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#GuestRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tsimpa ena_Guest Room_01</individualName>
+        <WiderThan rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1995279830"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-2036900799 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-2036900799">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Storage"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">den me pairnei_Storage_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-22963832 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-22963832">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LivingRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">to swsto_Living Room_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-232972966 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-232972966">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#WC"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">argyro iliopoulou_WC_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-300626634 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-300626634">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#House"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">den exw mia</individualName>
+        <hasSite rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1259003290"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-397613566 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-397613566">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#GuestRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">den me pairnei_Guest Room_02</individualName>
+        <AdjacentNorth rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-2036900799"/>
+        <AdjacentUnder rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-397613567"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-397613567 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-397613567">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#GuestRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">den me pairnei_Guest Room_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-423143513 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-423143513">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DiningRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">den exw mia_Dining Room_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-475292615 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-475292615">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#House"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">re ta spaw</individualName>
+        <hasSite rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-506207991"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-487216309 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-487216309">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Hall"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">den me pairnei_Hall_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-48845111 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-48845111">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Kitchen"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">giannis taulhaus_Kitchen_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-502178974 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-502178974">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#PlayRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">den exw mia_Play Room_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-506207991 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-506207991">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Site"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Site Of re ta spaw</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-52080674 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-52080674">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DiningRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">test1_Dining Room_01</individualName>
+        <LongerThan rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1231079374"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-662231647 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-662231647">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Hall"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">re ta spaw_Hall_01</individualName>
+        <NarrowerThan rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1953978270"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-667058938 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-667058938">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LivingRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">trypani_Living Room_01</individualName>
+        <LongerThanHigh rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1415559989"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-695549568 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-695549568">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DiningRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">da_Dining Room_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-715833503 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-715833503">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Hall"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">les re_Hall_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-749046153 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-749046153">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Office"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">giannis taulhaus_Office_01</individualName>
+        <LongerThanWide rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1415559989"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-757418088 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-757418088">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DiningRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tsai me lemoni_Dining Room_01</individualName>
+        <AdjacentOver rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#174909366"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-88652083 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-88652083">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Hall"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tsai me lemoni_Hall_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1021724431 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1021724431">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Site"/>
+        <hasY rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasY>
+        <hasX rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasX>
+        <hasZ rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasZ>
+        <hasFloors rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasFloors>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Site Of test1</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1045740843 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1045740843">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DiningRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">giannis taulhaus_Dining Room_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1052872754 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1052872754">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#House"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">giannis taulhaus</individualName>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1118239086"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1118239087"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1966066405"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-48845111"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-749046153"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1045740843"/>
+        <hasSite rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#565639426"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1057193829 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1057193829">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#House"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">to swsto</individualName>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-22963832"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1656204803"/>
+        <hasSite rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1964423221"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#386866381"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#473934206"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#648038815"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1081238213 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1081238213">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#GuestRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">trypani_Guest Room_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1097786710 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1097786710">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LivingRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">loreena tsitsonta_Living Room_01</individualName>
+        <EqualWidth rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#32814212"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1097786711 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1097786711">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LivingRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">loreena tsitsonta_Living Room_02</individualName>
+        <EqualLength rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1097786710"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#109836558 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#109836558">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Storage"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">den exw mia_Storage_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#110251487 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#110251487">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#House"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">test1</individualName>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-52080674"/>
+        <hasSite rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1021724431"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1231079374"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1303177924"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1303177925"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#120767284 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#120767284">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#GuestRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">si_Guest Room_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1231079374 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1231079374">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LivingRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">test1_Living Room_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1303177924 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1303177924">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Bedroom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">test1_Bedroom_01</individualName>
+        <AdjacentNorth rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1303177925"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1303177925 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1303177925">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Bedroom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">test1_Bedroom_02</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1379574473 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1379574473">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Site"/>
+        <hasX rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasX>
+        <hasZ rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasZ>
+        <hasFloors rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasFloors>
+        <hasY rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasY>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Site Of les re</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1461969489 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1461969489">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#DiningRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tsimpa ena_Dining Room_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1656204803 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1656204803">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#GuestRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">to swsto_Guest Room_01</individualName>
+        <AdjacentNorth rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-22963832"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1709682529 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1709682529">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Garage"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">trypani_Garage_01</individualName>
+        <EqualWidth rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-667058938"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#174909366 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#174909366">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Kitchen"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tsai me lemoni_Kitchen_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1964423221 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1964423221">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Site"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Site Of to swsto</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#2054531429 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#2054531429">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#House"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tsai me lemoni</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#300349823 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#300349823">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Storage"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tsai me lemoni_Storage_01</individualName>
+        <EqualHeight rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1058671713"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#3197 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#3197">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#House"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">da</individualName>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-695549568"/>
+        <hasSite rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#803348813"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#32814212 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#32814212">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Kitchen"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">loreena tsitsonta_Kitchen_01</individualName>
+        <AdjacentUnder rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1097786710"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#3670 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#3670">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#House"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">si</individualName>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#120767284"/>
+        <hasSite rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#803349286"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#888325102"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#386866381 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#386866381">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Hall"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">to swsto_Hall_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#420545872 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#420545872">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Corridor"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">re ta spaw_Corridor_01</individualName>
+        <EqualLength rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#906607156"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#473934206 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#473934206">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Bedroom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">to swsto_Bedroom_01</individualName>
+        <ShorterThan rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#386866381"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#565639426 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#565639426">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Site"/>
+        <hasZ rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasZ>
+        <hasY rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasY>
+        <hasX rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasX>
+        <hasFloors rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasFloors>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Site Of giannis taulhaus</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#620955077 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#620955077">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#House"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">argyro iliopoulou</individualName>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1587523509"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1587523510"/>
+        <hasSite rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1598376203"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1931361485"/>
+        <hasRoom rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-232972966"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#633700999 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#633700999">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Site"/>
+        <hasFloors rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</hasFloors>
+        <hasZ rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</hasZ>
+        <hasX rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</hasX>
+        <hasY rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</hasY>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Site Of loreena tsitsonta</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#648038815 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#648038815">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Garage"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">to swsto_Garage_01</individualName>
+        <EqualWidth rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1656204803"/>
+        <EqualLength rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#386866381"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#735856959 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#735856959">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#PlayRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">re ta spaw_Play Room_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#803348813 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#803348813">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Site"/>
+        <hasFloors rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasFloors>
+        <hasZ rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasZ>
+        <hasX rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasX>
+        <hasY rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasY>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Site Of da</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#803349286 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#803349286">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Site"/>
+        <hasZ rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasZ>
+        <hasFloors rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasFloors>
+        <hasX rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasX>
+        <hasY rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</hasY>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Site Of si</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#806733980 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#806733980">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Site"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Site Of tsimpa ena</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#836916975 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#836916975">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Kitchen"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tsimpa ena_Kitchen_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#837649356 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#837649356">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#House"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tsimpa ena</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#860016535 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#860016535">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LivingRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">den exw mia_Living Room_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#888325102 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#888325102">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Storage"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">si_Storage_01</individualName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#906607156 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#906607156">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#LivingRoom"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">re ta spaw_Living Room_01</individualName>
+        <EqualWidth rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1953978270"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#960350772 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#960350772">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Hall"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tsimpa ena_Hall_01</individualName>
+        <AdjacentSouth rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#1461969489"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#960350773 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#960350773">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Hall"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tsimpa ena_Hall_02</individualName>
+        <AdjacentSouth rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1995279830"/>
+        <AdjacentWest rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#-1995279830"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#962357432 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#962357432">
+        <rdf:type rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Storage"/>
+        <individualName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">tsimpa ena_Storage_01</individualName>
+        <AdjacentSouth rdf:resource="http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#960350773"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.2.4.1806) http://owlapi.sourceforge.net -->
+
