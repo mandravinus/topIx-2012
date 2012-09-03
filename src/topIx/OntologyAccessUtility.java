@@ -547,14 +547,30 @@ public class OntologyAccessUtility //implements Runnable
         return true;
     }
     
-    public List<OWLIndividual> returnSitesInOntology () {
+    public Map<String, OWLIndividual> returnSitesInOntology () {
+        Map<String, OWLIndividual> returnMap=new HashMap<>();
         List<OWLIndividual> returnList=new ArrayList<>();
+        OWLAnnotationProperty hasNameAnnotationProperty=OWLFactory.getOWLAnnotationProperty(":individualName", topIxPrefixManager);
+        
         
         OWLClassExpression tempSiteClassExpression=OWLFactory.getOWLClass(":Site", topIxPrefixManager);
         for(OWLClassAssertionAxiom tempClassAssAx:topIxOnt.getClassAssertionAxioms(tempSiteClassExpression)) {
             returnList.add(tempClassAssAx.getIndividual());
+            
+            Set<OWLAnnotationAssertionAxiom> tempSiteAnnotationsSet=topIxOnt.getAnnotationAssertionAxioms(tempClassAssAx.getIndividual().asOWLNamedIndividual().getIRI());
+            for (OWLAnnotationAssertionAxiom tempAnnotationAssertionAxiom:tempSiteAnnotationsSet) {
+                if(tempAnnotationAssertionAxiom.getProperty().equals(hasNameAnnotationProperty))
+                {
+                    String tempString=tempAnnotationAssertionAxiom.getValue().toString();
+                    logger.info(tempString);
+                    tempString=tempString.substring(tempString.indexOf('"')+1, tempString.indexOf('^')-1);
+                    logger.info(tempString);
+                    logger.info(tempClassAssAx.getIndividual().toString());
+                    returnMap.put(tempString, tempClassAssAx.getIndividual());
+                }
+            }
         }
-        return returnList;
+        return returnMap;
     }
 
     public void saveOntology() {

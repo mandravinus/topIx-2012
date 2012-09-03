@@ -109,7 +109,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
     JLabel availableSitesCBoxLabel;
     JLabel availableSolutionsCBoxLabel;
     JLabel renderSolidLabel;
-    JComboBox<OWLIndividual> availableSitesCBox;
+    JComboBox<String> availableSitesCBox;
     JComboBox<OwlSolution> availableSolutionsCBox;
     JCheckBox renderSolidChBox;
     JButton printBtn;
@@ -452,15 +452,16 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         tabs.addTab("Results", paneII);
         //tabs.addTab("Jess Monitor", jessMonitorPane);
         mainPanel.add(tabs);
-        this.add(mainPanel);
+        this.setContentPane(mainPanel);
         this.setVisible(true);
         this.pack();
     }
     
     public void populateResultsComponents () {
         if (!guiAccess.returnSitesInOntology().isEmpty()) {
-            OWLIndividual[] tempModelArray=(OWLIndividual[])guiAccess.returnSitesInOntology().toArray(new OWLIndividual[0]);
-            ComboBoxModel<OWLIndividual> tempModel=new DefaultComboBoxModel<>(tempModelArray);
+            //THE NEXT IS A VERY IMPORTANT LINE TO KNOW, VERY USEFUL AS A CASTING METHOD!!!!
+            String[] tempModelArray=(String[])guiAccess.returnSitesInOntology().keySet().toArray(new String[0]);
+            ComboBoxModel<String> tempModel=new DefaultComboBoxModel<>(tempModelArray);
             this.availableSitesCBox.setModel(tempModel);
         }
     }
@@ -812,6 +813,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                         guiChoco.getChocoHouseMap(),
                         guiChoco.getChocoRoomMap());
                 guiAccess.getSolutionsList().add(tempSolution);
+                //this.populateResultsComponents();
             }
             else {
                 logger.info("not possible the first solution");
@@ -893,9 +895,13 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         
         //AVAILABLESITES COMBO BOX--------------------------------------------//
         if (actionEvent.getSource()==availableSitesCBox&&availableSitesCBox.getItemCount()>0) {
-            OWLIndividual tempOwlInd=(OWLIndividual)availableSitesCBox.getSelectedItem();
+            OWLIndividual tempOwlInd=guiAccess.returnSitesInOntology().get(availableSitesCBox.getSelectedItem());
+            //isolating the site hash from its IRI in order to...
             String tempSiteToBeLoaded=tempOwlInd.toString().substring(tempOwlInd.toString().indexOf('#')+1, tempOwlInd.toString().length()-1);
+            //...pass it as a parameter to the method retrieveSolutions which in turn...
             guiAccess.retrieveSolutions(tempSiteToBeLoaded);
+            //...populates the solutionList attribute that will accommodate the set of the solutions
+            //each time the selected site refreshes.
             Vector<OwlSolution> tempSolutionVector=new Vector<>(guiAccess.getSolutionsList());
             logger.info(tempSolutionVector.size());
             ComboBoxModel<OwlSolution> solutionsModel=new DefaultComboBoxModel<>(tempSolutionVector);
