@@ -32,7 +32,12 @@ import chocosolution.ChocoUtility;
 
 import choco.kernel.solver.variables.integer.IntDomainVar;
 import chocosolution.*;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import javax.imageio.ImageIO;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.BasicConfigurator;
@@ -47,6 +52,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
 {
     //GUI components
     JPanel mainPanel;
+    GroupLayout mainLayout;
     //mainPanel components
     JPanel paneI;
     JPanel paneII;
@@ -105,6 +111,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
     GroupLayout layIb3_Grp;
     //paneII components     - results presentation
     JPanel paneIIa;
+    GroupLayout layII_Grp;
     //paneIIa components    - result panel controls.
     JLabel availableSitesCBoxLabel;
     JLabel availableSolutionsCBoxLabel;
@@ -112,6 +119,16 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
     JComboBox<String> availableSitesCBox;
     JComboBox<OwlSolution> availableSolutionsCBox;
     JCheckBox renderSolidChBox;
+    GroupLayout layIIa_Grp;
+    //navigation buttons
+    JButton siteLeft;
+    JButton siteRight;
+    JButton solutionLeft;
+    JButton solutionRight;
+    //icons for the navigation buttons
+    Icon left;
+    Icon right;
+    
     JButton printBtn;
 
     TopIx3D topIx3D;
@@ -181,7 +198,8 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         logger= Logger.getLogger(GUI.class.toString());
         logger.info("creating GUI jpanel");
         mainPanel=new JPanel();
-        
+        mainLayout=new GroupLayout(mainPanel);
+        mainPanel.setLayout(mainLayout);
         guiAccess=accessRef;
         guiChoco=chocoRef;
         //this.decDes=decDes;
@@ -192,8 +210,11 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         //setSize(800, 600);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setBounds(50, 20, 1200, 700);
-        
+        //this.setMaximumSize(new Dimension(600, 600));
+        setBounds(100, 100, 950, 500);
+        this.setMaximumSize(new Dimension(950, 500));
+        this.setMinimumSize(new Dimension(950, 500));
+        setMaximizedBounds(this.getBounds());
         populateResultsComponents();
         
         propsCBoxLabel.setVisible(true);
@@ -201,6 +222,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         catsCBox.setSelectedIndex(1);
         rooms2Label.setVisible(false);
         rooms2.setVisible(false);
+        //this.pack();
         //tabs.getTabComponentAt(tabs.indexOfTab("Results")).setVisible(false);
         //layI_Crd.show(paneI, "Model Input");
         //BasicConfigurator.configure();
@@ -213,7 +235,10 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         layI_Crd=new CardLayout();
         paneI.setLayout(layI_Crd);
         paneII=new JPanel();
+        layII_Grp=new GroupLayout(paneII);
+        paneII.setLayout(layII_Grp);
             tabs=new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+            tabs.setSize(new Dimension(1000, 600));
         //--------------------------------------------------------------------//
         paneIa=new JPanel();
         paneIb=new JPanel();
@@ -279,9 +304,11 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             saveBtn=new JButton("Save");
                 saveBtn.addActionListener(this);
         //--------------------------------------------------------------------//
-        paneIIa=new JPanel(new FlowLayout());
-            availableSitesCBoxLabel=new JLabel("Available Sites in Ontology File");
-            availableSolutionsCBoxLabel=new JLabel("Stored Arrangements");
+        paneIIa=new JPanel();
+        layIIa_Grp=new GroupLayout(paneIIa);
+        paneIIa.setLayout(layIIa_Grp);
+            availableSitesCBoxLabel=new JLabel("Sites");
+            availableSolutionsCBoxLabel=new JLabel("Arrangements");
             availableSitesCBox=new JComboBox<>();
                 availableSitesCBox.addActionListener(this);
                 availableSitesCBox.addItemListener(this);
@@ -291,6 +318,13 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             renderSolidChBox=new JCheckBox();
                 renderSolidChBox.setSelected(false);
                 renderSolidChBox.addActionListener(this);
+            left=new ImageIcon("src/ontologyresources/images/left.png");
+                //left.
+            right=new ImageIcon("src/ontologyresources/images/right.png");
+            siteLeft=new JButton(left);
+            siteRight=new JButton(right);
+            solutionLeft=new JButton(left);
+            solutionRight=new JButton(right);
                 
         topIx3D=new TopIx3D();
         
@@ -318,6 +352,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         //fill paneIa
         layIa_Grp.setHorizontalGroup(
                 layIa_Grp.createSequentialGroup()
+                    .addContainerGap()
                     .addGroup(layIa_Grp.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addComponent(houseIdentifierLabel)
                         .addComponent(xLabel)
@@ -331,9 +366,11 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                         .addComponent(floorsInput, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                         .addComponent(floorHeightInput, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
                     .addGroup(layIa_Grp.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                        .addComponent(nextBtn)));
+                        .addComponent(nextBtn))
+                    .addContainerGap());
         layIa_Grp.setVerticalGroup(
                 layIa_Grp.createSequentialGroup()
+                    .addContainerGap()
                     .addGroup(layIa_Grp.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(houseIdentifierLabel)
                         .addComponent(houseIdentifierInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -350,9 +387,10 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                         .addComponent(floorHeightLabel)
                         .addComponent(floorHeightInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addGroup(layIa_Grp.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(nextBtn)));
+                        .addComponent(nextBtn))
+                    .addContainerGap());
         //fill paneIb1
-        paneIb1.add(roomsTreePanel);
+        //paneIb1.add(roomsTreePanel);
         //fill paneIb2
         layIb2_Grp.setHonorsVisibility(false);
         layIb2_Grp.setHorizontalGroup(
@@ -419,39 +457,116 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         //fill paneIb
         layIb_Grp.setHorizontalGroup(
                 layIb_Grp.createSequentialGroup()
-                    .addComponent(paneIb1)
+                    .addContainerGap()
+                    .addComponent(roomsTreePanel, 100, roomsTreePanel.getSize().width, 250)
+                    .addGap(15)
                     .addGroup(layIb_Grp.createParallelGroup()
                         .addComponent(paneIb2)
-                        .addComponent(paneIb3)));
+                        .addComponent(paneIb3))
+                    .addContainerGap());
         layIb_Grp.setVerticalGroup(
                 layIb_Grp.createSequentialGroup()
+                    .addContainerGap()
                     .addGroup(layIb_Grp.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(paneIb1)
+                        .addComponent(roomsTreePanel)
                         .addComponent(paneIb2))
-                    .addComponent(paneIb3));
+                    .addComponent(paneIb3)
+                    .addContainerGap());
         //fill paneIIa
-        paneIIa.add(availableSitesCBoxLabel);
-        paneIIa.add(availableSitesCBox);
-        paneIIa.add(availableSolutionsCBoxLabel);
-        paneIIa.add(availableSolutionsCBox);
-        paneIIa.add(renderSolidLabel);
-        paneIIa.add(renderSolidChBox);
+        //layIIa_Grp = new javax.swing.GroupLayout(getContentPane());
+        //getContentPane().setLayout(layIIa_Grp);
+        layIIa_Grp.setHorizontalGroup(
+            layIIa_Grp.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layIIa_Grp.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layIIa_Grp.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layIIa_Grp.createSequentialGroup()
+                        .addComponent(availableSitesCBoxLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(siteLeft)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(siteRight))
+                    .addComponent(availableSitesCBox, 0, 200, Short.MAX_VALUE)
+                    .addGroup(layIIa_Grp.createSequentialGroup()
+                        .addComponent(availableSolutionsCBoxLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(solutionLeft)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(solutionRight))
+                    .addComponent(availableSolutionsCBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        layIIa_Grp.setVerticalGroup(
+            layIIa_Grp.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layIIa_Grp.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layIIa_Grp.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(siteRight)
+                    .addGroup(layIIa_Grp.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(siteLeft)
+                        .addComponent(availableSitesCBoxLabel)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(availableSitesCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layIIa_Grp.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(availableSolutionsCBoxLabel)
+                    .addComponent(solutionLeft)
+                    .addComponent(solutionRight))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(availableSolutionsCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
         
         paneI.add(paneIa, "Basic Input");
         paneI.add(paneIb, "Model Input");
-
-        paneII.add(paneIIa);
-        paneII.add(topIx3D);
+        
+        //setting the layout for paneII
+        layII_Grp.setHorizontalGroup(
+                layII_Grp.createSequentialGroup()
+                .addComponent(paneIIa, 250, 250, 300)
+                //.addContainerGap()
+                .addGap(15)
+                .addComponent(topIx3D)
+        );
+        layII_Grp.setVerticalGroup(
+                layII_Grp.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layII_Grp.createParallelGroup()
+                    .addComponent(paneIIa)
+                    .addComponent(topIx3D))
+                .addContainerGap()
+        );
+        //paneII.add(topIx3D, BorderLayout.CENTER);
         
         
         //jessMonitorPane.add(BorderLayout.CENTER, jessPane);
         //jessMonitorPane.add(BorderLayout.SOUTH, jessCommandField);
         //jessMonitorPane.add(BorderLayout.EAST, evalButton);
-        
+        //tabs.setSize(new Dimension(1100, 700));
+        //paneI.setSize(1300, 600);
+        //paneII.setSize(1300, 600);
+        //paneII.validate();
         tabs.addTab("Input", paneI);
         tabs.addTab("Results", paneII);
         //tabs.addTab("Jess Monitor", jessMonitorPane);
-        mainPanel.add(tabs);
+        //mainPanel.setSize(new Dimension(1100, 700));
+        
+        //setting the layout for mainPanel
+        GroupLayout mainPanelLay_Grp=(GroupLayout)mainPanel.getLayout();
+        mainPanelLay_Grp.setHorizontalGroup(
+                mainPanelLay_Grp.createSequentialGroup()
+                //.addContainerGap()
+                .addComponent(tabs)
+                //.addContainerGap()
+        );
+        mainPanelLay_Grp.setVerticalGroup(
+                mainPanelLay_Grp.createSequentialGroup()
+                //.addContainerGap()
+                .addComponent(tabs)
+                //.addContainerGap()
+        );
+        
+        
         this.setContentPane(mainPanel);
         this.setVisible(true);
         this.pack();

@@ -24,12 +24,15 @@ import javax.vecmath.Vector3f;
 import topIx.owlintermediateclasses.OwlSolution;
 import com.sun.j3d.utils.behaviors.mouse.*;
 import javax.vecmath.*;
+import java.awt.Dimension;
 
 import org.apache.log4j.Logger;
 import topIx.owlintermediateclasses.OwlSolvedHouse;
 import topIx.owlintermediateclasses.OwlSolvedRoom;
 
 public class TopIx3D extends JPanel{
+    private static Dimension MY_SIZE;
+    
     JCanvas3D canvas3D;
     GraphicsDevice device=GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     SimpleUniverse simpleU;
@@ -67,14 +70,25 @@ public class TopIx3D extends JPanel{
     Logger logger;
     
     public TopIx3D() {
-        logger=Logger.getLogger(TopIx3D.class.getName());
-        canvas3D=new JCanvas3D(device);
+        logger=Logger.getLogger(TopIx3D.class.getName());        
         
-        this.setSize(600, 600);
-        //this.setLayout(new BorderLayout(10, 10));
-        canvas3D.setSize(600, 600);
+        MY_SIZE=new Dimension(600, 600);
+        
+        canvas3D=new JCanvas3D(device);
+        //this.setPreferredSize(new Dimension(600, 600));
+        this.setBounds(0, 0, 600, 600);
+        this.setSize(MY_SIZE);
+        this.setLayout(null);
+        canvas3D.setLocation(0, 0);
+        canvas3D.setFocusable(true);
+        canvas3D.requestFocus();
+        canvas3D.setSize(this.getSize());
+        //this.setLayout(new GroupLayout(this));
+        
+        //add the canvas for the group layout
         this.add(canvas3D);
         
+        //this.validate();
         logger.info("created canvas3D.");
 //        testSite=new Site3D(5, 7);
 //        testRoom=new Room3D(2, 3, 3, 5, 6, 0);

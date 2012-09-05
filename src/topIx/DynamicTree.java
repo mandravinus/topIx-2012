@@ -56,11 +56,14 @@ public class DynamicTree extends JPanel {
         //rootNode = new DefaultMutableTreeNode("Inserted Rooms");
         //treeModel = new DefaultTreeModel(rootNode);
         roomsTree = new JTree(/*treeModel*/);
+        //roomsTree.setSize(150, 400);
         roomsTree.setEditable(false);
         roomsTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
         JScrollPane treeScroller = new JScrollPane(roomsTree);
+        treeScroller.setSize(200, 500);
         this.add(treeScroller);
+        this.setSize(200, 500);
     }
 
     public DynamicTree(String SiteName) {
