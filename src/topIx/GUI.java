@@ -121,10 +121,10 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
     JCheckBox renderSolidChBox;
     GroupLayout layIIa_Grp;
     //navigation buttons
-    JButton siteLeft;
-    JButton siteRight;
-    JButton solutionLeft;
-    JButton solutionRight;
+    JButton siteLeftBtn;
+    JButton siteRightBtn;
+    JButton solutionLeftBtn;
+    JButton solutionRightBtn;
     //icons for the navigation buttons
     Icon left;
     Icon right;
@@ -321,10 +321,14 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             left=new ImageIcon("src/ontologyresources/images/left.png");
                 //left.
             right=new ImageIcon("src/ontologyresources/images/right.png");
-            siteLeft=new JButton(left);
-            siteRight=new JButton(right);
-            solutionLeft=new JButton(left);
-            solutionRight=new JButton(right);
+            siteLeftBtn=new JButton(left);
+                siteLeftBtn.addActionListener(this);
+            siteRightBtn=new JButton(right);
+                siteRightBtn.addActionListener(this);
+            solutionLeftBtn=new JButton(left);
+                solutionLeftBtn.addActionListener(this);
+            solutionRightBtn=new JButton(right);
+                solutionRightBtn.addActionListener(this);
                 
         topIx3D=new TopIx3D();
         
@@ -483,16 +487,16 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                     .addGroup(layIIa_Grp.createSequentialGroup()
                         .addComponent(availableSitesCBoxLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(siteLeft)
+                        .addComponent(siteLeftBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(siteRight))
+                        .addComponent(siteRightBtn))
                     .addComponent(availableSitesCBox, 0, 200, Short.MAX_VALUE)
                     .addGroup(layIIa_Grp.createSequentialGroup()
                         .addComponent(availableSolutionsCBoxLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(solutionLeft)
+                        .addComponent(solutionLeftBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(solutionRight))
+                        .addComponent(solutionRightBtn))
                     .addComponent(availableSolutionsCBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -501,17 +505,17 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             .addGroup(layIIa_Grp.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layIIa_Grp.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(siteRight)
+                    .addComponent(siteRightBtn)
                     .addGroup(layIIa_Grp.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(siteLeft)
+                        .addComponent(siteLeftBtn)
                         .addComponent(availableSitesCBoxLabel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(availableSitesCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layIIa_Grp.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(availableSolutionsCBoxLabel)
-                    .addComponent(solutionLeft)
-                    .addComponent(solutionRight))
+                    .addComponent(solutionLeftBtn)
+                    .addComponent(solutionRightBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(availableSolutionsCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -1042,6 +1046,30 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         if(actionEvent.getSource()==renderSolidChBox && availableSolutionsCBox.getSelectedItem()!=null) {
             OwlSolution tempSolution=(OwlSolution)availableSolutionsCBox.getSelectedItem();
             topIx3D.renderSolution(tempSolution, renderSolidChBox.isSelected());
+        }
+        
+        //SITELEFT CHECKBOX---------------------------------------------------//
+        if(actionEvent.getSource()==siteLeftBtn && availableSitesCBox.getItemCount()!=0) {
+            if (availableSitesCBox.getItemAt(availableSitesCBox.getSelectedIndex()-1)!=null)
+                availableSitesCBox.setSelectedItem(availableSitesCBox.getItemAt(availableSitesCBox.getSelectedIndex()-1));
+        }
+        
+        //SITERIGHT CHECKBOX--------------------------------------------------//
+        if(actionEvent.getSource()==siteRightBtn && availableSitesCBox.getItemCount()!=0) {
+            if(availableSitesCBox.getItemAt(availableSitesCBox.getSelectedIndex()+1)!=null)
+                availableSitesCBox.setSelectedItem(availableSitesCBox.getItemAt(availableSitesCBox.getSelectedIndex()+1));
+        }
+        
+        //SOLUTIONLEFT CHECKBOX-----------------------------------------------//
+        if(actionEvent.getSource()==solutionLeftBtn && availableSitesCBox.getItemCount()!=0) {
+            if(availableSolutionsCBox.getItemAt(availableSolutionsCBox.getSelectedIndex()-1)!=null)
+                availableSolutionsCBox.setSelectedItem(availableSolutionsCBox.getItemAt(availableSolutionsCBox.getSelectedIndex()-1));
+        }
+        
+        //SOLUTIONRIGHT CHECKBOX----------------------------------------------//
+        if(actionEvent.getSource()==solutionRightBtn && availableSolutionsCBox.getItemCount()!=0) {
+            if(availableSolutionsCBox.getItemAt(availableSolutionsCBox.getSelectedIndex()+1)!=null)
+                availableSolutionsCBox.setSelectedItem(availableSolutionsCBox.getItemAt(availableSolutionsCBox.getSelectedIndex()+1));
         }
     }
     
