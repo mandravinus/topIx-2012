@@ -162,9 +162,9 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
     
     Logger logger;
     
+    //deprecated constructor - the one with both OntologyAccessUtility and TopIxChoco references is used.
     public GUI(OntologyAccessUtility accessRef)
     {
-        //deprecated constructor - the one with both OntologyAccessUtility and TopIxChoco references is used.
         super("topIx project - bromoiras-gioukakis");
         mainPanel=new JPanel();
         
@@ -226,6 +226,8 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         //tabs.getTabComponentAt(tabs.indexOfTab("Results")).setVisible(false);
         //layI_Crd.show(paneI, "Model Input");
         //BasicConfigurator.configure();
+        
+        //add listeners to manage the mouse events on a panel level.
     }
 
     private void initializeComponents(Map<String, String> objCatsCB, Map<String, String> roomsCB)     //initialize panels with their layouts as well as components
@@ -314,6 +316,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 availableSitesCBox.addItemListener(this);
             availableSolutionsCBox=new JComboBox<>();
                 availableSolutionsCBox.addActionListener(this);
+                availableSolutionsCBox.addItemListener(this);
             renderSolidLabel=new JLabel("Render as Solid");
             renderSolidChBox=new JCheckBox();
                 renderSolidChBox.setSelected(false);
@@ -1032,6 +1035,11 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             logger.info("avail sol cbox evt");
             OwlSolution tempSolution=(OwlSolution)availableSolutionsCBox.getSelectedItem();
             this.topIx3D.renderSolution(tempSolution, renderSolidChBox.isSelected());
+            this.addMouseListener(topIx3D.getMouseTranslate());
+            this.addMouseListener(topIx3D.getMouseRotate());
+            this.addMouseMotionListener(topIx3D.getMouseTranslate());
+            this.addMouseMotionListener(topIx3D.getMouseRotate());
+            this.addMouseWheelListener(topIx3D.getMouseZoom());
             //this.topIx3D.repaintCanvas();
 //            for (OwlSolvedHouse tempHouse:testSol.getSolvedHouses()) {
 //                logger.info(tempHouse.getSolvedHouseLength());
@@ -1151,6 +1159,28 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         
         if (itemEvent.getSource()==rooms2) {
             currentRoom.setComboBox2RoomEntry(rooms2.getSelectedItem().toString());
+        }
+        
+        if (itemEvent.getSource()==availableSitesCBox){
+            if(availableSitesCBox.getItemAt(availableSitesCBox.getSelectedIndex()-1)==null)
+                siteLeftBtn.setEnabled(false);
+            else if(availableSitesCBox.getItemAt(availableSitesCBox.getSelectedIndex()+1)==null)
+                siteRightBtn.setEnabled(false);
+            else{
+                siteLeftBtn.setEnabled(true);
+                siteRightBtn.setEnabled(true);
+            }
+        }
+        
+        if (itemEvent.getSource()==availableSolutionsCBox){
+            if(availableSolutionsCBox.getItemAt(availableSolutionsCBox.getSelectedIndex()-1)==null)
+                solutionLeftBtn.setEnabled(false);
+            else if(availableSolutionsCBox.getItemAt(availableSolutionsCBox.getSelectedIndex()+1)==null)
+                solutionRightBtn.setEnabled(false);
+            else{
+                solutionLeftBtn.setEnabled(true);
+                solutionRightBtn.setEnabled(true);
+            }
         }
     }
     

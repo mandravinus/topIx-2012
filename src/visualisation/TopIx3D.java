@@ -46,7 +46,7 @@ public class TopIx3D extends JPanel{
     private MouseRotate mouseRotate;
     private MouseTranslate mouseTranslate;
     private MouseZoom mouseZoom;
-    
+
     private BoundingSphere boundingSphere;
     
     private TransformGroup viewTG;
@@ -86,7 +86,7 @@ public class TopIx3D extends JPanel{
         //this.setLayout(new GroupLayout(this));
         
         //add the canvas for the group layout
-        this.add(canvas3D);
+        
         
         //this.validate();
         logger.info("created canvas3D.");
@@ -98,6 +98,9 @@ public class TopIx3D extends JPanel{
         simpleU=new SimpleUniverse(canvas3D.getOffscreenCanvas3D());
         simpleU.getViewingPlatform().setNominalViewingTransform();
 
+        JPanel tempCanvas3D=simpleU.getViewer().getJPanel(0);
+        tempCanvas3D.setSize(MY_SIZE);
+        this.add(tempCanvas3D);
         
         siteApp=new Appearance();
         siteLineAtt=new LineAttributes(2.0f, LineAttributes.PATTERN_DASH_DOT, true);
@@ -127,6 +130,18 @@ public class TopIx3D extends JPanel{
         
 
         logger.info("reached the end of topix3d constructor");
+    }
+
+    public MouseRotate getMouseRotate() {
+        return mouseRotate;
+    }
+
+    public MouseTranslate getMouseTranslate() {
+        return mouseTranslate;
+    }
+
+    public MouseZoom getMouseZoom() {
+        return mouseZoom;
     }
     
     public BranchGroup createSceneGraph(/*BranchGroup branchGroupToRender*/) {
@@ -204,6 +219,7 @@ public class TopIx3D extends JPanel{
     }
     
     public void renderSolution(OwlSolution renderedSolution, boolean renderSolid) {
+            
         viewTG=new TransformGroup();
         viewTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
         viewTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
@@ -211,7 +227,7 @@ public class TopIx3D extends JPanel{
         mouseRotate=new MouseRotate(viewTG);
         mouseTranslate=new MouseTranslate(viewTG);
         mouseZoom=new MouseZoom(viewTG);
-        
+
         boundingSphere=new BoundingSphere(new Point3d(), 1000d);
         
         mouseRotate.setSchedulingBounds(boundingSphere);
@@ -269,6 +285,8 @@ public class TopIx3D extends JPanel{
         newBG.addChild(mouseRotate);
         newBG.addChild(mouseTranslate);
         newBG.addChild(mouseZoom);
+        logger.info("edw kanw print to rotate behaviour");
+        logger.info(mouseRotate);
         
         viewTG.setTransform(centerTranslate);
         
@@ -280,7 +298,7 @@ public class TopIx3D extends JPanel{
         if(tempLocale.numBranchGraphs()>1) {
             logger.info("11");
             logger.info(tempLocale.numBranchGraphs());
-            tempLocale.removeBranchGraph(currentBranchGroup); 
+            tempLocale.removeBranchGraph(currentBranchGroup);
             logger.info("12");
             logger.info(tempLocale.numBranchGraphs());
             currentBranchGroup=newBG;
