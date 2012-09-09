@@ -1,5 +1,6 @@
 package visualisation;
 
+import com.sun.j3d.utils.geometry.Text2D;
 import javax.media.j3d.*;
 import javax.vecmath.*;
 import org.apache.log4j.Logger;
@@ -15,12 +16,12 @@ public class Room3D extends Shape3D{
     private Color3f[] roomColors;
     private Vector3f[] roomNormals;
     
-    float roomLength;
-    float roomWidth;
-    float roomHeight;
-    float roomX;
-    float roomY;
-    float roomZ;
+    private float roomLength;
+    private float roomWidth;
+    private float roomHeight;
+    private float roomX;
+    private float roomY;
+    private float roomZ;
     
     Logger logger;
     
@@ -34,12 +35,12 @@ public class Room3D extends Shape3D{
         this.roomY=(float)roomY;
         this.roomZ=(float)roomZ;
         
-        this.roomLength=this.roomLength/10;
-        this.roomWidth=this.roomWidth/10;
-        this.roomHeight=this.roomHeight/10;
-        this.roomX=this.roomX/10;
-        this.roomY=this.roomY/10;
-        this.roomZ=this.roomZ/10;
+        this.roomLength=this.roomLength;
+        this.roomWidth=this.roomWidth;
+        this.roomHeight=this.roomHeight;
+        this.roomX=this.roomX;
+        this.roomY=this.roomY;
+        this.roomZ=this.roomZ;
         
         logger.info(this.roomLength);
         logger.info(this.roomWidth);

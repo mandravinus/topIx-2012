@@ -1039,7 +1039,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             this.addMouseListener(topIx3D.getMouseRotate());
             this.addMouseMotionListener(topIx3D.getMouseTranslate());
             this.addMouseMotionListener(topIx3D.getMouseRotate());
-            this.addMouseWheelListener(topIx3D.getMouseZoom());
+            //this.addMouseWheelListener(topIx3D.getMouseZoom());
             //this.topIx3D.repaintCanvas();
 //            for (OwlSolvedHouse tempHouse:testSol.getSolvedHouses()) {
 //                logger.info(tempHouse.getSolvedHouseLength());

@@ -27,10 +27,10 @@ public class House3D extends Shape3D{
         this.houseX=(float)houseX;
         this.houseY=(float)houseY;
         
-        this.houseLength=this.houseLength/10;
-        this.houseWidth=this.houseWidth/10;
-        this.houseX=this.houseX/10;
-        this.houseY=this.houseY/10;
+        this.houseLength=this.houseLength;
+        this.houseWidth=this.houseWidth;
+        this.houseX=this.houseX;
+        this.houseY=this.houseY;
         
         logger.info(this.houseLength);
         logger.info(this.houseWidth);

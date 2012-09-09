@@ -26,8 +26,8 @@ public class Site3D extends Shape3D {
         this.siteLength=(float)siteLength;
         this.siteWidth=(float)siteWidth;
         
-        this.siteLength=this.siteLength/10;
-        this.siteWidth=this.siteWidth/10;
+        this.siteLength=this.siteLength;
+        this.siteWidth=this.siteWidth;
         
         logger.info(this.siteLength);
         logger.info(this.siteWidth);

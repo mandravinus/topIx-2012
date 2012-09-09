@@ -25,6 +25,7 @@ import topIx.owlintermediateclasses.OwlSolution;
 import com.sun.j3d.utils.behaviors.mouse.*;
 import javax.vecmath.*;
 import java.awt.Dimension;
+import java.util.Enumeration;
 
 import org.apache.log4j.Logger;
 import topIx.owlintermediateclasses.OwlSolvedHouse;
@@ -96,8 +97,24 @@ public class TopIx3D extends JPanel{
         //scene.compile();
         
         simpleU=new SimpleUniverse(canvas3D.getOffscreenCanvas3D());
-        simpleU.getViewingPlatform().setNominalViewingTransform();
+        //simpleU.getViewingPlatform().setNominalViewingTransform();
+        double scale=simpleU.getViewingPlatform().getViewers()[0].getView().getScreenScale();
+        logger.info(simpleU.getViewingPlatform().getViewers()[0].getView().getScreenScalePolicy());
+        simpleU.getViewingPlatform().getViewers()[0].getView().setScreenScalePolicy(View.SCALE_EXPLICIT);
+        logger.info(simpleU.getViewingPlatform().getViewers()[0].getView().getScreenScalePolicy());
+        simpleU.getViewingPlatform().getViewers()[0].getView().setScreenScale(.2d);
+        scale=simpleU.getViewingPlatform().getViewers()[0].getView().getScreenScale();
+        logger.info("the view scale");
+        logger.info(scale);
+        
+        logger.info("number of trasfromgroups");
+        logger.info(simpleU.getViewingPlatform().getMultiTransformGroup().getNumTransforms());
 
+        Transform3D moveBackTransform3D=new Transform3D();
+        moveBackTransform3D.setTranslation(new Vector3d(0, 0, 20));
+        simpleU.getViewingPlatform().getMultiTransformGroup().getTransformGroup(0).setTransform(moveBackTransform3D);
+        
+        simpleU.getViewer().getJFrame(0).setVisible(false);
         JPanel tempCanvas3D=simpleU.getViewer().getJPanel(0);
         tempCanvas3D.setSize(MY_SIZE);
         this.add(tempCanvas3D);
@@ -219,10 +236,19 @@ public class TopIx3D extends JPanel{
     }
     
     public void renderSolution(OwlSolution renderedSolution, boolean renderSolid) {
-            
+        
         viewTG=new TransformGroup();
         viewTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
         viewTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+        
+        //the following lines mean to translate the whole site so that the
+        //center of the ground plane lies in the begining of the axes (0, 0, 0)
+        //which for some particular reason will not occur. maby because
+        float xTrans=(float)-renderedSolution.getSiteLength()/2;
+        float zTrans=(float)-renderedSolution.getSiteWidth()/2;
+        Transform3D centerTranslate=new Transform3D();
+        centerTranslate.setTranslation(new Vector3f(xTrans, 0, zTrans));
+        viewTG.setTransform(centerTranslate);
         
         mouseRotate=new MouseRotate(viewTG);
         mouseTranslate=new MouseTranslate(viewTG);
@@ -234,10 +260,6 @@ public class TopIx3D extends JPanel{
         mouseTranslate.setSchedulingBounds(boundingSphere);
         mouseZoom.setSchedulingBounds(boundingSphere);
         
-        float xTrans=(float)-renderedSolution.getSiteLength()/20;
-        float zTrans=(float)-renderedSolution.getSiteWidth()/20;
-        Transform3D centerTranslate=new Transform3D();
-        centerTranslate.setTranslation(new Vector3f(xTrans, 0, zTrans));
         
         
         logger.info("04");
@@ -279,8 +301,24 @@ public class TopIx3D extends JPanel{
                     renderSolid);
             renderedRoom3D.setAppearance(roomApp);
             viewTG.addChild(renderedRoom3D);
+            
+            //for each room we create a transform group where the roomName is
+            //to be mounted and translated, and then each roomName TG is to be 
+            //mounted on viewTG
+            TransformGroup tempRoomNameTG=new TransformGroup();
+            Vector3d tempRoomNameVector=new Vector3d(renderedSolvedRoom.getSolvedRoomX(), renderedSolvedRoom.getSolvedRoomZ(), (renderedSolvedRoom.getSolvedRoomY()+renderedSolvedRoom.getSolvedRoomWidth()-0.5f));
+            Transform3D tempRoomNameTransform3D=new Transform3D();
+            tempRoomNameTransform3D.setTranslation(tempRoomNameVector);
+            tempRoomNameTG.setTransform(tempRoomNameTransform3D);
+            Text2D tempRoomNameText2D=new Text2D(renderedSolvedRoom.getSolvedRoomLiteral(), new Color3f(1f, 1f, 1f), "Arial", 100, 0);
+            tempRoomNameTG.addChild(tempRoomNameText2D);
+            viewTG.addChild(tempRoomNameTG);
         }
-        logger.info("08");
+        logger.info("this is the count of the children of the viewTG");
+        Enumeration en=viewTG.getAllChildren();
+        while(en.hasMoreElements()){
+            logger.info(en.nextElement());
+        }
         
         newBG.addChild(mouseRotate);
         newBG.addChild(mouseTranslate);
@@ -288,7 +326,7 @@ public class TopIx3D extends JPanel{
         logger.info("edw kanw print to rotate behaviour");
         logger.info(mouseRotate);
         
-        viewTG.setTransform(centerTranslate);
+        
         
         newBG.compile();
         logger.info("09");
