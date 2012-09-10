@@ -58,6 +58,7 @@ public class OntologyAccessUtility //implements Runnable
     Map<String, String> roomToIRI = new HashMap<>(32);
     Map<String, String> propEntryNametoPropEntryIRI = new HashMap<>(64);
     Map<String, String> propEntryNameToPropCatName = new HashMap<>(64);
+    Map<String, IRI> geometricPropertiesMap=new HashMap<>();
     //sets used in deciding the two level object properties hierarchy (leaves, leaves-1) in filterLeafObjProps
     //the data included are in the form of OWLPropertyExpression
     Set<OWLPropertyExpression> set1;    //ends up to contain the leaves
@@ -194,11 +195,24 @@ public class OntologyAccessUtility //implements Runnable
                     }
                 }
             }
-
-
         }
 //        System.out.println(propEntryNameToPropCatName);
 //        System.out.println(propEntryNametoPropEntryIRI);
+    }
+    
+    public void retrieveGeometricPropertiesMap(){
+        OWLDataProperty geometricProperty=OWLFactory.getOWLDataProperty(":GeometricProperty", topIxPrefixManager);
+        OWLAnnotationProperty propertyID=OWLFactory.getOWLAnnotationProperty(":propertyID", topIxPrefixManager);
+        OWLAnnotationProperty houseSetable=OWLFactory.getOWLAnnotationProperty(":houseSetable", topIxPrefixManager);
+        OWLAnnotationProperty roomSetable=OWLFactory.getOWLAnnotationProperty(":roomSetable", topIxPrefixManager);
+        Set<OWLSubDataPropertyOfAxiom> tempGeometricDataPropertiesSet=topIxOnt.getDataSubPropertyAxiomsForSubProperty(geometricProperty);
+        String geometricPropertyName;
+        IRI geometricPropertyIRI;
+        
+        for(OWLSubDataPropertyOfAxiom tempGeomPropAxiom: tempGeometricDataPropertiesSet){
+            tempGeomPropAxiom.get
+        }
+        
     }
 
     ////////////////////////////////

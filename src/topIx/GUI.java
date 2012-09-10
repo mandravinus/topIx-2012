@@ -104,6 +104,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
     JButton addHouseBtn;
     JButton addRoomBtn;
     JButton registerBtn;
+    JButton manualInputBtn;
     JButton calculateBtn;
     JButton resetBtn;
     JButton backBtn;
@@ -154,9 +155,15 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
     OwlHouse currentHouse;
     OwlRoom currentRoom;
     
-    JOptionPane houseHeightPane;
-    JDialog houseHeightDialog;
-    
+    //manualInput dialog frame and its components
+    JDialog manualInputDialog;
+    JLabel manualPropertyListLabel;
+    JLabel manualPropertyValueLabel;
+    JButton manualInputRegisterButton;
+    JButton manualInputCancelButton;
+    JComboBox<String> manualPropertyComboBox;
+    JTextField manualPropertyValueTextField;
+    GroupLayout manualInputLay_Grp;
     
     //DeclarativeDescription decDes;
     
@@ -207,6 +214,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         initializeComponents(guiAccess.propEntryNameToPropCatName, guiAccess.roomToIRI);
         addComponents();
         
+        this.setIconImage(new ImageIcon("src/ontologyresources/images/topix.png").getImage());
         //setSize(800, 600);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -215,7 +223,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         this.setMaximumSize(new Dimension(950, 500));
         this.setMinimumSize(new Dimension(950, 500));
         setMaximizedBounds(this.getBounds());
-        populateResultsComponents();
+        //populateResultsComponents();
         
         propsCBoxLabel.setVisible(true);
         propsCBox.setVisible(true);
@@ -296,6 +304,8 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             registerBtn=new JButton("Register");
                 registerBtn.addActionListener(this);
                 registerBtn.setEnabled(false);
+            manualInputBtn=new JButton("Manual Input");
+                manualInputBtn.addActionListener(this);
             calculateBtn=new JButton("Calculate");
                 calculateBtn.addActionListener(this);
                 calculateBtn.setEnabled(false);
@@ -338,18 +348,36 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         
         //try
         //{
-            jessMonitorPane=new JPanel(new BorderLayout());
-            //jessPane=new ConsolePanel(decDes.getRt());
-            jessCommandField=new JTextField(60);
-                jessCommandField.setActionCommand("evalExpression");    
-                jessCommandField.addFocusListener(this);
-                jessCommandField.addActionListener(this);
-                jessCommandField.addKeyListener(this);
-            evalButton=new JButton("eval");
-                evalButton.setActionCommand("evalExpression");
-                evalButton.addActionListener(this);     
+//            jessMonitorPane=new JPanel(new BorderLayout());
+//            //jessPane=new ConsolePanel(decDes.getRt());
+//            jessCommandField=new JTextField(60);
+//                jessCommandField.setActionCommand("evalExpression");    
+//                jessCommandField.addFocusListener(this);
+//                jessCommandField.addActionListener(this);
+//                jessCommandField.addKeyListener(this);
+//            evalButton=new JButton("eval");
+//                evalButton.setActionCommand("evalExpression");
+//                evalButton.addActionListener(this);     
         //}catch (JessException je){System.out.println(je.getExecutionContext()+"\n"+je.getErrorCode()+" @line "+je.getLineNumber());}
-
+        this.populateResultsComponents();
+        availableSitesCBox.setSelectedItem(availableSitesCBox.getItemAt(0));
+        availableSolutionsCBox.setSelectedItem(availableSolutionsCBox.getItemAt(0));
+        siteLeftBtn.setEnabled(false);
+        solutionLeftBtn.setEnabled(false);
+        //--------------------------------------------------------------------//
+        manualInputDialog=new JDialog(this, "Manual Data Input", true);
+        manualInputDialog.setVisible(false);
+        manualInputDialog.setIconImage(new ImageIcon("src/ontologyresources/images/topix.png").getImage());
+        manualInputLay_Grp=new GroupLayout(manualInputDialog.getContentPane());
+            manualInputDialog.getContentPane().setLayout(manualInputLay_Grp);
+        manualPropertyListLabel=new JLabel("Property List");
+        manualPropertyValueLabel=new JLabel("Value");
+        manualInputRegisterButton=new JButton("Register");
+            manualInputRegisterButton.addActionListener(this);
+        manualInputCancelButton=new JButton("Cancel");
+            manualInputCancelButton.addActionListener(this);
+        manualPropertyComboBox=new JComboBox<>();
+        manualPropertyValueTextField=new JTextField(4);
                
         //--------------------------------------------------------------------//
     }
@@ -357,6 +385,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
     private void addComponents()            //add components to their respective containers
     {
         //fill paneIa
+        layIa_Grp.setAutoCreateGaps(true);
         layIa_Grp.setHorizontalGroup(
                 layIa_Grp.createSequentialGroup()
                     .addContainerGap()
@@ -367,7 +396,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                         .addComponent(floorsLabel)
                         .addComponent(floorHeightLabel))
                     .addGroup(layIa_Grp.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(houseIdentifierInput, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(houseIdentifierInput, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
                         .addComponent(xInput, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                         .addComponent(yInput, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                         .addComponent(floorsInput, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
@@ -400,12 +429,15 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         //paneIb1.add(roomsTreePanel);
         //fill paneIb2
         layIb2_Grp.setHonorsVisibility(false);
+        layIb2_Grp.setAutoCreateGaps(true);
         layIb2_Grp.setHorizontalGroup(
                 layIb2_Grp.createSequentialGroup()
                     .addGroup(layIb2_Grp.createParallelGroup()
                         .addComponent(rooms1Label)
                         .addComponent(rooms1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(compactnessChBoxLabel))
+                        .addGroup(layIb2_Grp.createSequentialGroup()
+                            .addComponent(compactnessChBoxLabel)
+                            .addComponent(compactnessChBox)))
                     .addGroup(layIb2_Grp.createParallelGroup()
                         .addComponent(catsCBoxLabel)
                         .addComponent(catsCBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -437,6 +469,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         rooms2Label.setVisible(false);
         rooms2.setVisible(false);
         //fill paneIb3
+        layIb3_Grp.setAutoCreateGaps(true);
         layIb3_Grp.setHorizontalGroup(
                 layIb3_Grp.createSequentialGroup()
                     .addGroup(layIb3_Grp.createParallelGroup()
@@ -444,22 +477,24 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                         .addComponent(addRoomBtn))
                     .addGroup(layIb3_Grp.createParallelGroup()
                         .addComponent(registerBtn)
-                        .addComponent(calculateBtn))
+                        .addComponent(manualInputBtn))
                     .addGroup(layIb3_Grp.createParallelGroup()
-                        .addComponent(resetBtn)
-                        .addComponent(backBtn))
+                        .addComponent(calculateBtn)
+                        .addComponent(resetBtn))
                     .addGroup(layIb3_Grp.createParallelGroup()
-                        .addComponent(saveBtn)));
+                        .addComponent(saveBtn)
+                        .addComponent(backBtn)));
         layIb3_Grp.setVerticalGroup(
                 layIb3_Grp.createSequentialGroup()
                     .addGroup(layIb3_Grp.createParallelGroup()
                         .addComponent(addHouseBtn)
                         .addComponent(registerBtn)
-                        .addComponent(resetBtn)
+                        .addComponent(calculateBtn)
                         .addComponent(saveBtn))
                     .addGroup(layIb3_Grp.createParallelGroup()
                         .addComponent(addRoomBtn)
-                        .addComponent(calculateBtn)
+                        .addComponent(manualInputBtn)
+                        .addComponent(resetBtn)
                         .addComponent(backBtn)));
         //fill paneIb
         layIb_Grp.setHorizontalGroup(
@@ -482,6 +517,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         //fill paneIIa
         //layIIa_Grp = new javax.swing.GroupLayout(getContentPane());
         //getContentPane().setLayout(layIIa_Grp);
+        layIIa_Grp.setAutoCreateGaps(true);
         layIIa_Grp.setHorizontalGroup(
             layIIa_Grp.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layIIa_Grp.createSequentialGroup()
@@ -500,8 +536,12 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                         .addComponent(solutionLeftBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(solutionRightBtn))
-                    .addComponent(availableSolutionsCBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(availableSolutionsCBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(GroupLayout.Alignment.TRAILING, layIIa_Grp.createSequentialGroup()
+                        .addComponent(renderSolidLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(renderSolidChBox))
+                .addGap(0, 0, Short.MAX_VALUE)))
         );
         layIIa_Grp.setVerticalGroup(
             layIIa_Grp.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -521,6 +561,10 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                     .addComponent(solutionRightBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(availableSolutionsCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layIIa_Grp.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addComponent(renderSolidLabel)
+                    .addComponent(renderSolidChBox))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         
@@ -573,6 +617,35 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 //.addContainerGap()
         );
         
+        //setting the layout for manualInputDialog
+        manualInputLay_Grp.setAutoCreateContainerGaps(true);
+        manualInputLay_Grp.setAutoCreateGaps(true);
+        manualInputLay_Grp.setHorizontalGroup(
+                manualInputLay_Grp.createSequentialGroup()
+                .addGroup(manualInputLay_Grp.createParallelGroup()
+                    .addComponent(manualPropertyListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(manualPropertyComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(manualInputLay_Grp.createSequentialGroup()
+                        .addComponent(manualInputCancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(manualInputRegisterButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(manualInputLay_Grp.createParallelGroup()
+                    .addComponent(manualPropertyValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(manualPropertyValueTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)));
+        manualInputLay_Grp.setVerticalGroup(
+                manualInputLay_Grp.createSequentialGroup()
+                .addGroup(manualInputLay_Grp.createParallelGroup()
+                    .addComponent(manualPropertyListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(manualPropertyValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(manualInputLay_Grp.createParallelGroup()
+                    .addComponent(manualPropertyComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(manualPropertyValueTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(manualInputLay_Grp.createParallelGroup()
+                    .addComponent(manualInputCancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(manualInputRegisterButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)));
+        manualInputDialog.setLocationRelativeTo(manualInputDialog.getOwner());
+        manualInputDialog.setResizable(false);
+        manualInputDialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        manualInputDialog.pack();
         
         this.setContentPane(mainPanel);
         this.setVisible(true);
@@ -891,6 +964,18 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 case "Equal Width To":
                     ChocoUtility.equalWidthConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getChocoRoomMap().get(room2Hash), guiChoco.getTopIxModel());
                     break;
+                case "Long":
+                    ChocoUtility.isLongConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getTopIxModel());
+                    break;
+                case "Short":
+                    ChocoUtility.isShortConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getTopIxModel());
+                    break;
+                case "Wide":
+                    ChocoUtility.isWideConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getTopIxModel());
+                    break;
+                case "Narrow":
+                    ChocoUtility.isNarrowConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getTopIxModel());
+                    break;
                 default:
                     break;
             }
@@ -1028,6 +1113,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             logger.info(tempSolutionVector.size());
             ComboBoxModel<OwlSolution> solutionsModel=new DefaultComboBoxModel<>(tempSolutionVector);
             availableSolutionsCBox.setModel(solutionsModel);
+            availableSolutionsCBox.setSelectedIndex(0);
         }
         
         //AVAILABLESOLUTIONS COMBO BOX----------------------------------------//
@@ -1035,10 +1121,10 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             logger.info("avail sol cbox evt");
             OwlSolution tempSolution=(OwlSolution)availableSolutionsCBox.getSelectedItem();
             this.topIx3D.renderSolution(tempSolution, renderSolidChBox.isSelected());
-            this.addMouseListener(topIx3D.getMouseTranslate());
-            this.addMouseListener(topIx3D.getMouseRotate());
-            this.addMouseMotionListener(topIx3D.getMouseTranslate());
-            this.addMouseMotionListener(topIx3D.getMouseRotate());
+            //this.addMouseListener(topIx3D.getMouseTranslate());
+            //this.addMouseListener(topIx3D.getMouseRotate());
+            //this.addMouseMotionListener(topIx3D.getMouseTranslate());
+            //this.addMouseMotionListener(topIx3D.getMouseRotate());
             //this.addMouseWheelListener(topIx3D.getMouseZoom());
             //this.topIx3D.repaintCanvas();
 //            for (OwlSolvedHouse tempHouse:testSol.getSolvedHouses()) {
@@ -1078,6 +1164,20 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         if(actionEvent.getSource()==solutionRightBtn && availableSolutionsCBox.getItemCount()!=0) {
             if(availableSolutionsCBox.getItemAt(availableSolutionsCBox.getSelectedIndex()+1)!=null)
                 availableSolutionsCBox.setSelectedItem(availableSolutionsCBox.getItemAt(availableSolutionsCBox.getSelectedIndex()+1));
+        }
+        
+        //MANUAL INPUT BUTTON-------------------------------------------------//
+        if(actionEvent.getSource()==manualInputBtn){
+            this.manualPropertyValueTextField.setText("");
+            this.manualPropertyComboBox.setSelectedItem(manualPropertyComboBox.getItemAt(0));
+            
+            
+            this.manualInputDialog.setVisible(true);
+        }
+        
+        //MANUAL INPUT CANCEL BUTTON------------------------------------------//
+        if(actionEvent.getSource()==manualInputCancelButton){
+            manualInputDialog.setVisible(false);
         }
     }
     

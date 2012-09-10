@@ -148,7 +148,23 @@ public class ChocoUtility {
     public static void widerThanLongConstraint(ChocoRoom room, CPModel model) {
         model.addConstraint(gt(room.getRoomWidthVar(), room.getRoomLengthVar()));
     }
+    
+    public static void isLongConstraint(ChocoRoom room, CPModel model){
+        model.addConstraint(geq(room.getRoomLengthVar(), 5));
+    }
+    
+    public static void isWideConstraint(ChocoRoom room, CPModel model){
+        model.addConstraint(geq(room.getRoomWidthVar(), 4));
+    }
 
+    public static void isShortConstraint(ChocoRoom room, CPModel model){
+        model.addConstraint(leq(room.getRoomLengthVar(), 3));
+    }
+    
+    public static void isNarrowConstraint(ChocoRoom room, CPModel model){
+        model.addConstraint(leq(room.getRoomWidthVar(), 2));
+    }
+    
     public static void positionXisConstraint(ChocoRoom room, int x, CPModel model) {
         room.getRoomXVar().setLowB(x);
         room.getRoomXVar().setUppB(x);

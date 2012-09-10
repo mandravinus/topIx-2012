@@ -109,10 +109,6 @@ public class TopIx3D extends JPanel{
         
         logger.info("number of trasfromgroups");
         logger.info(simpleU.getViewingPlatform().getMultiTransformGroup().getNumTransforms());
-
-        Transform3D moveBackTransform3D=new Transform3D();
-        moveBackTransform3D.setTranslation(new Vector3d(0, 0, 20));
-        simpleU.getViewingPlatform().getMultiTransformGroup().getTransformGroup(0).setTransform(moveBackTransform3D);
         
         simpleU.getViewer().getJFrame(0).setVisible(false);
         JPanel tempCanvas3D=simpleU.getViewer().getJPanel(0);
@@ -236,6 +232,9 @@ public class TopIx3D extends JPanel{
     }
     
     public void renderSolution(OwlSolution renderedSolution, boolean renderSolid) {
+        Transform3D moveBackTransform3D=new Transform3D();
+        moveBackTransform3D.setTranslation(new Vector3d(0, 0, renderedSolution.getSiteLength()*2));
+        simpleU.getViewingPlatform().getMultiTransformGroup().getTransformGroup(0).setTransform(moveBackTransform3D);
         
         viewTG=new TransformGroup();
         viewTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
@@ -248,12 +247,14 @@ public class TopIx3D extends JPanel{
         float zTrans=(float)-renderedSolution.getSiteWidth()/2;
         Transform3D centerTranslate=new Transform3D();
         centerTranslate.setTranslation(new Vector3f(xTrans, 0, zTrans));
+        
         viewTG.setTransform(centerTranslate);
         
         mouseRotate=new MouseRotate(viewTG);
+        mouseRotate.setFactor(mouseRotate.getXFactor()/4f);
         mouseTranslate=new MouseTranslate(viewTG);
         mouseZoom=new MouseZoom(viewTG);
-
+        
         boundingSphere=new BoundingSphere(new Point3d(), 1000d);
         
         mouseRotate.setSchedulingBounds(boundingSphere);
