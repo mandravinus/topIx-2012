@@ -8,6 +8,7 @@ import static choco.Choco.*;
 import choco.cp.model.CPModel;
 import choco.kernel.model.variables.integer.IntegerVariable;
 import choco.kernel.model.constraints.Constraint;
+import choco.kernel.model.variables.integer.IntegerConstantVariable;
 import topIx.owlintermediateclasses.OwlSite;
 
 /**
@@ -22,9 +23,10 @@ public class ChocoUtility {
     public static void insertHouseVariables(ChocoHouse chocoHouse, CPModel model) {
         model.addVariable(chocoHouse.getHouseLengthVar());
         model.addVariable(chocoHouse.getHouseWidthVar());
-        
+        model.addVariable(chocoHouse.getHouseHeightVar());
         model.addVariable(chocoHouse.getHouseXVar());
         model.addVariable(chocoHouse.getHouseYVar());
+        model.addVariable(chocoHouse.getHouseZVar());
     }
 
     public static void insertRoomVariables(ChocoRoom room, CPModel model) {
@@ -166,35 +168,41 @@ public class ChocoUtility {
     }
     
     public static void positionXisConstraint(ChocoRoom room, int x, CPModel model) {
-        room.getRoomXVar().setLowB(x);
-        room.getRoomXVar().setUppB(x);
+        model.addConstraint(eq(room.getRoomXVar(), x));
+    }
+    
+    public static void positionXisConstraint(ChocoHouse house, int x, CPModel model) {
+        model.addConstraint(eq(house.getHouseXVar(), x));
     }
 
     public static void positionYisConstraint(ChocoRoom room, int y, CPModel model) {
-        room.getRoomYVar().setLowB(y);
-        room.getRoomYVar().setUppB(y);
+        model.addConstraint(eq(room.getRoomYVar(), y));
     }
 
+    public static void positionYisConstraint(ChocoHouse house, int y, CPModel model){
+        model.addConstraint(eq(house.getHouseYVar(), y));
+    }
+    
     public static void positionZisConstraint(ChocoRoom room, int z, CPModel model) {
-        room.getRoomZVar().setLowB(z);
-        room.getRoomZVar().setUppB(z);
+        model.addConstraint(eq(room.getRoomZVar(), z));
     }
 
     public static void lengthIsConstraint(ChocoRoom room, int l, CPModel model) {
-        room.getRoomLengthVar().setLowB(l);
-        room.getRoomLengthVar().setUppB(l);
+        model.addConstraint(eq(room.getRoomLengthVar(), l));
+    }
+    
+    public static void lengthIsConstraint(ChocoHouse house, int l, CPModel model) {
+        model.addConstraint(eq(house.getHouseLengthVar(), l));
     }
 
     public static void widthIsConstraint(ChocoRoom room, int w, CPModel model) {
-        room.getRoomWidthVar().setLowB(w);
-        room.getRoomWidthVar().setUppB(w);
+        model.addConstraint(eq(room.getRoomWidthVar(), w));
     }
-
-    public static void heightIsConstraint(ChocoRoom room, int h, CPModel model) {
-        room.getRoomHeightVar().setLowB(h);
-        room.getRoomHeightVar().setUppB(h);
+    
+    public static void widthIsConstraint(ChocoHouse house, int w, CPModel model) {
+        model.addConstraint(eq(house.getHouseWidthVar(), w));
     }
-
+    
     public static void houseIsPartOfSiteConstraint(OwlSite currentSite, ChocoHouse chocoHouse, CPModel model) {
         model.addConstraint(geq(chocoHouse.getHouseXVar(), 0));
         model.addConstraint(geq(chocoHouse.getHouseYVar(), 0));
@@ -206,9 +214,11 @@ public class ChocoUtility {
     public static void roomIsPartOfHouseConstraint(ChocoHouse chocoHouse, ChocoRoom chocoRoom, CPModel model) {
         model.addConstraint(geq(chocoRoom.getRoomXVar(), chocoHouse.getHouseXVar()));
         model.addConstraint(geq(chocoRoom.getRoomYVar(), chocoHouse.getHouseYVar()));
+        model.addConstraint(geq(chocoRoom.getRoomZVar(), chocoHouse.getHouseZVar()));
         
         model.addConstraint(leq(sum(chocoRoom.getRoomXVar(), chocoRoom.getRoomLengthVar()), (sum(chocoHouse.getHouseXVar(), chocoHouse.getHouseLengthVar()))));
         model.addConstraint(leq(sum(chocoRoom.getRoomYVar(), chocoRoom.getRoomWidthVar()), (sum(chocoHouse.getHouseYVar(), chocoHouse.getHouseWidthVar()))));
+        model.addConstraint(leq(sum(chocoRoom.getRoomZVar(), chocoRoom.getRoomHeightVar()), (sum(chocoHouse.getHouseZVar(), chocoHouse.getHouseHeightVar()))));
     }
     
     public static void nonOverlappingHousesConstraint(ChocoHouse lhsHouse, ChocoHouse rhsHouse, CPModel model) {
@@ -216,7 +226,10 @@ public class ChocoUtility {
                 geq(lhsHouse.getHouseXVar(), (sum(rhsHouse.getHouseXVar(), rhsHouse.getHouseLengthVar()))),
                 geq(rhsHouse.getHouseXVar(), (sum(lhsHouse.getHouseXVar(), lhsHouse.getHouseLengthVar()))),
                 geq(lhsHouse.getHouseYVar(), (sum(rhsHouse.getHouseYVar(), rhsHouse.getHouseWidthVar()))),
-                geq(rhsHouse.getHouseYVar(), (sum(lhsHouse.getHouseYVar(), lhsHouse.getHouseWidthVar())))));
+                geq(rhsHouse.getHouseYVar(), (sum(lhsHouse.getHouseYVar(), lhsHouse.getHouseWidthVar()))),
+                geq(lhsHouse.getHouseZVar(), (sum(rhsHouse.getHouseZVar(), rhsHouse.getHouseHeightVar()))),
+                geq(rhsHouse.getHouseZVar(), (sum(lhsHouse.getHouseZVar(), lhsHouse.getHouseHeightVar())))
+                ));
     }
     
     public static void nonOverlappingRoomsConstraint(ChocoRoom lhsRoom, ChocoRoom rhsRoom, CPModel model) {
@@ -228,6 +241,13 @@ public class ChocoUtility {
                 geq(lhsRoom.getRoomZVar(), (sum(rhsRoom.getRoomZVar(), rhsRoom.getRoomHeightVar()))),
                 geq(rhsRoom.getRoomZVar(), (sum(lhsRoom.getRoomZVar(), lhsRoom.getRoomHeightVar())))
                 ));
+    }
+    
+    //the following constraint assures the height of the house will be
+    //an integer multiple of the floor heigh (tempHouseHeight or so in the addHouseBtn
+    //event handling routine.
+    public static void houseHeightTimesFloorHeightConstraint(ChocoHouse chocoHouse, int floorHeight, CPModel model){
+        model.addConstraint(eq(mod(chocoHouse.getHouseHeightVar(), floorHeight), 0));
     }
     
 //    public static void compactingRoomsConstraint

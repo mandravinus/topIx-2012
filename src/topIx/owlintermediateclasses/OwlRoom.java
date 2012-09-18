@@ -13,13 +13,13 @@ private String comboBox2RoomEntry;  //roomName selected at this moment in the ro
 
 
     public OwlRoom() {
-        this.selectedRoomEntry=null;
+        this.selectedRoomEntry=null;    //is set in JTree when selecting a room node!
         this.comboBoxRoomEntry=null;
         this.comboBox2RoomEntry=null;
     }
     
     public OwlRoom(String comboBoxEntry) {
-        this.selectedRoomEntry=null;
+        this.selectedRoomEntry=null;    //is set in JTree when selecting a room node!
         this.comboBoxRoomEntry=comboBoxEntry;
         this.comboBox2RoomEntry=null;
     }
@@ -55,6 +55,10 @@ private String comboBox2RoomEntry;  //roomName selected at this moment in the ro
             roomInstanceCounters.get(siteName_House_xx).put(comboBoxRoomEntry, new Integer(++counter));
             return counter;
         }
+    }
+    
+    public static void resetRoomInstanceCounters(){
+        roomInstanceCounters.clear();
     }
     
     public String returnRoomIndividualHash(String siteName, String selectedHouseEntry) {

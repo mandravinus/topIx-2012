@@ -56,9 +56,13 @@ public class OntologyAccessUtility //implements Runnable
     //respective parent as the corresponding value.
     //the structure referenced in retrieveRoomsMap method
     Map<String, String> roomToIRI = new HashMap<>(32);
+    
     Map<String, String> propEntryNametoPropEntryIRI = new HashMap<>(64);
     Map<String, String> propEntryNameToPropCatName = new HashMap<>(64);
+    
     Map<String, IRI> geometricPropertiesMap=new HashMap<>();
+    Map<String, IRI> houseSetableGeometricPropertiesMap=new HashMap<>();
+    Map<String, IRI> roomSetableGeometricPropertiesMap=new HashMap<>();
     //sets used in deciding the two level object properties hierarchy (leaves, leaves-1) in filterLeafObjProps
     //the data included are in the form of OWLPropertyExpression
     Set<OWLPropertyExpression> set1;    //ends up to contain the leaves
@@ -86,6 +90,7 @@ public class OntologyAccessUtility //implements Runnable
         
         this.retrieveSubObjectPropertyAxioms();
         this.retrieveRoomsMap();
+        this.retrieveGeometricPropertiesMaps();
         
 
 
@@ -200,19 +205,34 @@ public class OntologyAccessUtility //implements Runnable
 //        System.out.println(propEntryNametoPropEntryIRI);
     }
     
-    public void retrieveGeometricPropertiesMap(){
+    public void retrieveGeometricPropertiesMaps(){
         OWLDataProperty geometricProperty=OWLFactory.getOWLDataProperty(":GeometricProperty", topIxPrefixManager);
         OWLAnnotationProperty propertyID=OWLFactory.getOWLAnnotationProperty(":propertyID", topIxPrefixManager);
+        logger.info(propertyID);
         OWLAnnotationProperty houseSetable=OWLFactory.getOWLAnnotationProperty(":houseSetable", topIxPrefixManager);
         OWLAnnotationProperty roomSetable=OWLFactory.getOWLAnnotationProperty(":roomSetable", topIxPrefixManager);
-        Set<OWLSubDataPropertyOfAxiom> tempGeometricDataPropertiesSet=topIxOnt.getDataSubPropertyAxiomsForSubProperty(geometricProperty);
-        String geometricPropertyName;
-        IRI geometricPropertyIRI;
+        Set<OWLSubDataPropertyOfAxiom> tempGeometricDataPropertiesSet=topIxOnt.getDataSubPropertyAxiomsForSuperProperty(geometricProperty);
         
         for(OWLSubDataPropertyOfAxiom tempGeomPropAxiom: tempGeometricDataPropertiesSet){
-            tempGeomPropAxiom.get
+            OWLDataProperty tempDataProperty=tempGeomPropAxiom.getSubProperty().asOWLDataProperty();
+            //the following two local vars will become an entry for geometricPropertiesMap
+            String tempString=tempDataProperty.getAnnotations(topIxOnt, propertyID).toString();
+                tempString=tempString.substring(tempString.indexOf('"')+1, tempString.indexOf("^")-1);
+            IRI tempIRI=tempGeomPropAxiom.getSubProperty().asOWLDataProperty().getIRI();
+            geometricPropertiesMap.put(tempString, tempIRI);
+            
+            //the following code decides whether the above entry should also be contained
+            //in the houseSetableGeometricPropertiesMap
+            Set<OWLAnnotation> tempDataPropAnnotationSet=tempDataProperty.getAnnotations(topIxOnt);
+            for(OWLAnnotation tempDataPropAnnotation:tempDataPropAnnotationSet){
+                if(tempDataPropAnnotation.getProperty()==houseSetable && tempDataPropAnnotation.getValue().toString().equals("\"true\"^^xsd:boolean")){
+                    houseSetableGeometricPropertiesMap.put(tempString, tempIRI);
+                }
+                if(tempDataPropAnnotation.getProperty()==roomSetable && tempDataPropAnnotation.getValue().toString().equals("\"true\"^^xsd:boolean")){
+                    roomSetableGeometricPropertiesMap.put(tempString, tempIRI);
+                }
+            }
         }
-        
     }
 
     ////////////////////////////////
@@ -350,6 +370,8 @@ public class OntologyAccessUtility //implements Runnable
             
             //assert SolvedHouse individuals and assert Solution->hasSolvedHouse objProperty. also assert the DATA PROPERTIES for each solvedHouse indvidual
             for(OwlSolvedHouse tempSolvedHouse:tempSolution.getSolvedHouses()) {
+                logger.info("373");
+            logger.info(tempSolution.getSolvedHouses().toString());
                 OWLClassExpression solvedHouseClassExpression=OWLFactory.getOWLClass(":SolvedHouse", topIxPrefixManager);
                 OWLIndividual tempSolvedHouseIndividual=OWLFactory.getOWLNamedIndividual(":"+tempSolutionID+"_SH_"+tempSolvedHouse.getSolvedHouseHash(), topIxPrefixManager);
                 OWLClassAssertionAxiom tempClassAssAx=OWLFactory.getOWLClassAssertionAxiom(solvedHouseClassExpression, tempSolvedHouseIndividual);
@@ -381,6 +403,8 @@ public class OntologyAccessUtility //implements Runnable
                 tempDataProperty=OWLFactory.getOWLDataProperty(":hasY", topIxPrefixManager);
                 tempDataPropertyAssertionAxiom=OWLFactory.getOWLDataPropertyAssertionAxiom(tempDataProperty, tempSolvedHouseIndividual, tempSolvedHouse.getSolvedHouseY());
                 manager.addAxiom(topIxOnt, tempDataPropertyAssertionAxiom);
+                logger.info("asserts the house");
+                logger.info(tempSolvedHouse.getSolvedHouseLiteral());
             }    
 
             //assert SolvedRoom individuals and assert Solution->hasSolvedRoom objProperty. also assert the DATA PROPERTIES for each solvedRoom indvidual

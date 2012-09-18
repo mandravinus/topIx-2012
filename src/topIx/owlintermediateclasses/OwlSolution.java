@@ -101,6 +101,10 @@ public class OwlSolution {
     
     @Override
     public String toString() {
+        System.out.println(String.format("Solution#%1$02d", this.solutionID));
+        System.out.println("SOLVED HOUSES OF THE SOLUTION\n"+this.solvedHouses.toString());
+        System.out.println("SOLVED ROOMS OF THE SOLUTION\n"+this.solvedRooms.toString());
+        System.out.println("END OF SOLUTION BLOCK");
         return(String.format("Solution#%1$02d", this.solutionID));
     }
 }

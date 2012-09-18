@@ -22,6 +22,7 @@ public class ChocoRoom {
     private IntegerVariable roomZVar;
     
     private IntegerExpressionVariable roomAreaExpressionVariable;
+    private IntegerExpressionVariable roomVolumeExpressionVariable;
     
     private IntDomainVar roomLengthRes;
     private IntDomainVar roomWidthRes;
@@ -41,9 +42,10 @@ public class ChocoRoom {
         
         this.roomXVar=makeIntVar(roomIndividualHash+"_x", 0, currentSite.getSiteLength());
         this.roomYVar=makeIntVar(roomIndividualHash+"_y", 0, currentSite.getSiteWidth());
-        this.roomZVar=makeIntVar(roomIndividualHash+"_z", 0, 0, "cp:bound");
+        this.roomZVar=makeIntVar(roomIndividualHash+"_z", 0, MAX_UPPER_BOUND, "cp:bound");
         
         this.roomAreaExpressionVariable=mult(this.roomLengthVar, this.roomWidthVar);
+        this.roomVolumeExpressionVariable=mult(this.roomLengthVar, mult(this.roomWidthVar, this.roomHeightVar));
         this.roomIsPartOfHouse=currentHouse.returnHouseIndividualHash(currentSite.getSiteName(), currentHouse.getSelectedHouseEntry());
     }
 
@@ -173,6 +175,14 @@ public class ChocoRoom {
 
     public void setRoomAreaExpressionVariable(IntegerExpressionVariable roomAreaExpressionVariable) {
         this.roomAreaExpressionVariable = roomAreaExpressionVariable;
+    }
+
+    public IntegerExpressionVariable getRoomVolumeExpressionVariable() {
+        return roomVolumeExpressionVariable;
+    }
+
+    public void setRoomVolumeExpressionVariable(IntegerExpressionVariable roomVolumeExpressionVariable) {
+        this.roomVolumeExpressionVariable = roomVolumeExpressionVariable;
     }
     
 }

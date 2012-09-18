@@ -26,9 +26,11 @@ public class RoomVariableStructures {
     
     private IntegerVariable houseXVar;
     private IntegerVariable houseYVar;
+    private IntegerVariable houseZVar;
     
     private IntegerVariable houseLVar;
     private IntegerVariable houseWVar;
+    private IntegerVariable houseHVar;
     
     public RoomVariableStructures() {
         xVars=new ArrayList<>();
@@ -54,8 +56,11 @@ public class RoomVariableStructures {
         for(ChocoHouse tempChocoHouse:chocoHouseMap.values()) {
             this.roomVarsMappedToHouses.get(tempChocoHouse.getHouseIndividualHash()).setHouseXVar(tempChocoHouse.getHouseXVar());
             this.roomVarsMappedToHouses.get(tempChocoHouse.getHouseIndividualHash()).setHouseYVar(tempChocoHouse.getHouseYVar());
+            this.roomVarsMappedToHouses.get(tempChocoHouse.getHouseIndividualHash()).setHouseZVar(tempChocoHouse.getHouseZVar());
+            
             this.roomVarsMappedToHouses.get(tempChocoHouse.getHouseIndividualHash()).setHouseLVar(tempChocoHouse.getHouseLengthVar());
             this.roomVarsMappedToHouses.get(tempChocoHouse.getHouseIndividualHash()).setHouseWVar(tempChocoHouse.getHouseWidthVar());
+            this.roomVarsMappedToHouses.get(tempChocoHouse.getHouseIndividualHash()).setHouseHVar(tempChocoHouse.getHouseHeightVar());
         }
         
         for(ChocoRoom tempChocoRoom:chocoRoomMap.values()) {
@@ -155,6 +160,22 @@ public class RoomVariableStructures {
 
     public void setHouseYVar(IntegerVariable houseYVar) {
         this.houseYVar = houseYVar;
+    }
+
+    public IntegerVariable getHouseHVar() {
+        return houseHVar;
+    }
+
+    public void setHouseHVar(IntegerVariable houseHVar) {
+        this.houseHVar = houseHVar;
+    }
+
+    public IntegerVariable getHouseZVar() {
+        return houseZVar;
+    }
+
+    public void setHouseZVar(IntegerVariable houseZVar) {
+        this.houseZVar = houseZVar;
     }
     
 }

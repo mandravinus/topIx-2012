@@ -8,7 +8,11 @@ import org.apache.log4j.BasicConfigurator;
 public class OwlHouse {
 
     static Logger logger = Logger.getLogger(OwlHouse.class.getName());
+    //the following map contains the number that each site (in the way the application
+    //is implemented only one site resides in the map each time the application runs)
+    //contains within its bounds.
     private static Map<String, Integer> houseInstancesPerSite = new HashMap<>();
+    //selectedHouseEntry is updated from the roomsTree valueChanged handler!!!
     private String selectedHouseEntry;
     private int currentHouseHeight;
     
@@ -36,6 +40,10 @@ public class OwlHouse {
         }
         return new Integer(counter);
     }
+    
+    public static void resetHouseIndex(String siteName){
+        houseInstancesPerSite.put(siteName, 0);
+    }
 
     public String returnHouseIndividualHash(String siteName, Integer index) {
         //returns hash value of a string formatted as: "siteName_house_xx"
@@ -44,6 +52,9 @@ public class OwlHouse {
         return (String.valueOf(returnString.hashCode()));
     }
     
+    //!!!!WHEN A HOUSE ENTITY IS SELECTED IN THE TREE, THE FOLLOWING METHOD RETURNS
+    //A VALID HASHCODE FOR THE SELECTED HOUSE FOR USAGE IN THE CHOCOHOUSEMAP RETRIEVAL
+    //METHOD!!!!!
     public String returnHouseIndividualHash(String siteName, String selectedHouseEntry) {
         String returnString;
         returnString=String.format("%1$s_%2$s", siteName, selectedHouseEntry);

@@ -38,6 +38,7 @@ package topIx;
 import javax.swing.*;
 import javax.swing.tree.*;
 import java.awt.*;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -48,15 +49,15 @@ public class DynamicTree extends JPanel {
     protected DefaultMutableTreeNode rootNode;
     protected DefaultTreeModel treeModel;
     protected JTree roomsTree;
+    
+    Logger logger;
     //private Toolkit toolkit=Toolkit.getDefaultToolkit();
 
     public DynamicTree() {
         super(new GridLayout(1, 0));
-
-        //rootNode = new DefaultMutableTreeNode("Inserted Rooms");
-        //treeModel = new DefaultTreeModel(rootNode);
-        roomsTree = new JTree(/*treeModel*/);
-        //roomsTree.setSize(150, 400);
+        
+        logger=Logger.getLogger(this.getClass().getName());
+        roomsTree = new JTree();
         roomsTree.setEditable(false);
         roomsTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
@@ -85,16 +86,17 @@ public class DynamicTree extends JPanel {
     }
 
     public void clearTree() {
+        roomsTree.setSelectionPath(new TreePath(treeModel.getPathToRoot(rootNode)));
         rootNode.removeAllChildren();
-        treeModel.reload();
+        this.treeModel.reload(rootNode);
     }
     
     public void addRootNodeToTree(String rootNode) {
-        treeModel=new DefaultTreeModel(new DefaultMutableTreeNode(rootNode));
+        this.rootNode=new DefaultMutableTreeNode(rootNode);
+        treeModel=new DefaultTreeModel(this.rootNode);
         roomsTree.setModel(treeModel);
         roomsTree.setEditable(false);
         roomsTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        
     }
 
     public void addHouseNodeToTree(String houseStr) {
@@ -118,5 +120,17 @@ public class DynamicTree extends JPanel {
     public String returnSelectedNodeString() {
         DefaultMutableTreeNode returnSelectedNode=(DefaultMutableTreeNode)roomsTree.getLastSelectedPathComponent();
         return returnSelectedNode.toString();
+    }
+
+    public DefaultMutableTreeNode getRootNode() {
+        return rootNode;
+    }
+
+    public void setRootNode(DefaultMutableTreeNode rootNode) {
+        this.rootNode = rootNode;
+    }
+    
+    public int getRootChildCount(){
+        return this.treeModel.getChildCount(this.rootNode);
     }
 }

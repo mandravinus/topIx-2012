@@ -7,6 +7,7 @@ package topIx;
 
 
 import choco.cp.solver.propagation.ChocoEngine;
+import choco.kernel.model.variables.integer.IntegerConstantVariable;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 //import java.awt.FlowLayout;
@@ -49,7 +50,7 @@ import visualisation.TopIx3D;
  * @author Antiregulator
  */
 public class GUI extends JFrame implements ActionListener, ItemListener, TreeSelectionListener, FocusListener, KeyListener//, TreeModelListener, Runnable
-{
+{   
     //GUI components
     JPanel mainPanel;
     GroupLayout mainLayout;
@@ -169,6 +170,11 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
     
     Logger logger;
     
+    //the following var is a flag that is set everytime a selection is made in
+    //the JTree, and provides info as to whether the site, a house or a room is
+    //currently selected.
+    int selectedNodeDepth;
+    
     //deprecated constructor - the one with both OntologyAccessUtility and TopIxChoco references is used.
     public GUI(OntologyAccessUtility accessRef)
     {
@@ -177,7 +183,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         
         guiAccess=accessRef;
         
-        //this.decDes=decDes;
+        selectedNodeDepth=0;
         
         initializeComponents(guiAccess.propEntryNameToPropCatName, guiAccess.roomToIRI);
         addComponents();
@@ -306,6 +312,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 registerBtn.setEnabled(false);
             manualInputBtn=new JButton("Manual Input");
                 manualInputBtn.addActionListener(this);
+                manualInputBtn.setEnabled(false);
             calculateBtn=new JButton("Calculate");
                 calculateBtn.addActionListener(this);
                 calculateBtn.setEnabled(false);
@@ -749,6 +756,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                     currentSite.returnSiteNameHash());
             roomsTreePanel.addHouseNodeToTree(currentHouse.returnHouseEntryInJTree(tempIndex));
             currentRoom=new OwlRoom(rooms1.getSelectedItem().toString());   //GIATI TO KANW AYTO EDW??
+                                                                            //isws apla arxikopoiw to currentRoom gia thn akolouthi xrhsh toy...?
 
             Integer tempHouseHeightInteger;
             for (;;)
@@ -786,9 +794,17 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                             currentSite.getSiteName())),
                     tempChocoHouse);
             
+            logger.info(guiChoco.getChocoHouseMap().toString());
+            logger.info(currentHouse.returnHouseIndividualHash(
+                        currentSite.getSiteName(),
+                        currentHouse.getSelectedHouseEntry()));
+            
             //inserting the new house's variables into the choco model.
             ChocoUtility.insertHouseVariables(tempChocoHouse, guiChoco.getTopIxModel());
             ChocoUtility.houseIsPartOfSiteConstraint(currentSite, tempChocoHouse, guiChoco.getTopIxModel());
+            ChocoUtility.houseHeightTimesFloorHeightConstraint(tempChocoHouse, tempHouseHeightInteger.intValue(), guiChoco.getTopIxModel());
+            logger.info("tempchocohouse1");
+            logger.info(tempChocoHouse);
         }
         
         //ADD ROOM BUTTON-----------------------------------------------------//
@@ -848,6 +864,8 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                         currentSite.getSiteName(), 
                         currentHouse.getSelectedHouseEntry()));
             ChocoUtility.roomIsPartOfHouseConstraint(tempChocoHouse, tempChocoRoom, guiChoco.getTopIxModel());
+            logger.info("tempchocohouse2");
+            logger.info(tempChocoHouse);
             
             logger.info("room stats");
             logger.info(tempChocoRoom.getRoomLengthVar().getUppB());
@@ -996,13 +1014,16 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 guiChoco.insertSiteCompactnessConstraints(currentSite);
             }
             logger.info("calculate-d: -> "+guiChoco.getTopIxModel().getNbConstraints());
-            guiChoco.insertHouseCompactnessConstraints();
+            guiChoco.insertHouseVolumeCompactnessConstraints();
             logger.info("calculate-e: -> "+guiChoco.getTopIxModel().getNbConstraints());
             
             boolean lastSolutionFeasible;
             OwlSolution tempSolution;
+            guiAccess.getSolutionsList().clear();
             
             //initialise the solver and recall call the solution
+            logger.info("the variables of the model in string");
+            logger.info(guiChoco.getTopIxModel().varsToString());
             guiChoco.getTopIxSolver().read(guiChoco.getTopIxModel());
             lastSolutionFeasible=guiChoco.getTopIxSolver().solve();
             
@@ -1012,7 +1033,6 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 
                 guiChoco.initialiseChocoHouseResVars();
                 guiChoco.initialiseChocoRoomResVars();
-                
                 tempSolution=new OwlSolution(
                         new Integer(solutionCounter),
                         new Integer(currentSite.getSiteLength()),
@@ -1021,43 +1041,52 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                         guiChoco.getChocoRoomMap());
                 guiAccess.getSolutionsList().add(tempSolution);
                 //this.populateResultsComponents();
+                tempSolution.toString();
             }
             else {
                 logger.info("not possible the first solution");
             }
             
-//            while(lastSolutionFeasible && solutionCounter<=30) {
-//                lastSolutionFeasible=guiChoco.getTopIxSolver().nextSolution();
-//                if (lastSolutionFeasible) {
-//                    //solutionCounter++;
-//                    guiChoco.initialiseChocoHouseResVars();
-//                    guiChoco.initialiseChocoRoomResVars();
-//                    tempSolution=new OwlSolution(
-//                            ++solutionCounter,
-//                            new Integer(currentSite.getSiteLength()),
-//                            new Integer(currentSite.getSiteWidth()),
-//                            guiChoco.getChocoHouseMap(),
-//                            guiChoco.getChocoRoomMap());
-//                    guiAccess.getSolutionsList().add(tempSolution);
-//                //guiAccess.registerSolution(guiChoco.getChocoHouseMap(), guiChoco.getChocoRoomMap());
-//                }
-//            }
-//            if(!(guiAccess.getSolutionsList().isEmpty()))
-//                guiAccess.storeSolutions(currentSite.returnSiteNameHash());
-//            else
-//                logger.info("MANTARA, DEN EXEI LYSEIS TO SENARIO!!!!");
+            while(lastSolutionFeasible && solutionCounter<=100) {
+                lastSolutionFeasible=guiChoco.getTopIxSolver().nextSolution();
+                if (lastSolutionFeasible) {
+                    //solutionCounter++;
+                    guiChoco.initialiseChocoHouseResVars();
+                    guiChoco.initialiseChocoRoomResVars();
+                    tempSolution=new OwlSolution(
+                            ++solutionCounter,
+                            new Integer(currentSite.getSiteLength()),
+                            new Integer(currentSite.getSiteWidth()),
+                            guiChoco.getChocoHouseMap(),
+                            guiChoco.getChocoRoomMap());
+                    guiAccess.getSolutionsList().add(tempSolution);
+                //guiAccess.registerSolution(guiChoco.getChocoHouseMap(), guiChoco.getChocoRoomMap());
+                }
+            }
+            
+            logger.info("--------------------------------------------------------------------------1070");
+            logger.info(guiAccess.getSolutionsList().toString());
+            logger.info("-------------------------------------------------------------------END OF 1070");
+            
+            if(!(guiAccess.getSolutionsList().isEmpty()))
+            {
+                
+                guiAccess.storeSolutions(currentSite.returnSiteNameHash());
+            }
+            else
+                logger.info("MANTARA, DEN EXEI LYSEIS TO SENARIO!!!!");
             
             
             
             logger.info("THE SOLVER RETURNED!");
 //            guiAccess.storeSolutions(currentSite.returnSiteNameHash());
-            int totalSolutionsCounter=1;
-            while(lastSolutionFeasible) {
-                lastSolutionFeasible=guiChoco.getTopIxSolver().nextSolution();
-                totalSolutionsCounter++;
-            }
+//            int totalSolutionsCounter=1;
+//            while(lastSolutionFeasible && totalSolutionsCounter<=30) {
+//                lastSolutionFeasible=guiChoco.getTopIxSolver().nextSolution();
+//                totalSolutionsCounter++;
+//            }
             
-            logger.info(totalSolutionsCounter);
+//            logger.info(totalSolutionsCounter);
 //            IntDomainVar tmpVar;
 //            for (String s:guiChoco.getChocoRoomMap().keySet()) {
 //                System.out.println(guiChoco.getChocoRoomMap().get(s).getRoomIndividualHash());
@@ -1120,7 +1149,8 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         if (actionEvent.getSource()==availableSolutionsCBox) {
             logger.info("avail sol cbox evt");
             OwlSolution tempSolution=(OwlSolution)availableSolutionsCBox.getSelectedItem();
-            this.topIx3D.renderSolution(tempSolution, renderSolidChBox.isSelected());
+            if(tempSolution!=null)
+                this.topIx3D.renderSolution(tempSolution, renderSolidChBox.isSelected());
             //this.addMouseListener(topIx3D.getMouseTranslate());
             //this.addMouseListener(topIx3D.getMouseRotate());
             //this.addMouseMotionListener(topIx3D.getMouseTranslate());
@@ -1168,10 +1198,24 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         
         //MANUAL INPUT BUTTON-------------------------------------------------//
         if(actionEvent.getSource()==manualInputBtn){
+            logger.info("stats for geometric property maps");
+            logger.info(guiAccess.geometricPropertiesMap.size());
+            logger.info(guiAccess.houseSetableGeometricPropertiesMap.size());
+            logger.info(guiAccess.roomSetableGeometricPropertiesMap.size());
+            
             this.manualPropertyValueTextField.setText("");
+            
+            if(selectedNodeDepth==1){
+                String[] tempModelArray=(String[])guiAccess.houseSetableGeometricPropertiesMap.keySet().toArray(new String[0]);
+                ComboBoxModel<String> tempModel=new DefaultComboBoxModel<>(tempModelArray);
+                this.manualPropertyComboBox.setModel(tempModel);
+            }
+            else if(selectedNodeDepth==2){
+                String[] tempModelArray=(String[])guiAccess.roomSetableGeometricPropertiesMap.keySet().toArray(new String[0]);
+                ComboBoxModel tempModel=new DefaultComboBoxModel(tempModelArray);
+                this.manualPropertyComboBox.setModel(tempModel);
+            }
             this.manualPropertyComboBox.setSelectedItem(manualPropertyComboBox.getItemAt(0));
-            
-            
             this.manualInputDialog.setVisible(true);
         }
         
@@ -1179,32 +1223,170 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         if(actionEvent.getSource()==manualInputCancelButton){
             manualInputDialog.setVisible(false);
         }
+        
+        //MANUAL INPUT REGISTER BUTTON----------------------------------------//
+        if(actionEvent.getSource()==manualInputRegisterButton){            
+            String selectedProperty=(String)manualPropertyComboBox.getSelectedItem();
+            int tempValue=validateIntegerInput2(this.manualPropertyValueTextField.getText());
+            if(tempValue==-1){
+                JOptionPane.showMessageDialog(manualInputDialog,
+                        "Please, enter an integer value, greater or equal to zero.",
+                        "Invalid entry...",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+            else {
+                if(selectedNodeDepth==1){       //this is for a house entity
+                    String houseHash=currentHouse.returnHouseIndividualHash(
+                            currentSite.getSiteName(),
+                            currentHouse.getSelectedHouseEntry());
+                    ChocoHouse tempHouse=guiChoco.getChocoHouseMap().get(houseHash);
+                    if("Has X".equals(selectedProperty) && tempValue<=currentSite.getSiteLength()){
+                        ChocoUtility.positionXisConstraint(tempHouse, tempValue, guiChoco.getTopIxModel());
+                        this.manualInputDialog.setVisible(false);
+                    }
+                    else if("Has Y".equals(selectedProperty) && tempValue<=currentSite.getSiteWidth()){
+                        ChocoUtility.positionYisConstraint(tempHouse, tempValue, guiChoco.getTopIxModel());
+                        this.manualInputDialog.setVisible(false);
+                    }
+                    else if("Has Length".equals(selectedProperty) && tempValue>0 && tempValue<=currentSite.getSiteLength()-1){
+                        ChocoUtility.lengthIsConstraint(tempHouse, tempValue, guiChoco.getTopIxModel());
+                        this.manualInputDialog.setVisible(false);
+                    }
+                    else if("Has Width".equals(selectedProperty) && tempValue>0 && tempValue<=currentSite.getSiteWidth()-1){
+                        ChocoUtility.widthIsConstraint(tempHouse, tempValue, guiChoco.getTopIxModel());
+                        this.manualInputDialog.setVisible(false);
+                    }
+                    else if(("Has X".equals(selectedProperty) && tempValue>currentSite.getSiteLength()) ||
+                            ("Has Y".equals(selectedProperty) && tempValue>currentSite.getSiteWidth()) ||
+                            ("Has Length".equals(selectedProperty) && tempValue>0 && tempValue>currentSite.getSiteLength()-1) ||
+                            ("Has Width".equals(selectedProperty) && tempValue>0 && tempValue>currentSite.getSiteWidth()-1)){
+                        JOptionPane.showMessageDialog(
+                                this.manualInputDialog,
+                                String.format(
+                                    "Please, enter appopriate values! for X <=%d, for Y<=%d, for Length <=%d, for Width <=%d",
+                                    currentSite.getSiteLength(),
+                                    currentSite.getSiteWidth(),
+                                    currentSite.getSiteLength()-1,
+                                    currentSite.getSiteWidth()-1),
+                                "Invalid Entry",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(
+                                manualInputDialog,
+                                "Please, enter a positive number for either length or width variables.",
+                                "Invalid Entry",
+                                JOptionPane.WARNING_MESSAGE); 
+                        manualPropertyValueTextField.setText("");
+                    }
+                }
+                else if(selectedNodeDepth==2){  //this is for a room entity
+                    String roomHash=currentRoom.returnRoomIndividualHash(
+                            currentSite.getSiteName(),
+                            currentHouse.getSelectedHouseEntry(),
+                            currentRoom.getSelectedRoomEntry());
+                    ChocoRoom tempRoom=guiChoco.getChocoRoomMap().get(roomHash);
+                    if("Has X".equals(selectedProperty) && tempValue<=currentSite.getSiteLength()){
+                        ChocoUtility.positionXisConstraint(tempRoom, tempValue, guiChoco.getTopIxModel());
+                        this.manualInputDialog.setVisible(false);
+                    }
+                    else if("Has Y".equals(selectedProperty) && tempValue<=currentSite.getSiteWidth()){
+                        ChocoUtility.positionYisConstraint(tempRoom, tempValue, guiChoco.getTopIxModel());
+                        this.manualInputDialog.setVisible(false);
+                    }
+                    else if("Has Z".equals(selectedProperty) && tempValue%currentHouse.getCurrentHouseHeight()==0){
+                        ChocoUtility.positionZisConstraint(tempRoom, tempValue, guiChoco.getTopIxModel());
+                        this.manualInputDialog.setVisible(false);
+                    }
+                    else if("Has Z".equals(selectedProperty) && tempValue%currentHouse.getCurrentHouseHeight()!=0){
+                        JOptionPane.showMessageDialog(this.manualInputDialog, "Please, set the room Z to be exact multiple of the floor height, which is "+currentHouse.getCurrentHouseHeight()+".", "Invalid Entry", JOptionPane.WARNING_MESSAGE);
+                    }
+                    else if("Has Length".equals(selectedProperty) && tempValue>0 && tempValue<=currentSite.getSiteLength()-1){
+                        ChocoUtility.lengthIsConstraint(tempRoom, tempValue, guiChoco.getTopIxModel());
+                        this.manualInputDialog.setVisible(false);
+                    }
+                    else if("Has Width".equals(selectedProperty) && tempValue>0 && tempValue<=currentSite.getSiteWidth()-1){
+                        ChocoUtility.widthIsConstraint(tempRoom, tempValue, guiChoco.getTopIxModel());
+                        this.manualInputDialog.setVisible(false);
+                    }
+                    else if(("Has X".equals(selectedProperty) && tempValue>currentSite.getSiteLength()) ||
+                            ("Has Y".equals(selectedProperty) && tempValue>currentSite.getSiteWidth()) ||
+                            ("Has Length".equals(selectedProperty) && tempValue>0 && tempValue>currentSite.getSiteLength()-1) ||
+                            ("Has Width".equals(selectedProperty) && tempValue>0 && tempValue>currentSite.getSiteWidth()-1)){
+                        JOptionPane.showMessageDialog(
+                                this.manualInputDialog,
+                                String.format(
+                                    "Please, enter appopriate values! for X <=%d, for Y<=%d, for Length <=%d, for Width <=%d",
+                                    currentSite.getSiteLength(),
+                                    currentSite.getSiteWidth(),
+                                    currentSite.getSiteLength()-1,
+                                    currentSite.getSiteWidth()-1),
+                                "Invalid Entry",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(
+                                manualInputDialog,
+                                "Please, enter a positive number for either length or width variables.",
+                                "Invalid Entry",
+                                JOptionPane.WARNING_MESSAGE); 
+                        manualPropertyValueTextField.setText("");
+                    }
+                }
+            }
+        }
+        
+        //RESET BUTTON--------------------------------------------------------//
+        //will clear all the structures and return the application in its load state.
+        if(actionEvent.getSource()==resetBtn){
+            //clears the tree and the whole tree model except for the root node!
+            this.roomsTreePanel.clearTree();
+            //will clear the whole roomInstanceCounters map, since the siteName
+            //does not play a particular role there.
+            OwlRoom.resetRoomInstanceCounters();
+            //will clear the current site entry of the static map houseInstancesPerSite
+            //which resides in the OwlHouse class
+            OwlHouse.resetHouseIndex(currentSite.getSiteName());
+            //reloading the ontology, thus doign away with any addition made so far.
+            this.guiAccess.loadOntology();
+            this.guiChoco.reinitializeModel();
+            logger.info("variables in the model after the reset");
+            logger.info(guiChoco.getTopIxModel().getNbTotVars());
+            this.guiChoco.getTopIxSolver().clear();
+        }
     }
     
     @Override
     public void valueChanged(TreeSelectionEvent e) {
-        DefaultMutableTreeNode selectedNode=(DefaultMutableTreeNode) roomsTreePanel.getTree().getLastSelectedPathComponent();
-        //del-DefaultMutableTreeNode tempRootNode=(DefaultMutableTreeNode) roomsTreePanel.getTree().getModel().getRoot();
-        //del-int treeDepth=tempRootNode.getDepth();
-        int selectedNodeDepth=selectedNode.getLevel();
+//        logger.info("blah BLAH BLAH BLAH");
+//        logger.info(roomsTreePanel.getTree().getLastSelectedPathComponent());
+//        logger.info(selectedNode);
+//        this.selectedNodeDepth=selectedNode.getLevel();
+        logger.info("root child count");
+        logger.info(roomsTreePanel.getRootChildCount());
         
-        if(true) {
-            //to gather all posibly uninitialised instances necessary for the actions performed when selecting a node
-            //and initialise them here, as soon as a node is inserted in the tree.
-            //if (instance==null) {
-            //  instance=new Instance();
-            //}
-        }
+        this.selectedNodeDepth=e.getPath().getPathCount()-1;
+//        
+//        if(true) {
+//            //to gather all posibly uninitialised instances necessary for the actions performed when selecting a node
+//            //and initialise them here, as soon as a node is inserted in the tree.
+//            //if (instance==null) {
+//            //  instance=new Instance();
+//            //}
+//        }
         
         //in case selectedNode is ROOT (SITENAME)
         if (selectedNodeDepth==0) {
+            DefaultMutableTreeNode selectedNode=(DefaultMutableTreeNode)roomsTreePanel.getTree().getLastSelectedPathComponent();
             this.addHouseBtn.setEnabled(true);
             this.addRoomBtn.setEnabled(false);
             this.registerBtn.setEnabled(false);
-            if (!(selectedNode.isLeaf()))
+//            if (!(selectedNode.isLeaf()))
+//                this.calculateBtn.setEnabled(true);
+//            else
+            if(roomsTreePanel.getRootChildCount()>0)
                 this.calculateBtn.setEnabled(true);
-            else
-                this.calculateBtn.setEnabled(false);
+            this.manualInputBtn.setEnabled(false);this.selectedNodeDepth=0;
             //this.currentHouse=null; //TO RECONSIDER THESE TWO LINES!!! (maybe my comment out of the node selection if's will compensate for that).
             //this.currentRoom=null;
             
@@ -1212,9 +1394,12 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         }
         //in case selectedNode is LEVEL_1 (HOUSE)
         else if (selectedNodeDepth==1) {
+            DefaultMutableTreeNode selectedNode=(DefaultMutableTreeNode)roomsTreePanel.getTree().getLastSelectedPathComponent();
             this.addRoomBtn.setEnabled(true);
             this.addHouseBtn.setEnabled(false);
             this.registerBtn.setEnabled(false);
+            this.manualInputBtn.setEnabled(true);
+            this.calculateBtn.setEnabled(false);
             
             
             this.currentHouse.setSelectedHouseEntry(selectedNode.toString());
@@ -1229,9 +1414,11 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         }
         //in case selectedNode is LEAF (ROOM)
         else if (selectedNodeDepth==2) {
+            DefaultMutableTreeNode selectedNode=(DefaultMutableTreeNode)roomsTreePanel.getTree().getLastSelectedPathComponent();
             this.addHouseBtn.setEnabled(false);
             this.addRoomBtn.setEnabled(false);
             this.registerBtn.setEnabled(true);
+            this.calculateBtn.setEnabled(false);
             this.currentHouse.setSelectedHouseEntry(selectedNode.getParent().toString());
             this.currentRoom.setSelectedRoomEntry(selectedNode.toString());
             //keeping the currentHouseHeight up to date.
@@ -1243,6 +1430,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 rooms2.addItem(tempHouseNode.getChildAt(i).toString());
             }
             rooms2.removeItem(currentRoom.getSelectedRoomEntry());
+            this.manualInputBtn.setEnabled(true);
         }
     }
     
@@ -1315,6 +1503,17 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         try {
             int returnInt=Integer.parseInt(integerInput);
             if (returnInt<=0)
+                throw(new NumberFormatException());
+            return returnInt;
+        } catch (NumberFormatException nfe) {
+            return -1;
+        }
+    }
+    
+    int validateIntegerInput2(String integerInput) {
+        try {
+            int returnInt=Integer.parseInt(integerInput);
+            if (returnInt<0)
                 throw(new NumberFormatException());
             return returnInt;
         } catch (NumberFormatException nfe) {

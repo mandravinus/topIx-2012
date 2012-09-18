@@ -13,17 +13,19 @@ public class ChocoHouse {
     
     private IntegerVariable houseLengthVar;
     private IntegerVariable houseWidthVar;
-    //private IntegerVariable houseHeightVar;
+    private IntegerVariable houseHeightVar;
 
     private IntegerVariable houseXVar;
     private IntegerVariable houseYVar;
+    private IntegerVariable houseZVar;
     
     private IntDomainVar houseLengthRes;
     private IntDomainVar houseWidthRes;
-    //private IntDomainVar houseHeightRes;
+    private IntDomainVar houseHeightRes;
     
     private IntDomainVar houseXRes;
     private IntDomainVar houseYRes;
+    private IntDomainVar houseZRes;
         
     private Logger logger=Logger.getLogger(ChocoHouse.class.getName());
     
@@ -33,9 +35,12 @@ public class ChocoHouse {
         
         houseLengthVar=makeIntVar(houseIndividualHash+"_l", 1, currentSite.getSiteLength());
         houseWidthVar=makeIntVar(houseIndividualHash+"_w", 1, currentSite.getSiteWidth());
+        houseHeightVar=makeIntVar(houseIndividualHash+"_h", 1, MAX_UPPER_BOUND, "cp:bound");
         
         houseXVar=makeIntVar(houseIndividualHash+"_x", 0, currentSite.getSiteLength());
         houseYVar=makeIntVar(houseIndividualHash+"_y", 0, currentSite.getSiteWidth());
+        houseZVar=makeIntVar(houseIndividualHash+"_z", 0, 0);
+
     }
 
     public IntDomainVar getHouseXRes() {
@@ -69,6 +74,23 @@ public class ChocoHouse {
     public void setHouseYVar(IntegerVariable houseYVar) {
         this.houseYVar = houseYVar;
     }
+
+    public IntDomainVar getHouseZRes() {
+        return houseZRes;
+    }
+
+    public void setHouseZRes(IntDomainVar houseZRes) {
+        this.houseZRes = houseZRes;
+    }
+
+    public IntegerVariable getHouseZVar() {
+        return houseZVar;
+    }
+
+    public void setHouseZVar(IntegerVariable houseZVar) {
+        this.houseZVar = houseZVar;
+    }
+    
 
     public String getHouseIndividualHash() {
         return houseIndividualHash;
@@ -117,4 +139,21 @@ public class ChocoHouse {
     public void setHouseWidthVar(IntegerVariable houseWidthVar) {
         this.houseWidthVar = houseWidthVar;
     }
+
+    public IntDomainVar getHouseHeightRes() {
+        return houseHeightRes;
+    }
+
+    public void setHouseHeightRes(IntDomainVar houseHeightRes) {
+        this.houseHeightRes = houseHeightRes;
+    }
+
+    public IntegerVariable getHouseHeightVar() {
+        return houseHeightVar;
+    }
+
+    public void setHouseHeightVar(IntegerVariable houseHeightVar) {
+        this.houseHeightVar = houseHeightVar;
+    }
+    
 }
