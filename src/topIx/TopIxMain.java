@@ -11,18 +11,12 @@ import java.util.*;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.BasicConfigurator;
-
-//import jess.*;
-
 /**
  *
  * @author Antiregulator
  */
 public class TopIxMain
 {
-    
-    private final Map col=new HashMap();
-    private List l=Collections.synchronizedList(new ArrayList<Integer>());
     static Logger logger;
     
     
@@ -45,19 +39,7 @@ public class TopIxMain
         OntologyAccessUtility access=new OntologyAccessUtility();
         logger.info(access.propEntryNameToPropCatName);
         TopIxChoco chocoModule=new TopIxChoco();
-        //DeclarativeDescription decDes=new DeclarativeDescription();
         GUI aGui=new GUI(access, chocoModule);
-        
-        //Rete rt1=decDes.getRt();
-        
-        
-        /*try{
-        //rt1.eval("(deftemplate topIxFact (slot relation)(slot subject) (slot object))");
-            
-            decDes.testMethod();
-            rt1.eval("(list-deftemplates)", rt1.getGlobalContext());
-            rt1.eval("(facts)", rt1.getGlobalContext());
-        }catch(JessException je){}*/
         
         System.out.println("loaded ontology: "+access.topIxOnt);
         System.out.println("from: "+access.manager.getOntologyDocumentIRI(access.topIxOnt));

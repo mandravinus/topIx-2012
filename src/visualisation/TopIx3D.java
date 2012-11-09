@@ -40,9 +40,7 @@ public class TopIx3D extends JPanel{
     
     BranchGroup currentBranchGroup;
     BranchGroup rootBranchGroup;
-   //BranchGroup mainBG;
-   //TransformGroup siteTG;
-    
+
     //mouse behaviors objects
     private MouseRotate mouseRotate;
     private MouseTranslate mouseTranslate;
@@ -84,20 +82,11 @@ public class TopIx3D extends JPanel{
         canvas3D.setFocusable(true);
         canvas3D.requestFocus();
         canvas3D.setSize(this.getSize());
-        //this.setLayout(new GroupLayout(this));
         
-        //add the canvas for the group layout
-        
-        
-        //this.validate();
         logger.info("created canvas3D.");
-//        testSite=new Site3D(5, 7);
-//        testRoom=new Room3D(2, 3, 3, 5, 6, 0);
-        //BranchGroup scene=createSceneGraph();
-        //scene.compile();
+
         
         simpleU=new SimpleUniverse(canvas3D.getOffscreenCanvas3D());
-        //simpleU.getViewingPlatform().setNominalViewingTransform();
         double scale=simpleU.getViewingPlatform().getViewers()[0].getView().getScreenScale();
         logger.info(simpleU.getViewingPlatform().getViewers()[0].getView().getScreenScalePolicy());
         simpleU.getViewingPlatform().getViewers()[0].getView().setScreenScalePolicy(View.SCALE_EXPLICIT);
@@ -136,11 +125,6 @@ public class TopIx3D extends JPanel{
         roomApp.setLineAttributes(roomLineAtt);
         roomApp.setColoringAttributes(roomColorAtt);
         roomApp.setPolygonAttributes(roomPolygonAtt);
-        
-        //simpleU.addBranchGraph(scene);
-        
-        //renderOnlyLetters();
-        
 
         logger.info("reached the end of topix3d constructor");
     }
@@ -160,75 +144,7 @@ public class TopIx3D extends JPanel{
     public BranchGroup createSceneGraph(/*BranchGroup branchGroupToRender*/) {
         //create the root of the BranchGraph
         rootBranchGroup=new BranchGroup();
-//        mainBG=new BranchGroup();
-//        
-//        siteTG=new TransformGroup();
-//        this.siteTG.setCapability(TransformGroup.ALLOW_CHILDREN_EXTEND);
-//        
-//        
-//        Transform3D transformAll=new Transform3D();
-//        Transform3D tempRotate=new Transform3D();
-//        Transform3D translateLeft=new Transform3D();
-//        Vector3f transformVec=new Vector3f(-.1f, -.3f, 0);
-//        
-//        transformAll.rotX(Math.PI/4.0d);
-//        tempRotate.rotY(Math.PI/3.0d);
-//        translateLeft.setTranslation(transformVec);
-//        transformAll.mul(tempRotate);
-//        transformAll.mul(translateLeft);
-//        
-//        siteTG.setTransform(transformAll);
-//        
-//        LineAttributes boxLinAtt=new LineAttributes(1.4f, LineAttributes.PATTERN_DASH_DOT, true);
-//        ColoringAttributes boxColAtt=new ColoringAttributes(.7f, .8f, 1f, ColoringAttributes.SHADE_GOURAUD);
-//        PolygonAttributes boxPolAtt=new PolygonAttributes(PolygonAttributes.POLYGON_FILL, PolygonAttributes.CULL_NONE, 1f);
-//        
-//        Appearance boxApp=new Appearance();
-//        boxApp.setColoringAttributes(boxColAtt);
-//        boxApp.setLineAttributes(boxLinAtt);
-//        boxApp.setPolygonAttributes(boxPolAtt);
-//        
-//        Appearance boxApp2=new Appearance();
-//        boxApp2.setColoringAttributes(boxColAtt);
-//        boxApp2.setLineAttributes(new LineAttributes(5f, LineAttributes.PATTERN_SOLID, true));
-//        boxApp2.setPolygonAttributes(boxPolAtt);
-        
-////        Box box1=new Box(.2f, .3f, .1f, Primitive.GENERATE_NORMALS, boxApp);
-////        box1.setAppearance(2, boxApp2);
-////        Box box2=new Box(.6f, .1f, .7f, Primitive.GENERATE_NORMALS, boxApp);
-////        box1.setName("paparakia");
-////        
-////        Site3D localSite=new Site3D(5, 7);
-////        
-////        //mainBG.addChild(box1);
-////        //mainBG.addChild(box2);
-////        testSite.setAppearance(boxApp);
-////        testRoom.setAppearance(boxApp2);
-////                
-////        localSite.setAppearance(boxApp);
-//        testSite.setAppearance(boxApp);
-//        mainBG.addChild(testSite);
-//        mainBG.addChild(testRoom);
-//
-//        Text2D sampleText=new Text2D("EIMAI KAI GAMW!!!", new Color3f(1f, 1f, 1f), "SansSerif", 40, 0);
-//        mainBG.addChild(sampleText);
-//        
-//        siteTG.addChild(mainBG);
-//        
-//        rootBranchGroup.addChild(siteTG);
-        
-        
         return rootBranchGroup;
-    }
-    
-    public void renderOnlyLetters() {
-//        this.mainBG.removeAllChildren();
-//        //this.siteTG.removeAllChildren();
-//        
-//        Text2D sampleText=new Text2D("EIMAI KAI GAMW!!!", new Color3f(1f, 1f, 1f), "SansSerif", 40, 0);
-//        mainBG.addChild(sampleText);
-//        this.mainBG.addChild(sampleText);
-//        this.siteTG.addChild(mainBG);
     }
     
     public void renderSolution(OwlSolution renderedSolution, boolean renderSolid) {
@@ -260,17 +176,13 @@ public class TopIx3D extends JPanel{
         mouseRotate.setSchedulingBounds(boundingSphere);
         mouseTranslate.setSchedulingBounds(boundingSphere);
         mouseZoom.setSchedulingBounds(boundingSphere);
-        
-        
-        
+
         logger.info("04");
         logger.info("05");
         BranchGroup newBG=new BranchGroup();
         newBG.setCapability(BranchGroup.ALLOW_DETACH);
         newBG.addChild(viewTG);
-        
-        
-        
+
         //create and attach the site rectangle to the BranchGroup
         logger.info(renderedSolution.getSiteLength());
         logger.info(renderedSolution.getSiteWidth());
@@ -326,9 +238,7 @@ public class TopIx3D extends JPanel{
         newBG.addChild(mouseZoom);
         logger.info("edw kanw print to rotate behaviour");
         logger.info(mouseRotate);
-        
-        
-        
+
         newBG.compile();
         logger.info("09");
         Locale tempLocale=this.simpleU.getLocale();

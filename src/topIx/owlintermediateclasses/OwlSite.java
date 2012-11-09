@@ -42,11 +42,6 @@ public class OwlSite /*extends Site*/ {
         this.siteWidth = siteWidth;
     }
     
-    //method poy tha kalei ton siteID getter
-    //public String getSiteName() {
-    //    return this.siteName;
-    //}
-    
     //method poy epistrefei orisma katallhlo gia Site entity assertion sthn ontologia.
     public String returnSiteNameHash() {
         return String.valueOf(this.siteName.hashCode());

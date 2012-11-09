@@ -69,14 +69,6 @@ public class DynamicTree extends JPanel {
 
     public DynamicTree(String SiteName) {
         super(new GridLayout(1, 0));
-
-        //rootNode = new DefaultMutableTreeNode(SiteName);
-        //treeModel = new DefaultTreeModel(rootNode);
-
-//        roomsTree = new JTree();
-//        roomsTree.setEditable(false);
-//        roomsTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-
         JScrollPane treeScroller = new JScrollPane(roomsTree);
         this.add(treeScroller);
     }
@@ -106,15 +98,10 @@ public class DynamicTree extends JPanel {
         roomsTree.expandPath(roomsTree.getPathForRow(0));
     }
 
-    public void addRoomNodeToTree(String roomStr/*, MutableTreeNode or String*/) {
+    public void addRoomNodeToTree(String roomStr) {
         DefaultMutableTreeNode roomChildNode = new DefaultMutableTreeNode(roomStr);
         DefaultMutableTreeNode tempParentNode=(DefaultMutableTreeNode)roomsTree.getLastSelectedPathComponent();
         treeModel.insertNodeInto(roomChildNode, tempParentNode, tempParentNode.getChildCount());
-        //edw tha prostethei me thn insertNodeInto to neo room me parametroys:
-        //i.ton pros dhmioyrgia komvo se morfh MutableTreeNode (roomChildNode)
-        //ii.thn parametro toy epilegmenoy house node poy eite tha mpainei sth method ws string
-        //   eite tha mpainei ws MutableTreeNode, analoga ti epistrefei to DefaultTreeModel
-        //   h opoia allh klash einai ypeythynh na epistrefei me kapoia morfh ton epilegmeno komvo.
     }
     
     public String returnSelectedNodeString() {

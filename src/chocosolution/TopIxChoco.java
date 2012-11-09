@@ -112,39 +112,6 @@ public class TopIxChoco {
             Constraint houseCompactnessConstraint=eq(sumRoomAreaExpVar, tempChocoHouseAreaExpVar);
             this.topIxModel.addConstraint(houseCompactnessConstraint);
         }
-//        RoomVariableStructures roomVariableStructures=new RoomVariableStructures();
-//        roomVariableStructures.initialiseRoomVarsMappedToHouses(chocoHouseMap);
-//        roomVariableStructures.fillVariableStructures(chocoHouseMap, chocoRoomMap);
-//        
-//        for(RoomVariableStructures tempRoomVariableStructures:roomVariableStructures.getRoomVarsMappedToHouses().values()) {
-//            IntegerVariable[] roomLengthVars;
-//            IntegerVariable[] roomWidthVars;
-//            
-//            IntegerExpressionVariable sumRoomLength;
-//            IntegerExpressionVariable sumRoomWidth;
-//            
-//            IntegerExpressionVariable sumRoomAreaExpressionVariable;
-//            IntegerExpressionVariable[] roomAreaExpressionVariables;
-//            
-//            roomLengthVars=(IntegerVariable[])tempRoomVariableStructures.getlVars().toArray(new IntegerVariable[0]);
-//            roomWidthVars=(IntegerVariable[])tempRoomVariableStructures.getwVars().toArray(new IntegerVariable[0]);
-//            
-//            roomAreaExpressionVariables=new IntegerExpressionVariable[roomLengthVars.length];
-//            
-//            for(int i=0; i<roomLengthVars.length; i++) {
-//                IntegerExpressionVariable tempRoomAreaExpressionVariable=
-//            }
-//            IntegerExpressionVariable sumRoomL=sum(roomLengthVars);
-//            //roomWidthVars=(IntegerVariable[])tempRoomVariableStructures.getwVars().toArray(new IntegerVariable[0]);
-//            //IntegerExpressionVariable sumRoomW=sum(roomWidthVars);
-//            IntegerExpressionVariable sumRoomW=sum(tempRoomVariableStructures.getwVars().toArray(new IntegerVariable[0]));
-//            
-//            IntegerExpressionVariable tempRoomArea=mult(sumRoomL, sumRoomW);
-//            IntegerExpressionVariable tempHouseArea=mult(tempRoomVariableStructures.getHouseLVar(), tempRoomVariableStructures.getHouseWVar());
-//            Constraint houseCompactnessConstraint=(eq(tempRoomArea, tempHouseArea));
-            
-            //this.topIxModel.addConstraint(houseCompactnessConstraint);
-        //}
     }
     
     //this method matches the houses to the roomAreaExpressionVariables that 

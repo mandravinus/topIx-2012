@@ -8,20 +8,13 @@ package topIx;
  *
  * @author Antiregulator
  */
-//import t1.AnnotationStrings;
 import java.io.BufferedReader;
 import java.util.*;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.*;
-
-import chocosolution.*;
 import topIx.owlintermediateclasses.*;
-
 import org.apache.log4j.Logger;
 
 
@@ -75,37 +68,14 @@ public class OntologyAccessUtility //implements Runnable
     private List<OwlSolution> solutionsList=new ArrayList<>();
     
     Logger logger;
-
-////    public void run()
-////    {
-////        loadOntology();
-////        retrieveSubObjectPropertyAxioms();
-////        retrieveRoomsMap();
-////    }
+    
     public OntologyAccessUtility() {
         //edw na klhthoyn oi synarthseis ths sygkekrimenhs klashs me thn provlepomenh seira, oytwswste na mh xreiastei na ginei ayto sth main
         logger=Logger.getLogger(OntologyAccessUtility.class.getName());
-        
         this.loadOntology();
-        
         this.retrieveSubObjectPropertyAxioms();
         this.retrieveRoomsMap();
         this.retrieveGeometricPropertiesMaps();
-        
-
-
-        /*
-         * allAxioms=topIxOnt.getAxioms(); roomsVec=new Vector<String>();
-         *
-         * retrieveSuperClasses(); fillRoomsVector();
-        retrieveAnnotations();
-         */
-
-
-        //filterLeafObjProps();
-
-
-        //fillGuiSets();
     }
 
     public void loadOntology() {
@@ -130,8 +100,6 @@ public class OntologyAccessUtility //implements Runnable
             //ontFile = new File("../src/ontologyresources/ptyxiaki_v0.8.owl");
             ontFile=new File("src/ontologyresources/ptyxiaki_v0.8.owl");
 
-
-            //ontFile=new File("..\\ontologyData\\ptyxiaki_v0.72.owl");
             manager.addIRIMapper(new SimpleIRIMapper(toBeMappedIRI, IRI.create(ontFile)));
             ontologyIRI = IRI.create("http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl");
             topIxOnt = manager.loadOntology(ontologyIRI);
@@ -154,16 +122,13 @@ public class OntologyAccessUtility //implements Runnable
         for (OWLSubClassOfAxiom scoAx : topIxOnt.getSubClassAxiomsForSuperClass(OWLFactory.getOWLClass(IRI.create("http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Room")))) {
             String tmpS = scoAx.getSubClass().toString();
 
-            //System.out.println(tmpS.substring(tmpS.indexOf('<')+1, tmpS.indexOf('>')));
             Set<OWLAnnotationAssertionAxiom> tmpAnnSet = topIxOnt.getAnnotationAssertionAxioms(IRI.create(tmpS.substring(tmpS.indexOf('<') + 1, tmpS.indexOf('>'))));
             for (OWLAnnotationAssertionAxiom aaAx : tmpAnnSet) {
-                //System.out.println(aaAx.getProperty().toString());
                 if (aaAx.getProperty().toString().equals("<http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#classID>")) {
                     roomToIRI.put(aaAx.getValue().toString().substring(1, aaAx.getValue().toString().indexOf('^') - 1), tmpS.substring(tmpS.indexOf('<') + 1, tmpS.indexOf('>')));
                 }
             }
         }
-        //System.out.println(roomToIRI);
     }
 
     public void retrieveSubObjectPropertyAxioms() {
@@ -185,8 +150,6 @@ public class OntologyAccessUtility //implements Runnable
             tmpAnnSet1 = topIxOnt.getAnnotationAssertionAxioms(IRI.create(tmpS.substring(1, tmpS.indexOf('>')))); //this set only contains one annotation per entry
             for (OWLAnnotationAssertionAxiom aaAx : tmpAnnSet1) {
                 String currentObjPropCatName = aaAx.getValue().toString().substring(1, aaAx.getValue().toString().indexOf('^') - 1);
-                //System.out.println(currentΟbjPropCatName);
-                //System.out.println("blah!");
 
                 tmpSet2 = topIxOnt.getObjectSubPropertyAxiomsForSuperProperty(OWLFactory.getOWLObjectProperty(IRI.create(tmpS.substring(1, tmpS.length() - 1))));
                 for (OWLSubObjectPropertyOfAxiom sopAx2 : tmpSet2) {
@@ -201,8 +164,6 @@ public class OntologyAccessUtility //implements Runnable
                 }
             }
         }
-//        System.out.println(propEntryNameToPropCatName);
-//        System.out.println(propEntryNametoPropEntryIRI);
     }
     
     public void retrieveGeometricPropertiesMaps(){
@@ -239,8 +200,6 @@ public class OntologyAccessUtility //implements Runnable
     //INDIVIDUAL ASSERTION METHODS//
     ////////////////////////////////
     public boolean assertSiteIndividual(String siteNameHash, String siteNameAnnotation) {
-        //del-String tmpS=("Site Of "+siteNameHash);
-        //del-String tmpHashedS=TopIxUtilityMethods.returnIndividualIdentifier(tmpS);
         OWLClassExpression tmpCE = OWLFactory.getOWLClass(":Site", topIxPrefixManager);
         OWLIndividual tmpInd = OWLFactory.getOWLNamedIndividual(':' + siteNameHash, topIxPrefixManager);
 
@@ -251,8 +210,6 @@ public class OntologyAccessUtility //implements Runnable
     }
 
     public boolean assertHouseIndividual(String houseEntryHash, String houseEntryAnnotation) {
-        //del-String tmpS=TopIxUtilityMethods.returnIndividualIdentifier(s);
-
         OWLClassExpression tempClassExpression = OWLFactory.getOWLClass(":House", topIxPrefixManager);
         OWLIndividual tempIndividual = OWLFactory.getOWLNamedIndividual(':' + houseEntryHash, topIxPrefixManager);
 
@@ -266,10 +223,6 @@ public class OntologyAccessUtility //implements Runnable
     }
 
     public boolean assertRoomIndividual(String roomName, String roomIndividualHash, String roomIndividualAnnotation) {
-        //System.out.println(s);
-        //List<String> tmpList=TopIxUtilityMethods.returnIndividualIdentifier(houseID, roomID);
-        //if(!topIxOnt.containsEntityInSignature(IRI.create(topIxOnt.getOntologyID().getOntologyIRI().toString()+'#'+tmpList.get(1))))
-        //{
         OWLClassExpression tempClassExpression = OWLFactory.getOWLClass(IRI.create(roomToIRI.get(roomName))); //retrieves the Room Class IRI fron the roomToIRI map, using roomID as a key.
         OWLIndividual tempIndividual = OWLFactory.getOWLNamedIndividual(':' + roomIndividualHash, topIxPrefixManager);
 
@@ -282,30 +235,6 @@ public class OntologyAccessUtility //implements Runnable
 
     }
 
-//    public List<String> assertRoomIndividual(String houseID, String roomID)
-//    {
-//        //System.out.println(s);
-//        List<String> tmpList=TopIxUtilityMethods.returnIndividualIdentifier(houseID, roomID);
-//        //if(!topIxOnt.containsEntityInSignature(IRI.create(topIxOnt.getOntologyID().getOntologyIRI().toString()+'#'+tmpList.get(1))))
-//        //{
-//            OWLClassExpression tmpCE=OWLFactory.getOWLClass(IRI.create(roomToIRI.get(roomID))); //retrieves the Room Class IRI fron the roomToIRI map, using roomID as a key.
-//            OWLIndividual tmpInd=OWLFactory.getOWLNamedIndividual(':'+tmpList.get(1), topIxPrefixManager);
-//
-//            manager.addAxiom(topIxOnt, OWLFactory.getOWLClassAssertionAxiom(tmpCE, tmpInd));
-//            manager.addAxiom(topIxOnt, OWLFactory.getOWLAnnotationAssertionAxiom(
-//                    OWLFactory.getOWLAnnotationProperty(IRI.create(topIxOnt.getOntologyID().getOntologyIRI().toString()+'#'+"individualName"))
-//                    , IRI.create(topIxOnt.getOntologyID().getOntologyIRI().toString()+'#'+tmpList.get(1))
-//                    , OWLFactory.getOWLLiteral(String.format("%1$s_%2$s", houseID, tmpList.get(0)))));
-//            System.out.println(roomID+'\n'+houseID+'\n'+tmpList.get(1));
-//            return(tmpList);
-//        //}
-//        //else
-//        //{
-//        //    System.out.println("thn pathses me to hashcode, malaka!");
-//        //    
-//            //return null;
-//        //}
-//    }
     //////////////////////////////
     //PROPERTY ASSERTION METHODS//
     //////////////////////////////
@@ -325,14 +254,6 @@ public class OntologyAccessUtility //implements Runnable
         return true;
     }
 
-//    public boolean assertHasSitePropertyInstance(String houseName, String siteName)
-//    {
-//        OWLObjectProperty objProp=OWLFactory.getOWLObjectProperty(IRI.create(topIxOnt.getOntologyID().getOntologyIRI()+"#hasSite"));
-//        OWLIndividual houseInd=OWLFactory.getOWLNamedIndividual(':'+houseName, topIxPrefixManager);
-//        OWLIndividual siteInd=OWLFactory.getOWLNamedIndividual(':'+siteName, topIxPrefixManager);
-//        manager.addAxiom(topIxOnt, OWLFactory.getOWLObjectPropertyAssertionAxiom(objProp, houseInd, siteInd));
-//        return true;
-//    }
     public boolean assertHasRoomPropertyInstance(String houseIndividualHash, String roomIndividualHash) {
         OWLObjectProperty tempOWLbjectProperty = OWLFactory.getOWLObjectProperty(IRI.create(topIxOnt.getOntologyID().getOntologyIRI() + "#hasRoom"));
         OWLIndividual houseIndividual = OWLFactory.getOWLNamedIndividual(':' + houseIndividualHash, topIxPrefixManager);
@@ -483,7 +404,6 @@ public class OntologyAccessUtility //implements Runnable
         
         }
         //retrieving the site dimensions for this solution set (the site remains the same throughout the plethos of solutions).
-        //
         int tempSiteLength=0;
         int tempSiteWidth=0;
         OWLDataProperty siteHasLengthProp=OWLFactory.getOWLDataProperty(":hasX", topIxPrefixManager);
@@ -626,157 +546,4 @@ public class OntologyAccessUtility //implements Runnable
     public void setSolutionsList(List<OwlSolution> solutionsList) {
         this.solutionsList = solutionsList;
     }
-    
-    
-
-////    public void filterLeafObjProps()
-////    {
-////        set1=new HashSet(aMap.keySet());
-////        set2=new HashSet(set1);
-////        Set<OWLObjectPropertyExpression> tmpSet=new HashSet(aMap.values());
-////        
-////        set1.removeAll(tmpSet);
-////        System.out.println(set1.size());
-////        set2.retainAll(tmpSet);
-////
-////        Set<IRI> tmpValues=new HashSet(this.subObjProp.values());
-////        for(IRI pex:tmpValues)
-////        {
-////            this.subObjProp.remove(pex);
-////        }
-////    }
-//    public void retrieveAnnotations()
-    //   {
-////        AnnotationUseful utility=null;
-////        for(OWLAnnotationAssertionAxiom ax:topIxOnt.getAxioms(AxiomType.ANNOTATION_ASSERTION))
-////        {
-////            utility.updateAttrs(ax);
-////            AnnotationStuff.put(ax.getSubject(), utility);
-////        }
-    // }
-    /*
-     * public void fillGuiSets() { //to become class attribute. Set<IRI>
-     * leafObjectProperties = new HashSet<>(30);
-     *
-     * for(OWLPropertyExpression pex:this.subObjProp.values()) {
-     * leafObjectProperties.add(IRI.create(pex.toString().substring(1,
-     * pex.toString().length()-1))); }
-     *
-     * for(IRI iri:leafObjectProperties) { for(OWLAnnotationAssertionAxiom
-     * aaAx:topIxOnt.getAnnotationAssertionAxioms(iri)) {
-     *
-     * //System.out.println(aaAx.getProperty().toString()); switch
-     * (aaAx.getProperty().toString()) { case
-     * "<htp://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#propertyID>":
-     * objPropEntries.add(aaAx.getValue().toString().substring(1,
-     * aaAx.getValue().toString().indexOf('^')-1)); break; } }
-     *
-     * }
-     * }
-     */
-    public void retrieveAnnotationsDeprecated() {
-        Set<OWLAnnotationAssertionAxiom> annotationsSet = topIxOnt.getAxioms(AxiomType.ANNOTATION_ASSERTION);
-        Iterator<OWLAnnotationAssertionAxiom> it1 = annotationsSet.iterator();
-        while (it1.hasNext()) {
-            OWLAnnotationAssertionAxiom aaaAx = it1.next();
-
-            //AnnotationStrings tmpStrs=new AnnotationStrings(aaaAx.toString());
-            //String tmpSaa=aaaAx.toString();
-            //System.out.println(tmpStrs.getTmpSaa() + '\n' + tmpStrs.getTmpSap() + '\n');
-        }
-    }
-
-    public void retrieveSuperClasses() {
-        subclassOfSet = topIxOnt.getAxioms(AxiomType.SUBCLASS_OF);
-        hsStr = new HashSet<>();
-        for (OWLSubClassOfAxiom scoAx : subclassOfSet) {
-            hsStr.add(scoAx.getSuperClass());
-        }
-        //for(OWLClassExpression ce:hsStr)
-        //    System.out.println(ce.toString());
-    }
-
-    public void fillRoomsVector() {
-//        String tmpS;
-//        OWLSubClassOfAxiom aaAx;
-
-        for (OWLAxiom ax : allAxioms) {
-            //System.out.println(ax./*getAxiomType().*/toString());
-            if (ax.getAxiomType().toString().equals("AnnotationAssertion")) {
-                OWLAnnotationAssertionAxiom aaAx2 = (OWLAnnotationAssertionAxiom) ax;
-                String oasS = aaAx2.getSubject().toString();  //ayto to string tha sygkrithei me to string poy tha prokypsei
-                //ap to getsubclass toy subclassOfAxiom
-
-                //aaAx=(OWLSubClassOfAxiom)ax;
-                //if(aaAx.getSubject().equals()
-                //System.out.println(oas.toString());
-
-                for (OWLAxiom ax2 : allAxioms) {
-                    if (ax2.getAxiomType().toString().equals("SubClassOf")) {
-                        OWLSubClassOfAxiom scoAx = (OWLSubClassOfAxiom) ax2;
-                        String tmpS2 = scoAx.getSubClass().toString();
-                        tmpS2 = tmpS2.substring(tmpS2.indexOf('<') + 1, tmpS2.indexOf('>'));
-
-                        if (oasS.equals(tmpS2)) {
-                            OWLClassExpression cexS = scoAx.getSuperClass();
-                            //for(OWLClassExpression cexVec:hsStr)
-                            {
-                                if (cexS.toString().equals("<http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl#Room>")) {
-                                    //String - substring to katallhlo meros toy string in order for it to
-                                    String finalVec = aaAx2.getValue().toString();
-                                    finalVec = finalVec.substring(finalVec.indexOf('"') + 1, finalVec.indexOf('^') - 1);
-                                    roomsVec.add(finalVec);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-
-            /*
-             * if(ax.getAxiomType().toString().equals("SubClassOf")) {
-             * OWLSubClassOfAxiom scoAx2=(OWLSubClassOfAxiom)ax;
-             * OWLClassExpression cex=scoAx2.getSuperClass();
-             *
-             * //System.out.println('\n');
-            }
-             */
-            //System.out.println(roomsVec.size());
-        }
-    }
-
-    public void fillObjectPropsVec() {
-    }
-
-    /*
-     * public void test1() { OWLSubClassOfAxiom scoAx;
-     * OWLAnnotationAssertionAxiom aaAx;
-     *
-     * String s1=new String(); String s2=new String();
-     *
-     * for(OWLAxiom ax:allAxioms) {
-     * if(ax.getAxiomType().toString().equals("SubClassOf")) {
-     * scoAx=(OWLSubClassOfAxiom)ax; String tmpS=scoAx.getSubClass().toString();
-     * System.out.println("SubclassOf axiom sub:
-     * "+tmpS.substring(tmpS.indexOf('<')+1, tmpS.indexOf('>')));
-     * if(tmpS.substring(tmpS.indexOf('#')+1,
-     * tmpS.indexOf('>')).equals("Office"))
-     * s1=tmpS.substring(tmpS.indexOf('<')+1, tmpS.indexOf('>')); }
-     * if(ax.getAxiomType().toString().equals("AnnotationAssertion")) {
-     * aaAx=(OWLAnnotationAssertionAxiom)ax; String
-     * tmpS=aaAx.getSubject().toString();
-     * System.out.println("AnnotationAssertion axiom:
-     * "+aaAx.getSubject().toString());
-     * if(tmpS.substring(tmpS.indexOf('#')+1).equals("Office")) s2=tmpS; } }
-     *
-     * System.out.println("test start..."); System.out.println(s1);
-     * System.out.println(s2); System.out.println("test end...");
-     * if(s1.equals(s2)) System.out.println("yeah!"); } public void stringTest()
-     * { String s1, s2; s1=new String("abcdef");
-     * s2=s1.substring(s1.indexOf('a'), s1.indexOf('f'));
-     *
-     * System.out.println("\n\n"+s2);
-    }
-     */
 }

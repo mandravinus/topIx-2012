@@ -5,25 +5,14 @@
 
 package topIx;
 
-
-import choco.cp.solver.propagation.ChocoEngine;
-import choco.kernel.model.variables.integer.IntegerConstantVariable;
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
-//import java.awt.FlowLayout;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.JOptionPane;
-//import javax.swing.border.*;
 import java.util.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.event.TreeModelListener;
 import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeModelEvent;
-//import javax.swing.tree.DefaultTreeModel;
-//import javax.swing.tree.TreeModel;
-//import javax.swing.tree.TreeSelectionModel;
 
 import org.semanticweb.owlapi.model.OWLIndividual;
 
@@ -31,17 +20,11 @@ import chocosolution.TopIxChoco;
 import chocosolution.ChocoRoom;
 import chocosolution.ChocoUtility;
 
-import choco.kernel.solver.variables.integer.IntDomainVar;
 import chocosolution.*;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import javax.imageio.ImageIO;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
+
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.BasicConfigurator;
 
 import topIx.owlintermediateclasses.*;
 import visualisation.TopIx3D;
@@ -49,7 +32,7 @@ import visualisation.TopIx3D;
  *
  * @author Antiregulator
  */
-public class GUI extends JFrame implements ActionListener, ItemListener, TreeSelectionListener, FocusListener, KeyListener//, TreeModelListener, Runnable
+public class GUI extends JFrame implements ActionListener, ItemListener, TreeSelectionListener
 {   
     //GUI components
     JPanel mainPanel;
@@ -68,13 +51,9 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
     JLabel houseIdentifierLabel;
     JLabel xLabel;
     JLabel yLabel;
-    JLabel floorsLabel;
-    JLabel floorHeightLabel;
     JTextField houseIdentifierInput;
     JTextField xInput;
     JTextField yInput;
-    JTextField floorsInput;
-    JTextField floorHeightInput;
     JButton nextBtn;
     //paneIb components     - ontology data entry
     JPanel paneIb1;
@@ -85,9 +64,6 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
     //JScrollPane treeScroller;
     //JTree roomsTree;
     DynamicTree roomsTreePanel;
-    
-    
-    
         //has default FlowLayout
     //paneIb2 components    - combo boxes
     JLabel rooms1Label;
@@ -131,27 +107,24 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
     Icon left;
     Icon right;
     
-    JButton printBtn;
-
-    TopIx3D topIx3D;
-    
-    //JessMonitor pane components
-    JPanel jessMonitorPane;
-    //ConsolePanel jessPane;
-    JTextField jessCommandField;
-    JButton evalButton;
-    
     //misc attributes
-    //Map<String, Integer> roomName_roomHashCode;
     String houseIdentifier;
     Integer houseIdentifierHashCode;
+    //the following var is a flag that is set everytime a selection is made in
+    //the JTree, and provides info as to whether the site, a house or a room is
+    //currently selected.
+    int selectedNodeDepth;
     
-    //private Map<DefaultMutableTreeNode, IRI> treeEntry_IndividualIRI;
-    
+    //components of other classes that have an association relation with the GUI
+    //instance
     OntologyAccessUtility guiAccess;
     TopIxChoco guiChoco;
-    //holds temporary OwlSite, OwlHouse, OwlRoom fields which are initialized when they are first needed (stoys event handlers toys dld)
-    //- candidate to be moved to OntologyAccessUtility class or... God knows where!!!
+    TopIx3D topIx3D;
+    
+    //holds temporary OwlSite, OwlHouse, OwlRoom fields which are initialized
+    //when they are first needed (stoys event handlers toys dld)
+    // -candidate to be moved to OntologyAccessUtility class or...
+    //...God knows where!!!
     OwlSite currentSite;
     OwlHouse currentHouse;
     OwlRoom currentRoom;
@@ -166,82 +139,34 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
     JTextField manualPropertyValueTextField;
     GroupLayout manualInputLay_Grp;
     
-    //DeclarativeDescription decDes;
-    
     Logger logger;
-    
-    //the following var is a flag that is set everytime a selection is made in
-    //the JTree, and provides info as to whether the site, a house or a room is
-    //currently selected.
-    int selectedNodeDepth;
-    
-    //deprecated constructor - the one with both OntologyAccessUtility and TopIxChoco references is used.
-    public GUI(OntologyAccessUtility accessRef)
-    {
-        super("topIx project - bromoiras-gioukakis");
-        mainPanel=new JPanel();
-        
-        guiAccess=accessRef;
-        
-        selectedNodeDepth=0;
-        
-        initializeComponents(guiAccess.propEntryNameToPropCatName, guiAccess.roomToIRI);
-        addComponents();
-        
-        //setSize(800, 600);
-        setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setBounds(200, 100, 1100, 900);
-        
-        propsCBoxLabel.setVisible(true);
-        propsCBox.setVisible(true);
-        catsCBox.setSelectedIndex(1);
-        rooms2Label.setVisible(false);
-        rooms2.setVisible(false);
-        //tabs.getTabComponentAt(tabs.indexOfTab("Results")).setVisible(false);
-        //layI_Crd.show(paneI, "Model Input");
-        
-        logger= Logger.getLogger(GUI.class.toString());
-        //BasicConfigurator.configure();
-    }
 
         public GUI(OntologyAccessUtility accessRef, TopIxChoco chocoRef)
     {
-        super("topIx project - bromoiras-gioukakis");
+        super("TopIx project -- Bromoiras David - TEI of Athens");
         logger= Logger.getLogger(GUI.class.toString());
         logger.info("creating GUI jpanel");
         mainPanel=new JPanel();
         mainLayout=new GroupLayout(mainPanel);
         mainPanel.setLayout(mainLayout);
         guiAccess=accessRef;
-        guiChoco=chocoRef;
-        //this.decDes=decDes;
-        
+        guiChoco=chocoRef;       
         initializeComponents(guiAccess.propEntryNameToPropCatName, guiAccess.roomToIRI);
         addComponents();
         
         this.setIconImage(new ImageIcon("src/ontologyresources/images/topix.png").getImage());
-        //setSize(800, 600);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        //this.setMaximumSize(new Dimension(600, 600));
         setBounds(100, 100, 950, 500);
         this.setMaximumSize(new Dimension(950, 500));
         this.setMinimumSize(new Dimension(950, 500));
         setMaximizedBounds(this.getBounds());
-        //populateResultsComponents();
         
         propsCBoxLabel.setVisible(true);
         propsCBox.setVisible(true);
         catsCBox.setSelectedIndex(1);
         rooms2Label.setVisible(false);
         rooms2.setVisible(false);
-        //this.pack();
-        //tabs.getTabComponentAt(tabs.indexOfTab("Results")).setVisible(false);
-        //layI_Crd.show(paneI, "Model Input");
-        //BasicConfigurator.configure();
-        
-        //add listeners to manage the mouse events on a panel level.
     }
 
     private void initializeComponents(Map<String, String> objCatsCB, Map<String, String> roomsCB)     //initialize panels with their layouts as well as components
@@ -266,13 +191,9 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         houseIdentifierLabel=new JLabel("Name of Project:");
         xLabel=new JLabel("Site Length:");
         yLabel=new JLabel("Site Width:");
-        floorsLabel=new JLabel("Number of Floors:");
-        floorHeightLabel=new JLabel("Floor Height:");
         houseIdentifierInput=new JTextField();
         xInput=new JTextField();
         yInput=new JTextField();
-        floorsInput=new JTextField();
-        floorHeightInput=new JTextField();
         nextBtn=new JButton("Next");
             nextBtn.addActionListener(this);
         //--------------------------------------------------------------------//
@@ -349,23 +270,10 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 solutionLeftBtn.addActionListener(this);
             solutionRightBtn=new JButton(right);
                 solutionRightBtn.addActionListener(this);
+            
                 
         topIx3D=new TopIx3D();
-        
-        
-        //try
-        //{
-//            jessMonitorPane=new JPanel(new BorderLayout());
-//            //jessPane=new ConsolePanel(decDes.getRt());
-//            jessCommandField=new JTextField(60);
-//                jessCommandField.setActionCommand("evalExpression");    
-//                jessCommandField.addFocusListener(this);
-//                jessCommandField.addActionListener(this);
-//                jessCommandField.addKeyListener(this);
-//            evalButton=new JButton("eval");
-//                evalButton.setActionCommand("evalExpression");
-//                evalButton.addActionListener(this);     
-        //}catch (JessException je){System.out.println(je.getExecutionContext()+"\n"+je.getErrorCode()+" @line "+je.getLineNumber());}
+
         this.populateResultsComponents();
         availableSitesCBox.setSelectedItem(availableSitesCBox.getItemAt(0));
         availableSolutionsCBox.setSelectedItem(availableSolutionsCBox.getItemAt(0));
@@ -399,15 +307,11 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                     .addGroup(layIa_Grp.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addComponent(houseIdentifierLabel)
                         .addComponent(xLabel)
-                        .addComponent(yLabel)
-                        .addComponent(floorsLabel)
-                        .addComponent(floorHeightLabel))
+                        .addComponent(yLabel))
                     .addGroup(layIa_Grp.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(houseIdentifierInput, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
                         .addComponent(xInput, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(yInput, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(floorsInput, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(floorHeightInput, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(yInput, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
                     .addGroup(layIa_Grp.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addComponent(nextBtn))
                     .addContainerGap());
@@ -423,12 +327,6 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                     .addGroup(layIa_Grp.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(yLabel)
                         .addComponent(yInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layIa_Grp.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(floorsLabel)
-                        .addComponent(floorsInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layIa_Grp.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(floorHeightLabel)
-                        .addComponent(floorHeightInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addGroup(layIa_Grp.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(nextBtn))
                     .addContainerGap());
@@ -522,8 +420,6 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                     .addComponent(paneIb3)
                     .addContainerGap());
         //fill paneIIa
-        //layIIa_Grp = new javax.swing.GroupLayout(getContentPane());
-        //getContentPane().setLayout(layIIa_Grp);
         layIIa_Grp.setAutoCreateGaps(true);
         layIIa_Grp.setHorizontalGroup(
             layIIa_Grp.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -594,34 +490,19 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                     .addComponent(topIx3D))
                 .addContainerGap()
         );
-        //paneII.add(topIx3D, BorderLayout.CENTER);
         
-        
-        //jessMonitorPane.add(BorderLayout.CENTER, jessPane);
-        //jessMonitorPane.add(BorderLayout.SOUTH, jessCommandField);
-        //jessMonitorPane.add(BorderLayout.EAST, evalButton);
-        //tabs.setSize(new Dimension(1100, 700));
-        //paneI.setSize(1300, 600);
-        //paneII.setSize(1300, 600);
-        //paneII.validate();
         tabs.addTab("Input", paneI);
         tabs.addTab("Results", paneII);
-        //tabs.addTab("Jess Monitor", jessMonitorPane);
-        //mainPanel.setSize(new Dimension(1100, 700));
         
         //setting the layout for mainPanel
         GroupLayout mainPanelLay_Grp=(GroupLayout)mainPanel.getLayout();
         mainPanelLay_Grp.setHorizontalGroup(
                 mainPanelLay_Grp.createSequentialGroup()
-                //.addContainerGap()
                 .addComponent(tabs)
-                //.addContainerGap()
         );
         mainPanelLay_Grp.setVerticalGroup(
                 mainPanelLay_Grp.createSequentialGroup()
-                //.addContainerGap()
                 .addComponent(tabs)
-                //.addContainerGap()
         );
         
         //setting the layout for manualInputDialog
@@ -700,45 +581,17 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         if (actionEvent.getSource()==nextBtn && ((validateIntegerInput(xInput.getText())<=-1)||(validateIntegerInput(yInput.getText())<=-1))) {
             JOptionPane.showMessageDialog(this, "Please provide a positive integer for site length and width!");
         }
-        
-        //if(actionEvent.getSource()==nextBtn)
         else if (actionEvent.getSource()==nextBtn)
         {
-            //int tmpL, tmpW;
-
             currentSite=new OwlSite(houseIdentifierInput.getText(), Integer.parseInt(xInput.getText()),Integer.parseInt(yInput.getText()));
-            
             guiAccess.assertSiteIndividual(currentSite.returnSiteNameHash(), currentSite.returnSiteNameAnnotation());
             roomsTreePanel.addRootNodeToTree(currentSite.returnSiteNameCompact());
             roomsTreePanel.getTree().addTreeSelectionListener(this);
-            //roomsTreePanel.getTree().getModel().addTreeModelListener(this);
             roomsTreePanel.setVisible(true);
-            //the following commented block shows sort of what oughts to be done in the addHouse actionPerformed part.
-            //
-            //del-initializing the houseIdentifier attribute which will be used in naming each project's rooms.
-            //del-houseIdentifier=houseIdentifierInput.getText();
-            //del-guiAccess.assertHouseIndividual(houseIdentifier);
-            //del-String houseHashed=TopIxUtilityMethods.returnIndividualIdentifier(houseIdentifier);
-            //del-String siteHashed=guiAccess.assertSiteIndividual(houseIdentifier); //returns the hashed string of "Site Of_<houseIdentifier>
-            //del-guiAccess.assertHasSitePropertyInstance(houseHashed, siteHashed);
-            
             layI_Crd.show(paneI, "Model Input");
-            
-            //del-tmpL=Integer.parseInt(xInput.getText());
-            //del-tmpW=Integer.parseInt(yInput.getText());
-            //del-tmpH=Integer.parseInt(floorHeightInput.getText());
-            //del-tmpF=Integer.parseInt(floorsInput.getText());
             
             guiAccess.assertDataPropertyInstance(currentSite.returnSiteNameHash(), "hasX", currentSite.getSiteLength());
             guiAccess.assertDataPropertyInstance(currentSite.returnSiteNameHash(), "hasY", currentSite.getSiteWidth());
-            
-            //height is a per-house attribute
-            //del-guiAccess.assertDataPropertyInstance(currentSite.returnSiteNameHash(), "hasZ", currentSite.getSiteHeight());
-            //number of floors to be automatically inferenced by the csp engine.
-            //del-guiAccess.assertDataPropertyInstance(siteHashed, "hasFloors", tmpF);
-            
-           
-            //decDes.assertSiteFact(siteHashed, tmpL, tmpW, tmpH);
         }
         
         //ADD HOUSE BUTTON----------------------------------------------------//
@@ -810,9 +663,6 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         //ADD ROOM BUTTON-----------------------------------------------------//
         if(actionEvent.getSource()==addRoomBtn)
         {
-            //del-String ontologyRoomName=guiAccess.roomToIRI.get(rooms1.getSelectedItem().toString());
-            //del-ontologyRoomName=ontologyRoomName.substring(ontologyRoomName.indexOf('#')+1, ontologyRoomName.indexOf('>'));
-            /*int tempIndex=*/
             OwlRoom.augmentRoomIndex(currentSite.getSiteName(),
                 currentHouse.getSelectedHouseEntry(),
                 currentRoom.getComboBoxRoomEntry());
@@ -878,14 +728,6 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             roomsTreePanel.roomsTree.expandPath(roomsTreePanel.roomsTree.getPathForRow(0));
             
             logger.info(guiChoco.getTopIxModel().getNbTotVars());
-            
-            //decDes.assertRoomFact(roomHash);
-            //jess.Rete tmpRt=decDes.getRt();
-            //try{
-            //tmpRt.run();
-            //}catch (JessException je){System.out.println(je.getCause().toString());}
-            
-            //access.saveOntology();
         }
         
         //BACK BUTTON---------------------------------------------------------//
@@ -916,8 +758,6 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             }
             String declarativeProperty=(String)propsCBox.getSelectedItem();
             guiAccess.assertPropertyInstance(declarativeProperty, room1Hash, room2Hash);
-            //decDes.assertJessFact(IRI.create(GuiAccess.propEntryNametoPropEntryIRI.get(declarativeProperty)).toString(), room1Hash, room2Hash);
-
             switch (declarativeProperty) {
                 case "Eastwards Adjacent To":
                     ChocoUtility.adjacentEastConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getChocoRoomMap().get(room2Hash), guiChoco.getTopIxModel());
@@ -1040,7 +880,6 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                         guiChoco.getChocoHouseMap(),
                         guiChoco.getChocoRoomMap());
                 guiAccess.getSolutionsList().add(tempSolution);
-                //this.populateResultsComponents();
                 tempSolution.toString();
             }
             else {
@@ -1060,7 +899,6 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                             guiChoco.getChocoHouseMap(),
                             guiChoco.getChocoRoomMap());
                     guiAccess.getSolutionsList().add(tempSolution);
-                //guiAccess.registerSolution(guiChoco.getChocoHouseMap(), guiChoco.getChocoRoomMap());
                 }
             }
             
@@ -1114,16 +952,6 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             this.populateResultsComponents();
         }
         
-        //EVAL BUTTON---------------------------------------------------------//
-        //if(evt.getActionCommand().equals("evalExpression"))
-        //{
-        //   try
-        //    {
-        //        decDes.getRt().eval(jessCommandField.getText());
-        //    }catch(JessException je){}
-        //}
-        
-        
         //ROOMS2 COMBO BOX----------------------------------------------------//
         if ((actionEvent.getSource()==rooms2)&&(rooms2.getItemCount()>1)) {
             currentRoom.setComboBox2RoomEntry(rooms2.getSelectedItem().toString());
@@ -1151,19 +979,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             OwlSolution tempSolution=(OwlSolution)availableSolutionsCBox.getSelectedItem();
             if(tempSolution!=null)
                 this.topIx3D.renderSolution(tempSolution, renderSolidChBox.isSelected());
-            //this.addMouseListener(topIx3D.getMouseTranslate());
-            //this.addMouseListener(topIx3D.getMouseRotate());
-            //this.addMouseMotionListener(topIx3D.getMouseTranslate());
-            //this.addMouseMotionListener(topIx3D.getMouseRotate());
-            //this.addMouseWheelListener(topIx3D.getMouseZoom());
-            //this.topIx3D.repaintCanvas();
-//            for (OwlSolvedHouse tempHouse:testSol.getSolvedHouses()) {
-//                logger.info(tempHouse.getSolvedHouseLength());
-//            }
             logger.info("");
-//            for (OwlSolvedRoom tempRoom:testSol.getSolvedRooms()) {
-//                logger.info(tempRoom.getSolvedRoomWidth());
-//            }
         }
         
         //RENDERSOLIDCHECKBOX CHECKBOX----------------------------------------//
@@ -1358,32 +1174,17 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
     
     @Override
     public void valueChanged(TreeSelectionEvent e) {
-//        logger.info("blah BLAH BLAH BLAH");
-//        logger.info(roomsTreePanel.getTree().getLastSelectedPathComponent());
-//        logger.info(selectedNode);
-//        this.selectedNodeDepth=selectedNode.getLevel();
         logger.info("root child count");
         logger.info(roomsTreePanel.getRootChildCount());
         
         this.selectedNodeDepth=e.getPath().getPathCount()-1;
-//        
-//        if(true) {
-//            //to gather all posibly uninitialised instances necessary for the actions performed when selecting a node
-//            //and initialise them here, as soon as a node is inserted in the tree.
-//            //if (instance==null) {
-//            //  instance=new Instance();
-//            //}
-//        }
+
         
         //in case selectedNode is ROOT (SITENAME)
         if (selectedNodeDepth==0) {
-            DefaultMutableTreeNode selectedNode=(DefaultMutableTreeNode)roomsTreePanel.getTree().getLastSelectedPathComponent();
             this.addHouseBtn.setEnabled(true);
             this.addRoomBtn.setEnabled(false);
             this.registerBtn.setEnabled(false);
-//            if (!(selectedNode.isLeaf()))
-//                this.calculateBtn.setEnabled(true);
-//            else
             if(roomsTreePanel.getRootChildCount()>0)
                 this.calculateBtn.setEnabled(true);
             this.manualInputBtn.setEnabled(false);this.selectedNodeDepth=0;
@@ -1470,34 +1271,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 solutionRightBtn.setEnabled(true);
             }
         }
-    }
-    
-    @Override
-    public void focusGained(FocusEvent evt)
-    {
-        if(evt.getSource()==jessCommandField)
-        {
-            jessCommandField.selectAll();
-        }
-    }
-    
-    @Override
-    public void focusLost(FocusEvent evt){}
-    
-    @Override
-    public void keyPressed(KeyEvent evt){keyTyped(evt);}
-    
-    @Override
-    public void keyReleased(KeyEvent evt){}
-    
-    @Override
-    public void keyTyped(KeyEvent evt)
-    {
-        if((evt.getSource()==jessCommandField)&&(evt.getKeyCode()==13))
-        {
-            jessCommandField.setText("");
-        }
-    }
+    }  
     
     int validateIntegerInput(String integerInput) {
         try {
