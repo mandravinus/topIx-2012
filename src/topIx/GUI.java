@@ -48,10 +48,10 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
     GroupLayout layIa_Grp;
     GroupLayout layIb_Grp;
     //paneIa components     - primary data entry
-    JLabel houseIdentifierLabel;
+    JLabel siteIdentifierLabel;
     JLabel xLabel;
     JLabel yLabel;
-    JTextField houseIdentifierInput;
+    JTextField siteIdentifierInput;
     JTextField xInput;
     JTextField yInput;
     JButton nextBtn;
@@ -188,10 +188,10 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         paneIa.setLayout(layIa_Grp);
         paneIb.setLayout(layIb_Grp);
         //--------------------------------------------------------------------//
-        houseIdentifierLabel=new JLabel("Name of Project:");
+        siteIdentifierLabel=new JLabel("Name of Project:");
         xLabel=new JLabel("Site Length:");
         yLabel=new JLabel("Site Width:");
-        houseIdentifierInput=new JTextField();
+        siteIdentifierInput=new JTextField();
         xInput=new JTextField();
         yInput=new JTextField();
         nextBtn=new JButton("Next");
@@ -256,8 +256,10 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 availableSolutionsCBox.addActionListener(this);
                 availableSolutionsCBox.addItemListener(this);
             renderSolidLabel=new JLabel("Render as Solid");
+                renderSolidLabel.setVisible(false);
             renderSolidChBox=new JCheckBox();
                 renderSolidChBox.setSelected(false);
+                renderSolidChBox.setVisible(false);
                 renderSolidChBox.addActionListener(this);
             left=new ImageIcon("src/ontologyresources/images/left.png");
                 //left.
@@ -305,11 +307,11 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 layIa_Grp.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(layIa_Grp.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                        .addComponent(houseIdentifierLabel)
+                        .addComponent(siteIdentifierLabel)
                         .addComponent(xLabel)
                         .addComponent(yLabel))
                     .addGroup(layIa_Grp.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(houseIdentifierInput, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(siteIdentifierInput, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
                         .addComponent(xInput, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                         .addComponent(yInput, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
                     .addGroup(layIa_Grp.createParallelGroup(GroupLayout.Alignment.TRAILING)
@@ -319,8 +321,8 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 layIa_Grp.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(layIa_Grp.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(houseIdentifierLabel)
-                        .addComponent(houseIdentifierInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(siteIdentifierLabel)
+                        .addComponent(siteIdentifierInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addGroup(layIa_Grp.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(xLabel)
                         .addComponent(xInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -387,15 +389,13 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                         .addComponent(calculateBtn)
                         .addComponent(resetBtn))
                     .addGroup(layIb3_Grp.createParallelGroup()
-                        .addComponent(saveBtn)
                         .addComponent(backBtn)));
         layIb3_Grp.setVerticalGroup(
                 layIb3_Grp.createSequentialGroup()
                     .addGroup(layIb3_Grp.createParallelGroup()
                         .addComponent(addHouseBtn)
                         .addComponent(registerBtn)
-                        .addComponent(calculateBtn)
-                        .addComponent(saveBtn))
+                        .addComponent(calculateBtn))
                     .addGroup(layIb3_Grp.createParallelGroup()
                         .addComponent(addRoomBtn)
                         .addComponent(manualInputBtn)
@@ -583,7 +583,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         }
         else if (actionEvent.getSource()==nextBtn)
         {
-            currentSite=new OwlSite(houseIdentifierInput.getText(), Integer.parseInt(xInput.getText()),Integer.parseInt(yInput.getText()));
+            currentSite=new OwlSite(siteIdentifierInput.getText(), Integer.parseInt(xInput.getText()),Integer.parseInt(yInput.getText()));
             guiAccess.assertSiteIndividual(currentSite.returnSiteNameHash(), currentSite.returnSiteNameAnnotation());
             roomsTreePanel.addRootNodeToTree(currentSite.returnSiteNameCompact());
             roomsTreePanel.getTree().addTreeSelectionListener(this);
@@ -592,6 +592,9 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             
             guiAccess.assertDataPropertyInstance(currentSite.returnSiteNameHash(), "hasX", currentSite.getSiteLength());
             guiAccess.assertDataPropertyInstance(currentSite.returnSiteNameHash(), "hasY", currentSite.getSiteWidth());
+            
+            //disables editing to the sitename textfield
+            this.siteIdentifierInput.setEditable(false);
         }
         
         //ADD HOUSE BUTTON----------------------------------------------------//
@@ -733,8 +736,22 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         //BACK BUTTON---------------------------------------------------------//
         if(actionEvent.getSource()==backBtn)
         {
+            //clears the tree and the whole tree model except for the root node!
+            this.roomsTreePanel.clearTree();
+            //will clear the whole roomInstanceCounters map, since the siteName
+            //does not play a particular role there.
+            OwlRoom.resetRoomInstanceCounters();
+            //will clear the current site entry of the static map houseInstancesPerSite
+            //which resides in the OwlHouse class
+            OwlHouse.resetHouseIndex(currentSite.getSiteName());
+            //reloading the ontology, thus doign away with any addition made so far.
+            this.guiAccess.loadOntology();
+            this.guiChoco.reinitializeModel();
+            logger.info("variables in the model after the reset");
+            logger.info(guiChoco.getTopIxModel().getNbTotVars());
+            this.guiChoco.getTopIxSolver().clear();
+            //returns the view to the site input stuff
             layI_Crd.show(paneI, "Basic Input");
-            //System.out.println(guiChoco.getRmNmsToChRmInstncs().toString());
         }
         
         //REGISTER BUTTON-----------------------------------------------------//
@@ -908,8 +925,13 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             
             if(!(guiAccess.getSolutionsList().isEmpty()))
             {
-                
+                //storing the solutions that have been recovered
                 guiAccess.storeSolutions(currentSite.returnSiteNameHash());
+                //saving the ontology
+                guiAccess.saveOntology();
+                //refreshing the list of the solved sites
+                this.availableSitesCBox.removeAllItems();
+                this.populateResultsComponents();
             }
             else
                 logger.info("MANTARA, DEN EXEI LYSEIS TO SENARIO!!!!");
@@ -1155,20 +1177,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         //RESET BUTTON--------------------------------------------------------//
         //will clear all the structures and return the application in its load state.
         if(actionEvent.getSource()==resetBtn){
-            //clears the tree and the whole tree model except for the root node!
-            this.roomsTreePanel.clearTree();
-            //will clear the whole roomInstanceCounters map, since the siteName
-            //does not play a particular role there.
-            OwlRoom.resetRoomInstanceCounters();
-            //will clear the current site entry of the static map houseInstancesPerSite
-            //which resides in the OwlHouse class
-            OwlHouse.resetHouseIndex(currentSite.getSiteName());
-            //reloading the ontology, thus doign away with any addition made so far.
-            this.guiAccess.loadOntology();
-            this.guiChoco.reinitializeModel();
-            logger.info("variables in the model after the reset");
-            logger.info(guiChoco.getTopIxModel().getNbTotVars());
-            this.guiChoco.getTopIxSolver().clear();
+            //THIS FUNCTIONALITY HAS BEEN MERGED WITH THE backBtn FUNCTIONALITY
         }
     }
     

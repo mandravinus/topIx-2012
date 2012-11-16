@@ -56,6 +56,9 @@ public class TopIx3D extends JPanel{
     Appearance siteApp;
     LineAttributes siteLineAtt;
     ColoringAttributes siteColorAtt;
+    PolygonAttributes sitePolygonAtt;
+    TransparencyAttributes siteTransparencyAtt;
+    
     
     Appearance houseApp;
     LineAttributes houseLineAtt;
@@ -104,18 +107,24 @@ public class TopIx3D extends JPanel{
         tempCanvas3D.setSize(MY_SIZE);
         this.add(tempCanvas3D);
         
+        //appearance and attributes that concern the site rendering
         siteApp=new Appearance();
         siteLineAtt=new LineAttributes(2.0f, LineAttributes.PATTERN_DASH_DOT, true);
-        siteColorAtt=new ColoringAttributes(.4f, .4f, .8f, ColoringAttributes.SHADE_GOURAUD);
+        siteColorAtt=new ColoringAttributes(.8f, .8f, .8f, ColoringAttributes.SHADE_GOURAUD);
+        sitePolygonAtt=new PolygonAttributes(PolygonAttributes.POLYGON_FILL, PolygonAttributes.CULL_NONE, 0);
+        siteTransparencyAtt=new TransparencyAttributes(TransparencyAttributes.BLENDED, 0.7f);
         siteApp.setLineAttributes(siteLineAtt);
         siteApp.setColoringAttributes(siteColorAtt);
+        siteApp.setPolygonAttributes(sitePolygonAtt);
+        siteApp.setTransparencyAttributes(siteTransparencyAtt);
         
-        houseApp=new Appearance();
+        //appearance and attributes that concern the house rendering
+        //the rest happens in the render house loop
         houseLineAtt=new LineAttributes(1.5f, LineAttributes.PATTERN_DASH, true);
-        houseColorAtt=new ColoringAttributes(.3f, 6f, .8f, ColoringAttributes.SHADE_GOURAUD);
-        houseApp.setLineAttributes(houseLineAtt);
-        houseApp.setColoringAttributes(houseColorAtt);
+
+
         
+        //appearance and attributes that concern the rooms rendering
         roomApp=new Appearance();
         roomLineAtt=new LineAttributes(1.0f, LineAttributes.PATTERN_SOLID, true);
         roomColorAtt=new ColoringAttributes(.7f, .7f, .3f, ColoringAttributes.SHADE_GOURAUD);
@@ -198,6 +207,17 @@ public class TopIx3D extends JPanel{
                     renderedSolvedHouse.getSolvedHouseX(),
                     renderedSolvedHouse.getSolvedHouseY());
             //here to add the text2d for the house nomenclature system...
+            //...
+            
+            houseApp=new Appearance();
+            houseApp.setLineAttributes(houseLineAtt);
+            float redf=(float)Math.random();
+            float greenf=(float)Math.random();
+            float bluef=(float)Math.random();
+            houseApp.setColoringAttributes(new ColoringAttributes(redf*0.8f+0.2f, greenf*0.8f+0.2f, bluef*0.8f+0.2f, ColoringAttributes.SHADE_GOURAUD));
+            //using the same settings for rendering the site normals for transparency and culling
+            houseApp.setPolygonAttributes(sitePolygonAtt);
+            houseApp.setTransparencyAttributes(siteTransparencyAtt);
             renderedHouse3D.setAppearance(houseApp);
             viewTG.addChild(renderedHouse3D);
         }

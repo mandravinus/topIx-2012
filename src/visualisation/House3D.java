@@ -6,9 +6,9 @@ import org.apache.log4j.Logger;
 
 public class House3D extends Shape3D{
     public static final int VERTEX_COUNT=4;
-    public static final int INDEX_COUNT=8;
+    public static final int INDEX_COUNT=4;
     
-    private IndexedLineArray houseLineArray;
+    private IndexedQuadArray houseQuadArray;
     private Point3f[] housePoints;
     private Color3f[] houseColors;
     
@@ -35,8 +35,8 @@ public class House3D extends Shape3D{
         logger.info(this.houseLength);
         logger.info(this.houseWidth);
         
-        houseLineArray=new IndexedLineArray(House3D.VERTEX_COUNT, GeometryArray.COORDINATES|GeometryArray.COLOR_3, House3D.INDEX_COUNT);
-        housePoints=new Point3f[Site3D.VERTEX_COUNT];
+        houseQuadArray=new IndexedQuadArray(House3D.VERTEX_COUNT, GeometryArray.COORDINATES, House3D.INDEX_COUNT);
+        housePoints=new Point3f[Site3D.LINE_VERTEX_COUNT];
         //siteColors=new Color3f[Site3D.VERTEX_COUNT];
         
         //creating the coordinate points for each vertex...
@@ -52,32 +52,37 @@ public class House3D extends Shape3D{
         }
         
         //setting the vertices to the array along with their corresponding colors, as cited in the IndexedLineArray constructor
-        houseLineArray.setCoordinates(0, housePoints);
+        houseQuadArray.setCoordinates(0, housePoints);
 //        siteLineArray.setCoordinate(0, sitePoints[0]);
 //        siteLineArray.setCoordinate(1, sitePoints[1]);
 //        siteLineArray.setCoordinate(2, sitePoints[2]);
 //        siteLineArray.setCoordinate(3, sitePoints[3]);
         
-        houseLineArray.setColors(0, houseColors);
+        //houseQuadArray.setColors(0, houseColors);
         
-        houseLineArray.setCoordinateIndex(0, 0);
-        houseLineArray.setCoordinateIndex(1, 1);
-        houseLineArray.setCoordinateIndex(2, 1);
-        houseLineArray.setCoordinateIndex(3, 2);
-        houseLineArray.setCoordinateIndex(4, 2);
-        houseLineArray.setCoordinateIndex(5, 3);
-        houseLineArray.setCoordinateIndex(6, 3);
-        houseLineArray.setCoordinateIndex(7, 0);
+//        houseQuadArray.setCoordinateIndex(0, 0);
+//        houseQuadArray.setCoordinateIndex(1, 1);
+//        houseQuadArray.setCoordinateIndex(2, 1);
+//        houseQuadArray.setCoordinateIndex(3, 2);
+//        houseQuadArray.setCoordinateIndex(4, 2);
+//        houseQuadArray.setCoordinateIndex(5, 3);
+//        houseQuadArray.setCoordinateIndex(6, 3);
+//        houseQuadArray.setCoordinateIndex(7, 0);
+//        
+//        houseQuadArray.setColorIndex(0, 0);
+//        houseQuadArray.setColorIndex(1, 1);
+//        houseQuadArray.setColorIndex(2, 1);
+//        houseQuadArray.setColorIndex(3, 2);
+//        houseQuadArray.setColorIndex(4, 2);
+//        houseQuadArray.setColorIndex(5, 3);
+//        houseQuadArray.setColorIndex(6, 3);
+//        houseQuadArray.setColorIndex(7, 0);
+
+        houseQuadArray.setCoordinateIndex(0, 0);
+        houseQuadArray.setCoordinateIndex(1, 1);
+        houseQuadArray.setCoordinateIndex(2, 2);
+        houseQuadArray.setCoordinateIndex(3, 3);
         
-        houseLineArray.setColorIndex(0, 0);
-        houseLineArray.setColorIndex(1, 1);
-        houseLineArray.setColorIndex(2, 1);
-        houseLineArray.setColorIndex(3, 2);
-        houseLineArray.setColorIndex(4, 2);
-        houseLineArray.setColorIndex(5, 3);
-        houseLineArray.setColorIndex(6, 3);
-        houseLineArray.setColorIndex(7, 0);
-        
-        this.setGeometry(houseLineArray);
+        this.setGeometry(houseQuadArray);
     }
 }
