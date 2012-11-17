@@ -139,6 +139,13 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
     JTextField manualPropertyValueTextField;
     GroupLayout manualInputLay_Grp;
     
+    //select percentage of the solutions dialog frame and its components
+    JDialog selectSolutionsDialog;
+    JLabel selectSolutionsLbl;
+    JComboBox<Integer> selectSolutionCBox;
+    GroupLayout selectSolutionsLay_Grp;
+    JButton selectSolutionOkBtn;
+    
     Logger logger;
 
         public GUI(OntologyAccessUtility accessRef, TopIxChoco chocoRef)
@@ -243,6 +250,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 backBtn.addActionListener(this);
             saveBtn=new JButton("Save");
                 saveBtn.addActionListener(this);
+                saveBtn.setVisible(false);
         //--------------------------------------------------------------------//
         paneIIa=new JPanel();
         layIIa_Grp=new GroupLayout(paneIIa);
@@ -295,8 +303,24 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             manualInputCancelButton.addActionListener(this);
         manualPropertyComboBox=new JComboBox<>();
         manualPropertyValueTextField=new JTextField(4);
-               
         //--------------------------------------------------------------------//
+        selectSolutionsDialog=new JDialog(this, "Select solutions", true);
+        selectSolutionsDialog.setVisible(false);
+        selectSolutionsDialog.setIconImage(new ImageIcon("src/ontologyresources/images/topix.png").getImage());
+        selectSolutionsDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        selectSolutionsLay_Grp=new GroupLayout(selectSolutionsDialog.getContentPane());
+            selectSolutionsDialog.getContentPane().setLayout(selectSolutionsLay_Grp);
+        selectSolutionsLbl=new JLabel("testlabel");
+        selectSolutionOkBtn=new JButton("Ok");
+            selectSolutionOkBtn.addActionListener(this);
+        //building the structure to provide the combo box model
+        {
+            Integer[] tempIntegerArray=new Integer[10];
+            for(int i=0, j=10; i<10; i++, j+=10){
+                tempIntegerArray[i]=new Integer(j);
+            }
+            selectSolutionCBox=new JComboBox<>(tempIntegerArray);
+        }
     }
     
     private void addComponents()            //add components to their respective containers
@@ -534,6 +558,25 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         manualInputDialog.setResizable(false);
         manualInputDialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         manualInputDialog.pack();
+        
+        //setting the layout for selectSolutionsDialog
+        selectSolutionsLay_Grp.setAutoCreateContainerGaps(true);
+        selectSolutionsLay_Grp.setAutoCreateGaps(true);
+        selectSolutionsLay_Grp.setHorizontalGroup(
+                selectSolutionsLay_Grp.createSequentialGroup()
+                .addComponent(selectSolutionsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(selectSolutionsLay_Grp.createParallelGroup()
+                    .addComponent(selectSolutionCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(selectSolutionOkBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)));
+        selectSolutionsLay_Grp.setVerticalGroup(selectSolutionsLay_Grp.createSequentialGroup()
+                .addGroup(selectSolutionsLay_Grp.createParallelGroup()
+                    .addComponent(selectSolutionsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(selectSolutionCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(selectSolutionOkBtn));
+        selectSolutionsDialog.setLocationRelativeTo(selectSolutionsDialog.getOwner());
+        selectSolutionsDialog.setResizable(false);
+        selectSolutionsDialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+        selectSolutionsDialog.pack();
         
         this.setContentPane(mainPanel);
         this.setVisible(true);
@@ -900,10 +943,10 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 tempSolution.toString();
             }
             else {
-                logger.info("not possible the first solution");
+                JOptionPane.showMessageDialog(rootPane, "The solver cannot reach any solutions for the particular scenario. Please RESET and provide a new declarative description.", "Warning: No solutions!", JOptionPane.WARNING_MESSAGE);
             }
             
-            while(lastSolutionFeasible && solutionCounter<=100) {
+            while(lastSolutionFeasible) {
                 lastSolutionFeasible=guiChoco.getTopIxSolver().nextSolution();
                 if (lastSolutionFeasible) {
                     //solutionCounter++;
@@ -914,30 +957,41 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                             new Integer(currentSite.getSiteLength()),
                             new Integer(currentSite.getSiteWidth()),
                             guiChoco.getChocoHouseMap(),
-                            guiChoco.getChocoRoomMap());
+                            guiChoco.getChocoRoomMap()); 
                     guiAccess.getSolutionsList().add(tempSolution);
                 }
             }
             
-            logger.info("--------------------------------------------------------------------------1070");
-            logger.info(guiAccess.getSolutionsList().toString());
-            logger.info("-------------------------------------------------------------------END OF 1070");
+//            logger.info("--------------------------------------------------------------------------1070");
+//            logger.info(guiAccess.getSolutionsList().toString());
+//            logger.info("-------------------------------------------------------------------END OF 1070");
             
-            if(!(guiAccess.getSolutionsList().isEmpty()))
+            if(!(guiAccess.getSolutionsList().isEmpty())&&guiAccess.getSolutionsList().size()>=10)
             {
-                //storing the solutions that have been recovered
+                String tempSolutionSelection=String.format(
+                    "The solver has returned %d solutions. Choose a percentage of which you would like to keep",
+                    guiAccess.getSolutionsList().size());
+                this.selectSolutionsLbl.setText(tempSolutionSelection);
+                selectSolutionsDialog.pack();
+                selectSolutionsDialog.setVisible(true);
+            //after this, the action is transfered to the selectSolutionOkBtn event handler...
+            }
+            else if(!(guiAccess.getSolutionsList().isEmpty())&&guiAccess.getSolutionsList().size()<10){
                 guiAccess.storeSolutions(currentSite.returnSiteNameHash());
                 //saving the ontology
                 guiAccess.saveOntology();
                 //refreshing the list of the solved sites
                 this.availableSitesCBox.removeAllItems();
                 this.populateResultsComponents();
+                JOptionPane.showMessageDialog(
+                        this.rootPane,
+                        String.format(
+                            "The solver returned %d solutions. They are all stored to the ontology.",
+                            guiAccess.getSolutionsList().size()),
+                        "Less than ten solutions.",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
             else
-                logger.info("MANTARA, DEN EXEI LYSEIS TO SENARIO!!!!");
-            
-            
-            
             logger.info("THE SOLVER RETURNED!");
 //            guiAccess.storeSolutions(currentSite.returnSiteNameHash());
 //            int totalSolutionsCounter=1;
@@ -964,6 +1018,32 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
 //                System.out.println(String.valueOf(tmpVar.getVal()));
 //                System.out.println();
 //            }
+        }
+        //SELECT SOLUTION OK BUTTON-------------------------------------------//
+        if(actionEvent.getSource()==this.selectSolutionOkBtn)
+        {
+            List<OwlSolution> tempSolutionsToDiscard=new ArrayList<>(64);
+            Integer percentage=(Integer)this.selectSolutionCBox.getSelectedItem()/10;
+            selectSolutionsDialog.setVisible(false);
+            int counter=1;
+            for(OwlSolution tempOwlSolution:guiAccess.getSolutionsList()){
+                if ((counter>percentage)&&(counter<=10)){
+                    tempSolutionsToDiscard.add(tempOwlSolution);
+                }
+                else if(counter>10)
+                    counter=1;
+                counter++;
+            }
+            //removing the contents of the discard list from the solutions list...
+            guiAccess.getSolutionsList().removeAll(tempSolutionsToDiscard);
+            //storing the *selected percentage* of the solutions that have been recovered--NOT READY YET!!!!
+            guiAccess.storeSolutions(currentSite.returnSiteNameHash());
+            //saving the ontology
+            guiAccess.saveOntology();
+            //refreshing the list of the solved sites
+            this.availableSitesCBox.removeAllItems();
+            this.populateResultsComponents();
+            
         }
         
         //SAVE BUTTON---------------------------------------------------------//
@@ -1177,7 +1257,22 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         //RESET BUTTON--------------------------------------------------------//
         //will clear all the structures and return the application in its load state.
         if(actionEvent.getSource()==resetBtn){
-            //THIS FUNCTIONALITY HAS BEEN MERGED WITH THE backBtn FUNCTIONALITY
+            //clears the tree and the whole tree model except for the root node!
+            this.roomsTreePanel.clearTree();
+            //will clear the whole roomInstanceCounters map, since the siteName
+            //does not play a particular role there.
+            OwlRoom.resetRoomInstanceCounters();
+            //will clear the current site entry of the static map houseInstancesPerSite
+            //which resides in the OwlHouse class
+            OwlHouse.resetHouseIndex(currentSite.getSiteName());
+            //reloading the ontology, thus doign away with any addition made so far.
+            this.guiAccess.loadOntology();
+            this.guiChoco.reinitializeModel();
+            logger.info("variables in the model after the reset");
+            logger.info(guiChoco.getTopIxModel().getNbTotVars());
+            this.guiChoco.getTopIxSolver().clear();
+            //returns the view to the site input stuff
+            layI_Crd.show(paneI, "Basic Input");
         }
     }
     
