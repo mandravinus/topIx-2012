@@ -7,9 +7,16 @@ public class OwlRoom {
     
     private static Map<String, Map<String, Integer>> roomInstanceCounters = new HashMap<>();
     public static String DRONEHASH=String.valueOf(new String("droneHash").hashCode());
-    private String selectedRoomEntry;   //currently selected room entry in the JTree in order to assert a relationship with another room entity"roomName_xx"
-    private String comboBoxRoomEntry;   //roomName selected at this moment in the rooms1 list in order to feed the assert room individual "roomName"
-private String comboBox2RoomEntry;  //roomName selected at this moment in the rooms2 list in order to assert an object property instance that involves two room individuals.
+    private String selectedRoomEntry;   //currently selected room entry in the 
+                                        //JTree in order to assert a relationship 
+                                        //with another room entity"roomName_xx"
+    private String comboBoxRoomEntry;   //roomName selected at this moment in the
+                                        //rooms1 list in order to feed the assert 
+                                        //room individual "roomName"
+private String comboBox2RoomEntry;  //roomName selected at this moment in the 
+                                    //rooms2 list in order to assert an object 
+                                    //property instance that involves two room 
+                                    //individuals.
 
 
     public OwlRoom() {
@@ -73,13 +80,21 @@ private String comboBox2RoomEntry;  //roomName selected at this moment in the ro
         return String.valueOf(returnString.hashCode());
     }
     
-    public String returnRoomIndividualHash(String siteName, String selectedHouseEntry, String indexedRoomEntry) {   //indexed room entry either
-                                                                                                                    //refers to tree selected room
-                                                                                                                    //or rooms2 combo selected item.
+    
+    //indexed room entry either refers to tree selected room
+    
+    //returns the hashed room identifier for usage in asserting a room individual
+    //in the ontology.
+    public String returnRoomIndividualHash(
+            String siteName,
+            String selectedHouseEntry,
+            String indexedRoomEntry) {                                                                                                          //or rooms2 combo selected item.
         String returnString=String.format("%1$s_%2$s_%3$s", siteName, selectedHouseEntry, indexedRoomEntry);
         return String.valueOf(returnString.hashCode());
     }
     
+    //returns the annotation string of the identifier of the room to accompany
+    //the room individual.
     public String returnRoomIndividualAnnotation(String siteName, String selectedHouseEntry) {
         //returns "room #xx of house #xx of siteName"
         String siteName_House_xx=String.format("%1$s_%2$s", siteName, selectedHouseEntry);

@@ -50,6 +50,7 @@ public class OntologyAccessUtility //implements Runnable
     //the structure referenced in retrieveRoomsMap method
     Map<String, String> roomToIRI = new HashMap<>(32);
     
+    //maps that get filled in retrieveSubObjectPropertyAxioms()
     Map<String, String> propEntryNametoPropEntryIRI = new HashMap<>(64);
     Map<String, String> propEntryNameToPropCatName = new HashMap<>(64);
     
@@ -99,7 +100,10 @@ public class OntologyAccessUtility //implements Runnable
             toBeMappedIRI = IRI.create("http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl");
             //ontFile = new File("../src/ontologyresources/ptyxiaki_v0.8.owl");
             ontFile=new File("src/ontologyresources/ptyxiaki_v0.8.owl");
-
+            //in case of alternative location on load time when the application is jar'ed!
+            if(!ontFile.canRead()){
+                ontFile=new File("ontologyresources/ptyxiaki_v0.8.owl");
+            }
             manager.addIRIMapper(new SimpleIRIMapper(toBeMappedIRI, IRI.create(ontFile)));
             ontologyIRI = IRI.create("http://www.semanticweb.org/ontologies/ptyxiaki_v0.6/2011/5/Ontology1308067064597.owl");
             topIxOnt = manager.loadOntology(ontologyIRI);
@@ -166,6 +170,11 @@ public class OntologyAccessUtility //implements Runnable
         }
     }
     
+    //this method retrieves all the geometric properties that have been 
+    //pre-designated as "house setable" or "room setable",
+    //that is, if a geometric property is available for houses, it has been 
+    //annotated as "houseSetable", for rooms, "roomSetable" and for both it
+    //has been designated with both annotations.
     public void retrieveGeometricPropertiesMaps(){
         OWLDataProperty geometricProperty=OWLFactory.getOWLDataProperty(":GeometricProperty", topIxPrefixManager);
         OWLAnnotationProperty propertyID=OWLFactory.getOWLAnnotationProperty(":propertyID", topIxPrefixManager);
@@ -232,7 +241,6 @@ public class OntologyAccessUtility //implements Runnable
                 IRI.create(topIxOnt.getOntologyID().getOntologyIRI().toString() + '#' + roomIndividualHash),
                 OWLFactory.getOWLLiteral(String.format(roomIndividualAnnotation))));
         return true;
-
     }
 
     //////////////////////////////
@@ -245,7 +253,9 @@ public class OntologyAccessUtility //implements Runnable
         manager.addAxiom(topIxOnt, OWLFactory.getOWLObjectPropertyAssertionAxiom(objProp, room1Individual, room2Individual));
         return true;
     }
-
+    
+    //asserts a hasHouse property instance between a house and its corresponding
+    //site
     public boolean assertHasHousePropertyInstance(String houseEntryHash, String siteNameHash) {
         OWLObjectProperty objProp = OWLFactory.getOWLObjectProperty(IRI.create(topIxOnt.getOntologyID().getOntologyIRI() + "#hasHouse"));
         OWLIndividual houseIndividual = OWLFactory.getOWLNamedIndividual(':' + houseEntryHash, topIxPrefixManager);
@@ -270,9 +280,9 @@ public class OntologyAccessUtility //implements Runnable
         return true;
     }
 
-    public boolean assertDataPropertyInstance(String ind, String prop, String value) {
-        return true;
-    }
+//    public boolean assertDataPropertyInstance(String ind, String prop, String value) {
+//        return true;
+//    }
     
     public boolean storeSolutions(String siteNameHash) {
         for(OwlSolution tempSolution:solutionsList) {
@@ -393,8 +403,10 @@ public class OntologyAccessUtility //implements Runnable
         Set<OWLIndividual> tempSolvedHouseIndividuals=new HashSet<>();
         Set<OWLIndividual> tempSolvedRoomIndividuals=new HashSet<>();
         
-        //populate the tempSolutionIndividuals Set<OWLIndividual> with the Solution individuals that are solutions of the current Site
-        //this block runs through the set of all the object property axioms that have this site as their subject
+        //populate the tempSolutionIndividuals Set<OWLIndividual> 
+        //with the Solution individuals that are solutions of the current Site
+        //this block runs through the set of all the object property axioms 
+        //that have this site as their subject
         //and filters out the ones that are of type "hasSolution"
         for (OWLObjectPropertyAssertionAxiom tempObjPropAssAx:tempSitePropertyAxioms) {
             OWLObjectProperty tempHasSolutionObjectProperty=OWLFactory.getOWLObjectProperty(IRI.create(topIxOnt.getOntologyID().getOntologyIRI()+"#hasSolution"));
@@ -403,7 +415,8 @@ public class OntologyAccessUtility //implements Runnable
             }
         
         }
-        //retrieving the site dimensions for this solution set (the site remains the same throughout the plethos of solutions).
+        //retrieving the site dimensions for this solution set 
+        //(the site remains the same throughout the plethos of solutions).
         int tempSiteLength=0;
         int tempSiteWidth=0;
         OWLDataProperty siteHasLengthProp=OWLFactory.getOWLDataProperty(":hasX", topIxPrefixManager);
@@ -423,7 +436,8 @@ public class OntologyAccessUtility //implements Runnable
         
         logger.info(tempSolutionIndividuals.size());
         
-        //running every solution individual for/of that particular site in order to extract the solvedHouse's and the solvedRoom's
+        //running every solution individual for/of that particular site in order
+        //to extract the solvedHouse's and the solvedRoom's
         //via the hasSolvedHouse and hasSolvedRoom properties.
         int solutionCounter=0;
         for(OWLIndividual tempSolutionIndividual:tempSolutionIndividuals) {
@@ -506,10 +520,11 @@ public class OntologyAccessUtility //implements Runnable
     }
     
     public Map<String, OWLIndividual> returnSitesInOntology () {
+        //map that contains the correspondance between the names of the sites
+        //and their OWLIndividual representations.
         Map<String, OWLIndividual> returnMap=new HashMap<>();
         List<OWLIndividual> returnList=new ArrayList<>();
         OWLAnnotationProperty hasNameAnnotationProperty=OWLFactory.getOWLAnnotationProperty(":individualName", topIxPrefixManager);
-        
         
         OWLClassExpression tempSiteClassExpression=OWLFactory.getOWLClass(":Site", topIxPrefixManager);
         for(OWLClassAssertionAxiom tempClassAssAx:topIxOnt.getClassAssertionAxioms(tempSiteClassExpression)) {

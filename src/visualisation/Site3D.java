@@ -14,6 +14,7 @@ public class Site3D extends Shape3D {
     public static final int QUAD_VERTEX_COUNT=8;
     public static final int QUAD_INDEX_COUNT=16;
     
+    //the following attribute's usage has been replaced by siteQuadArray
     private IndexedLineArray siteLineArray;
     private IndexedQuadArray siteQuadArray;
     private Point3f[] sitePoints;

@@ -18,6 +18,9 @@ import org.apache.log4j.BasicConfigurator;
 public class TopIxMain
 {
     static Logger logger;
+    private static OntologyAccessUtility access;
+    private static TopIxChoco chocoModule;
+    private static GUI aGui;
     
     
     public static void main(String[] args)
@@ -36,10 +39,10 @@ public class TopIxMain
         logger.info("test");
         //logger.info(System.getProperty("java.library.path"));
         
-        OntologyAccessUtility access=new OntologyAccessUtility();
+        access=new OntologyAccessUtility();
         logger.info(access.propEntryNameToPropCatName);
-        TopIxChoco chocoModule=new TopIxChoco();
-        GUI aGui=new GUI(access, chocoModule);
+        chocoModule=new TopIxChoco();
+        aGui=new GUI(access, chocoModule);
         
         System.out.println("loaded ontology: "+access.topIxOnt);
         System.out.println("from: "+access.manager.getOntologyDocumentIRI(access.topIxOnt));

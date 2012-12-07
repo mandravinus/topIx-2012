@@ -21,7 +21,10 @@ public class ChocoRoom {
     private IntegerVariable roomYVar;
     private IntegerVariable roomZVar;
     
+    //the following attribute is no longer used, it is left here in case there
+    //is a reference that would break something. to be removed on an update.
     private IntegerExpressionVariable roomAreaExpressionVariable;
+    //the attribute that replaced the previous one.
     private IntegerExpressionVariable roomVolumeExpressionVariable;
     
     private IntDomainVar roomLengthRes;

@@ -39,6 +39,8 @@ public class TopIx3D extends JPanel{
     SimpleUniverse simpleU;
     
     BranchGroup currentBranchGroup;
+    //the following seems to have been rendered inutile.
+    //to check the system dependency on it.
     BranchGroup rootBranchGroup;
 
     //mouse behaviors objects
@@ -50,6 +52,7 @@ public class TopIx3D extends JPanel{
     
     private TransformGroup viewTG;
     
+    //the following attributes are not used, to be removed promptly...
     private Site3D testSite;
     private Room3D testRoom;
     
@@ -150,10 +153,12 @@ public class TopIx3D extends JPanel{
         return mouseZoom;
     }
     
-    public BranchGroup createSceneGraph(/*BranchGroup branchGroupToRender*/) {
+    //doesn't need to return a value, since this method is never assigned to any
+    //BranchGroup attribute or local variable.
+    public void createSceneGraph(/*BranchGroup branchGroupToRender*/) {
         //create the root of the BranchGraph
         rootBranchGroup=new BranchGroup();
-        return rootBranchGroup;
+        //return rootBranchGroup;
     }
     
     public void renderSolution(OwlSolution renderedSolution, boolean renderSolid) {

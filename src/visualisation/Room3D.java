@@ -11,6 +11,7 @@ public class Room3D extends Shape3D{
     public static final int INDEX_COUNT=24;
     
     private IndexedLineArray roomLineArray;
+    //unused object, to be removed promptly...
     private IndexedQuadArray roomPlaneArray;
     private Point3f[] roomPoints;
     private Color3f[] roomColors;

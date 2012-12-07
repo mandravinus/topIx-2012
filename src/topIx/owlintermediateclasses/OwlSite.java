@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 //import topIx.intermediateclasses.*;
 
-public class OwlSite /*extends Site*/ {
+public class OwlSite {
     private String siteName;
     private int siteLength;
     private int siteWidth;
+    //this map corresponds the houses that belong to the particular site with
+    //their respective heights. it is filled during the
     private Map<String, Integer> houseHeightMap;
     
     public OwlSite(String siteName, int siteLength, int siteWidth) {

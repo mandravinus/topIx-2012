@@ -67,6 +67,7 @@ public class DynamicTree extends JPanel {
         this.setSize(200, 500);
     }
 
+    //obsolete constructor, not currently used, to be removed promptly...
     public DynamicTree(String SiteName) {
         super(new GridLayout(1, 0));
         JScrollPane treeScroller = new JScrollPane(roomsTree);
@@ -90,7 +91,9 @@ public class DynamicTree extends JPanel {
         roomsTree.setEditable(false);
         roomsTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
     }
-
+    
+    //This method adds a new house node to the tree, under the site node.
+    //The name of the node comes as a String parameter.
     public void addHouseNodeToTree(String houseStr) {
         DefaultMutableTreeNode houseChildNode = new DefaultMutableTreeNode(houseStr);
         DefaultMutableTreeNode tempRootNode=(DefaultMutableTreeNode)treeModel.getRoot();
@@ -98,12 +101,16 @@ public class DynamicTree extends JPanel {
         roomsTree.expandPath(roomsTree.getPathForRow(0));
     }
 
+    //This method adds a new room node to the tree, under the currently selected
+    //house node. The name of the node comes as a String parameter.
     public void addRoomNodeToTree(String roomStr) {
         DefaultMutableTreeNode roomChildNode = new DefaultMutableTreeNode(roomStr);
         DefaultMutableTreeNode tempParentNode=(DefaultMutableTreeNode)roomsTree.getLastSelectedPathComponent();
         treeModel.insertNodeInto(roomChildNode, tempParentNode, tempParentNode.getChildCount());
     }
     
+    //This method returns the literal of the node that is currently selected in 
+    //the tree.
     public String returnSelectedNodeString() {
         DefaultMutableTreeNode returnSelectedNode=(DefaultMutableTreeNode)roomsTree.getLastSelectedPathComponent();
         return returnSelectedNode.toString();

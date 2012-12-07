@@ -63,8 +63,10 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         //will contemplate on the layout type
     //JScrollPane treeScroller;
     //JTree roomsTree;
-    DynamicTree roomsTreePanel;
+    DynamicTree roomsTreePanel; //--
         //has default FlowLayout
+    JTextArea relationsTextArea;
+    JScrollPane relationsScrollPane;
     //paneIb2 components    - combo boxes
     JLabel rooms1Label;
     JLabel rooms2Label;
@@ -117,20 +119,22 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
     
     //components of other classes that have an association relation with the GUI
     //instance
-    OntologyAccessUtility guiAccess;
-    TopIxChoco guiChoco;
-    TopIx3D topIx3D;
+    OntologyAccessUtility guiAccess;    //--
+    TopIxChoco guiChoco;    //--
+    TopIx3D topIx3D;    //--
     
     //holds temporary OwlSite, OwlHouse, OwlRoom fields which are initialized
     //when they are first needed (stoys event handlers toys dld)
     // -candidate to be moved to OntologyAccessUtility class or...
     //...God knows where!!!
-    OwlSite currentSite;
-    OwlHouse currentHouse;
-    OwlRoom currentRoom;
+    OwlSite currentSite;    //--
+    OwlHouse currentHouse;  //--
+    OwlRoom currentRoom;    //--
+    
+    Map<String, List<String>> roomHashToPropertiesList;
     
     //manualInput dialog frame and its components
-    JDialog manualInputDialog;
+    JDialog manualInputDialog;  //--
     JLabel manualPropertyListLabel;
     JLabel manualPropertyValueLabel;
     JButton manualInputRegisterButton;
@@ -140,7 +144,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
     GroupLayout manualInputLay_Grp;
     
     //select percentage of the solutions dialog frame and its components
-    JDialog selectSolutionsDialog;
+    JDialog selectSolutionsDialog;  //--
     JLabel selectSolutionsLbl;
     JComboBox<Integer> selectSolutionCBox;
     GroupLayout selectSolutionsLay_Grp;
@@ -225,6 +229,13 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             propsCBox=new JComboBox<>();
             compactnessChBox=new JCheckBox();
                 compactnessChBox.setSelected(true);
+            relationsTextArea=new JTextArea();
+                relationsTextArea.setEditable(false);
+                relationsTextArea.setSize(300, 150);
+            relationsScrollPane=new JScrollPane(
+                    relationsTextArea,
+                    JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
             
             
         paneIb3=new JPanel();
@@ -247,6 +258,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             resetBtn=new JButton("Reset");
                 resetBtn.addActionListener(this);
             backBtn=new JButton("Back");
+                backBtn.setVisible(false);
                 backBtn.addActionListener(this);
             saveBtn=new JButton("Save");
                 saveBtn.addActionListener(this);
@@ -305,9 +317,9 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         manualPropertyValueTextField=new JTextField(4);
         //--------------------------------------------------------------------//
         selectSolutionsDialog=new JDialog(this, "Select solutions", true);
-        selectSolutionsDialog.setVisible(false);
         selectSolutionsDialog.setIconImage(new ImageIcon("src/ontologyresources/images/topix.png").getImage());
         selectSolutionsDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        selectSolutionsDialog.setVisible(false);
         selectSolutionsLay_Grp=new GroupLayout(selectSolutionsDialog.getContentPane());
             selectSolutionsDialog.getContentPane().setLayout(selectSolutionsLay_Grp);
         selectSolutionsLbl=new JLabel("testlabel");
@@ -321,6 +333,8 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             }
             selectSolutionCBox=new JComboBox<>(tempIntegerArray);
         }
+        
+        roomHashToPropertiesList=new HashMap<>();
     }
     
     private void addComponents()            //add components to their respective containers
@@ -368,7 +382,9 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                         .addComponent(rooms1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addGroup(layIb2_Grp.createSequentialGroup()
                             .addComponent(compactnessChBoxLabel)
-                            .addComponent(compactnessChBox)))
+                            .addComponent(compactnessChBox))
+                        .addGroup(layIb2_Grp.createSequentialGroup()
+                            .addComponent(relationsScrollPane)))
                     .addGroup(layIb2_Grp.createParallelGroup()
                         .addComponent(catsCBoxLabel)
                         .addComponent(catsCBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -393,7 +409,9 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                         .addComponent(rooms2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addGroup(layIb2_Grp.createParallelGroup()
                         .addComponent(compactnessChBoxLabel)
-                        .addComponent(compactnessChBox)));
+                        .addComponent(compactnessChBox))
+                    .addGroup(layIb2_Grp.createParallelGroup()
+                        .addComponent(relationsScrollPane)));
         //visibility settings for optional components
         propsCBoxLabel.setVisible(false);
         propsCBox.setVisible(false);
@@ -583,7 +601,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         this.pack();
     }
     
-    public void populateResultsComponents () {
+    public void populateResultsComponents() {
         if (!guiAccess.returnSitesInOntology().isEmpty()) {
             //THE NEXT IS A VERY IMPORTANT LINE TO KNOW, VERY USEFUL AS A CASTING METHOD!!!!
             String[] tempModelArray=(String[])guiAccess.returnSitesInOntology().keySet().toArray(new String[0]);
@@ -621,8 +639,11 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
         }
         
         //NEXT BUTTON---------------------------------------------------------//
-        if (actionEvent.getSource()==nextBtn && ((validateIntegerInput(xInput.getText())<=-1)||(validateIntegerInput(yInput.getText())<=-1))) {
+        if (actionEvent.getSource()==nextBtn && ((validateIntegerInput(xInput.getText())<=-1)&&(validateIntegerInput(yInput.getText())<=-1))) {
             JOptionPane.showMessageDialog(this, "Please provide a positive integer for site length and width!");
+        }
+        else if(actionEvent.getSource()==nextBtn && (siteIdentifierInput.getText().equals(""))){
+            JOptionPane.showMessageDialog(this, "Please, provide a valid name for the Site!");
         }
         else if (actionEvent.getSource()==nextBtn)
         {
@@ -654,8 +675,8 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             guiAccess.assertHasHousePropertyInstance(currentHouse.returnHouseIndividualHash(currentSite.getSiteName(),tempIndex),
                     currentSite.returnSiteNameHash());
             roomsTreePanel.addHouseNodeToTree(currentHouse.returnHouseEntryInJTree(tempIndex));
-            currentRoom=new OwlRoom(rooms1.getSelectedItem().toString());   //GIATI TO KANW AYTO EDW??
-                                                                            //isws apla arxikopoiw to currentRoom gia thn akolouthi xrhsh toy...?
+            //the following line initializes the currentRoom object for future use.
+            currentRoom=new OwlRoom(rooms1.getSelectedItem().toString());   
 
             Integer tempHouseHeightInteger;
             for (;;)
@@ -789,7 +810,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             OwlHouse.resetHouseIndex(currentSite.getSiteName());
             //reloading the ontology, thus doign away with any addition made so far.
             this.guiAccess.loadOntology();
-            this.guiChoco.reinitializeModel();
+            this.guiChoco.reinitializeChocoSystem();
             logger.info("variables in the model after the reset");
             logger.info(guiChoco.getTopIxModel().getNbTotVars());
             this.guiChoco.getTopIxSolver().clear();
@@ -821,78 +842,103 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             switch (declarativeProperty) {
                 case "Eastwards Adjacent To":
                     ChocoUtility.adjacentEastConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getChocoRoomMap().get(room2Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Eastwards Adjacent To");
                     break;
                 case "Northwards Adjacent To":
                     ChocoUtility.adjacentNorthConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getChocoRoomMap().get(room2Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Northwards Adjacent To");
                     break;
                 case "Top-wards Adjacent To":
                     ChocoUtility.adjacentOverConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getChocoRoomMap().get(room2Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Top-wards Adjacent To");
                     break;
                 case "Southwards Adjacent To":
                     ChocoUtility.adjacentSouthConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getChocoRoomMap().get(room2Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Southwards Adjacent To");
                     break;
                 case "Bottom-wards Adjacent To":
                     ChocoUtility.adjacentUnderConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getChocoRoomMap().get(room2Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Bottom-wards Adjacent To");
                     break;
                 case "Westwards Adjacent To":
                     ChocoUtility.adjacentWestConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getChocoRoomMap().get(room2Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Westwards Adjacent To");
                     break;
                 case "Higher Than":
                     ChocoUtility.higherThanConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getChocoRoomMap().get(room2Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Higher Than");
                     break;
                 case "Longer Than":
                     ChocoUtility.longerThanConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getChocoRoomMap().get(room2Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Longer Than");
                     break;
                 case "Lower Than":
                     ChocoUtility.higherThanConstraint(guiChoco.getChocoRoomMap().get(room2Hash), guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Lower Than");
                     break;
                 case "Narrower Than":
                     ChocoUtility.widerThanConstraint(guiChoco.getChocoRoomMap().get(room2Hash), guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Narrower Than");
                     break;
                 case "Shorter Than":
                     ChocoUtility.higherThanConstraint(guiChoco.getChocoRoomMap().get(room2Hash), guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Shorter Than");
                     break;
                 case "Wider Than":
                     ChocoUtility.widerThanConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getChocoRoomMap().get(room2Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Wider Than");
                     break;
                 case "Higher Than Long":
                     ChocoUtility.higherThanLongConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Higher Than Long");
                     break;
                 case "Higher Than Wide":
                     ChocoUtility.higherThanWideConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Higher Than Wide");
                     break;
                 case "Longer Than High":
                     ChocoUtility.longerThanHighConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Longer Than High");
                     break;
                 case "Longer Than Wide":
                     ChocoUtility.longerThanWideConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Longer Than Wide");
                     break;
                 case "Wider Than High":
                     ChocoUtility.widerThanHighConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Wider Than High");
                     break;
                 case "Wider Than Long":
                     ChocoUtility.widerThanLongConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Wider Than Long");
                     break;
                 case "Equal Height To":
                     ChocoUtility.equalHeightConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getChocoRoomMap().get(room2Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Equal Height To");
                     break;
                 case "Equal Length To":
                     ChocoUtility.equalLengthConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getChocoRoomMap().get(room2Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Equal Length To");
                     break;
                 case "Equal Width To":
                     ChocoUtility.equalWidthConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getChocoRoomMap().get(room2Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Equal Width To");
                     break;
                 case "Long":
                     ChocoUtility.isLongConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Long");
                     break;
                 case "Short":
                     ChocoUtility.isShortConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Short");
                     break;
                 case "Wide":
                     ChocoUtility.isWideConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Wide");
                     break;
                 case "Narrow":
                     ChocoUtility.isNarrowConstraint(guiChoco.getChocoRoomMap().get(room1Hash), guiChoco.getTopIxModel());
+                    insertLiteralRelation("Narrow");
                     break;
                 default:
                     break;
@@ -943,7 +989,11 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 tempSolution.toString();
             }
             else {
-                JOptionPane.showMessageDialog(rootPane, "The solver cannot reach any solutions for the particular scenario. Please RESET and provide a new declarative description.", "Warning: No solutions!", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(
+                        this,
+                        "The solver cannot reach any solutions for the particular scenario. Please RESET and provide a new declarative description.",
+                        "Warning: No solutions!",
+                        JOptionPane.WARNING_MESSAGE);
             }
             
             while(lastSolutionFeasible) {
@@ -980,6 +1030,8 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 guiAccess.storeSolutions(currentSite.returnSiteNameHash());
                 //saving the ontology
                 guiAccess.saveOntology();
+                //disabling the calcilate button, so that no scenario is overwritten in the ontology.
+                this.calculateBtn.setVisible(false);
                 //refreshing the list of the solved sites
                 this.availableSitesCBox.removeAllItems();
                 this.populateResultsComponents();
@@ -1040,6 +1092,8 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             guiAccess.storeSolutions(currentSite.returnSiteNameHash());
             //saving the ontology
             guiAccess.saveOntology();
+            //disabling the calcilate button, so that no scenario is overwritten in the ontology.
+            this.calculateBtn.setVisible(false);
             //refreshing the list of the solved sites
             this.availableSitesCBox.removeAllItems();
             this.populateResultsComponents();
@@ -1267,7 +1321,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             OwlHouse.resetHouseIndex(currentSite.getSiteName());
             //reloading the ontology, thus doign away with any addition made so far.
             this.guiAccess.loadOntology();
-            this.guiChoco.reinitializeModel();
+            this.guiChoco.reinitializeChocoSystem();
             logger.info("variables in the model after the reset");
             logger.info(guiChoco.getTopIxModel().getNbTotVars());
             this.guiChoco.getTopIxSolver().clear();
@@ -1291,7 +1345,9 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             this.registerBtn.setEnabled(false);
             if(roomsTreePanel.getRootChildCount()>0)
                 this.calculateBtn.setEnabled(true);
-            this.manualInputBtn.setEnabled(false);this.selectedNodeDepth=0;
+            this.manualInputBtn.setEnabled(false);
+            this.selectedNodeDepth=0;
+            this.relationsTextArea.setText("");
             //this.currentHouse=null; //TO RECONSIDER THESE TWO LINES!!! (maybe my comment out of the node selection if's will compensate for that).
             //this.currentRoom=null;
             
@@ -1316,6 +1372,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 rooms2.addItem(selectedNode.getChildAt(i).toString());
             }
             rooms2.removeItem(currentRoom.getSelectedRoomEntry());
+            this.relationsTextArea.setText("");
         }
         //in case selectedNode is LEAF (ROOM)
         else if (selectedNodeDepth==2) {
@@ -1336,6 +1393,28 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             }
             rooms2.removeItem(currentRoom.getSelectedRoomEntry());
             this.manualInputBtn.setEnabled(true);
+            
+            //the following block feeds the text area of the already inserted 
+            //object properties per room
+            String tempRoomHash=currentRoom.returnRoomIndividualHash(
+                    currentSite.getSiteName(),
+                    currentHouse.getSelectedHouseEntry(),
+                    currentRoom.getSelectedRoomEntry());
+            logger.info("from inside the valuechanged method");
+            logger.info(tempRoomHash);
+            relationsTextArea.setText("");
+            if(roomHashToPropertiesList.get(tempRoomHash)!=null){
+                for (String tempRelationString:roomHashToPropertiesList.get(tempRoomHash))
+                {
+                    if(relationsTextArea.getText()==null||relationsTextArea.getText().equals("")){
+                        relationsTextArea.setText(tempRelationString+"\n");
+                    }
+                    else
+                        relationsTextArea.append(tempRelationString+"\n");
+                }
+            }
+            else
+                relationsTextArea.setText("");
         }
     }
     
@@ -1396,6 +1475,33 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             return returnInt;
         } catch (NumberFormatException nfe) {
             return -1;
+        }
+    }
+    
+    //inserting an entry to the properties list map, which will feed the text
+    //area with the object relation each room is entagnled in.
+    void insertLiteralRelation(String relation){
+        //temporarily stores the hash value of the selected room in the tree
+        String tempRoom1Hash=currentRoom.returnRoomIndividualHash(
+                    currentSite.getSiteName(),
+                    currentHouse.getSelectedHouseEntry(),
+                    currentRoom.getSelectedRoomEntry());
+        //temporarily stores the unhashed literar of the relationship a subject
+        //participates in. in a way "is longer than kithcen_03"
+        String tempRelationObjectString;
+        if(rooms2.isVisible())
+            tempRelationObjectString=new String(relation+" "+currentRoom.getComboBox2RoomEntry());
+        else
+            tempRelationObjectString=new String(relation);
+            
+        logger.info("from inside insertLiteralRelation");
+        logger.info(tempRoom1Hash);
+        if(roomHashToPropertiesList.containsKey(tempRoom1Hash))
+            roomHashToPropertiesList.get(tempRoom1Hash).add(tempRelationObjectString);
+        else{
+            roomHashToPropertiesList.put(tempRoom1Hash, new ArrayList<String>());
+            roomHashToPropertiesList.get(tempRoom1Hash).add(tempRelationObjectString);
+            logger.info(roomHashToPropertiesList.get(tempRoom1Hash).toString());
         }
     }
 }

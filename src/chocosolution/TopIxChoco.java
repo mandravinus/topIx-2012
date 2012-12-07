@@ -200,6 +200,7 @@ public class TopIxChoco {
         }
     }
     
+    //method not used, to be removed... replaced by reinitializeModel()
     public void clearAllModelVariables(){
         int varPointer=this.topIxModel.getNbTotVars();
         for(int i=0; i<varPointer; i++) {
@@ -207,8 +208,9 @@ public class TopIxChoco {
         }
     }
     
-    public void reinitializeModel(){
+    public void reinitializeChocoSystem(){
         this.topIxModel=new CPModel();
+        this.topIxSolver=new CPSolver();
     }
     
     public Map<String, ChocoHouse> getChocoHouseMap() {

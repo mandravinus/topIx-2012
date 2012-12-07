@@ -44,6 +44,9 @@ public class RoomVariableStructures {
         roomVarsMappedToHouses=new HashMap<>();
     }
     
+    //this method initializes the roomVarsMappedToHouses with the househashes 
+    //and a new RoomVariableStructures (an object of this containing class) as
+    //a map entry.
     public void initialiseRoomVarsMappedToHouses(Map<String, ChocoHouse> chocoHouseMap) {
         for(String tempString:chocoHouseMap.keySet()) {
             this.roomVarsMappedToHouses.put(tempString, new RoomVariableStructures());
