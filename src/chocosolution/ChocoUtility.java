@@ -168,39 +168,60 @@ public class ChocoUtility {
     }
     
     public static void positionXisConstraint(ChocoRoom room, int x, CPModel model) {
-        model.addConstraint(eq(room.getRoomXVar(), x));
+        Constraint tmpConst=eq(room.getRoomXVar(), x);
+        //model.addConstraint(eq(room.getRoomXVar(), x));
+        System.out.println(tmpConst);
+        System.out.println("from inside positionXisConstraint");
+        model.addConstraint(tmpConst);
+        System.out.println(room.toString()+x);
     }
     
     public static void positionXisConstraint(ChocoHouse house, int x, CPModel model) {
         model.addConstraint(eq(house.getHouseXVar(), x));
+        System.out.println("from inside positionXisConstraint");
+        System.out.println(house.toString()+x);
     }
 
     public static void positionYisConstraint(ChocoRoom room, int y, CPModel model) {
         model.addConstraint(eq(room.getRoomYVar(), y));
+        System.out.println("from inside positionYisConstraint");
+        System.out.println(room.toString()+y);
     }
 
     public static void positionYisConstraint(ChocoHouse house, int y, CPModel model){
         model.addConstraint(eq(house.getHouseYVar(), y));
+        System.out.println("from inside positionYisConstraint");
+        System.out.println(house.toString()+y);
     }
     
     public static void positionZisConstraint(ChocoRoom room, int z, CPModel model) {
         model.addConstraint(eq(room.getRoomZVar(), z));
+        System.out.println("from inside positionZisConstraint");
+        System.out.println(room.toString()+z);
     }
 
     public static void lengthIsConstraint(ChocoRoom room, int l, CPModel model) {
         model.addConstraint(eq(room.getRoomLengthVar(), l));
+        System.out.println("from inside lengthIsConstraint");
+        System.out.println(room.toString()+l);
     }
     
     public static void lengthIsConstraint(ChocoHouse house, int l, CPModel model) {
         model.addConstraint(eq(house.getHouseLengthVar(), l));
+        System.out.println("from inside lengthIsConstraint");
+        System.out.println(house.toString()+l);
     }
 
     public static void widthIsConstraint(ChocoRoom room, int w, CPModel model) {
         model.addConstraint(eq(room.getRoomWidthVar(), w));
+        System.out.println("from inside widthIsConstraint");
+        System.out.println(room.toString()+w);
     }
     
     public static void widthIsConstraint(ChocoHouse house, int w, CPModel model) {
         model.addConstraint(eq(house.getHouseWidthVar(), w));
+        System.out.println("from inside widthIsConstraint");
+        System.out.println(house.toString()+w);
     }
     
     public static void houseIsPartOfSiteConstraint(OwlSite currentSite, ChocoHouse chocoHouse, CPModel model) {

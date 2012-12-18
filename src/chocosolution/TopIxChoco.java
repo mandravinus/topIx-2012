@@ -127,26 +127,28 @@ public class TopIxChoco {
                     housesToBelongingRoomVolumeExpVars.get(tempHouseHash).add(tempChocoRoom.getRoomVolumeExpressionVariable());
                 }
             }
-            logger.info("........................................................................163");
-            logger.info(housesToBelongingRoomVolumeExpVars.values().toString());
+            //logger.info("........................................................................163");
+            //logger.info(housesToBelongingRoomVolumeExpVars.values().toString());
         }
         
         for(ChocoHouse tempChocoHouse:chocoHouseMap.values()){
             //for volume compactness...
-            logger.info("........................................................................167");
-            logger.info(chocoHouseMap.values().toString());
+            //logger.info("........................................................................167");
+            //logger.info(chocoHouseMap.values().toString());
             IntegerExpressionVariable tempChocoHouseVolumeExpVar=mult(tempChocoHouse.getHouseLengthVar(), (mult(tempChocoHouse.getHouseWidthVar(), tempChocoHouse.getHouseHeightVar())));
             IntegerExpressionVariable[] roomVolumeExpVars;
             IntegerExpressionVariable sumRoomVolumeExpVar;
             
-            //temp structure that holds 
+            //temp array that holds the values of each List of the room volume
+            //expressions per house. is built to feed the sum() choco opeator
+            //which can take an array as an argument, but not a List.
             roomVolumeExpVars=(IntegerExpressionVariable[])housesToBelongingRoomVolumeExpVars
                     .get(tempChocoHouse.getHouseIndividualHash())
                         .toArray(new IntegerExpressionVariable[0]);
-            logger.info("........................................................................177");
-            logger.info(roomVolumeExpVars.length);
+            //logger.info("........................................................................177");
+            //logger.info(roomVolumeExpVars.length);
             
-            //the sum method can accept as an orisma an array of appropriate elements
+            //the sum method can accept as an argument an array of appropriate elements
             //so we feed it with an array of roomVolumeExpVars, which sum adds one by one.
             sumRoomVolumeExpVar=sum(roomVolumeExpVars);
             //creating the volume equality constraint between the house and its rooms
@@ -159,22 +161,22 @@ public class TopIxChoco {
     public void initialiseChocoHouseResVars() {
         for (ChocoHouse tempChocoHouse:chocoHouseMap.values()) {
             tempChocoHouse.setHouseLengthRes(topIxSolver.getVar(tempChocoHouse.getHouseLengthVar()));
-            logger.info(".......................................189");
-            logger.info(topIxSolver.getVar(tempChocoHouse.getHouseLengthVar()).getVal());
+            //logger.info(".......................................189");
+            //logger.info(topIxSolver.getVar(tempChocoHouse.getHouseLengthVar()).getVal());
             tempChocoHouse.setHouseWidthRes(topIxSolver.getVar(tempChocoHouse.getHouseWidthVar()));
-            logger.info(topIxSolver.getVar(tempChocoHouse.getHouseWidthVar()).getVal());
+            //logger.info(topIxSolver.getVar(tempChocoHouse.getHouseWidthVar()).getVal());
             tempChocoHouse.setHouseHeightRes(topIxSolver.getVar(tempChocoHouse.getHouseHeightVar()));
-            logger.info(tempChocoHouse.getHouseLengthRes().getVal());
-            logger.info(tempChocoHouse.getHouseWidthRes().getVal());
+            //logger.info(tempChocoHouse.getHouseLengthRes().getVal());
+            //logger.info(tempChocoHouse.getHouseWidthRes().getVal());
             
             tempChocoHouse.setHouseXRes(topIxSolver.getVar(tempChocoHouse.getHouseXVar()));
-            logger.info(topIxSolver.getVar(tempChocoHouse.getHouseXVar()).getVal());
+            //logger.info(topIxSolver.getVar(tempChocoHouse.getHouseXVar()).getVal());
             tempChocoHouse.setHouseYRes(topIxSolver.getVar(tempChocoHouse.getHouseYVar()));
-            logger.info(topIxSolver.getVar(tempChocoHouse.getHouseYVar()).getVal());
-            logger.info(".................................END OF 189");
+            //logger.info(topIxSolver.getVar(tempChocoHouse.getHouseYVar()).getVal());
+            //logger.info(".................................END OF 189");
             tempChocoHouse.setHouseZRes(topIxSolver.getVar(tempChocoHouse.getHouseZVar()));
-            IntDomainVar tempHouseXvar=topIxSolver.getVar(tempChocoHouse.getHouseXVar());
-            if (tempHouseXvar.isInstantiated()) logger.info("einai instantiated to X res");
+            //IntDomainVar tempHouseXvar=topIxSolver.getVar(tempChocoHouse.getHouseXVar());
+            //if (tempHouseXvar.isInstantiated()) logger.info("einai instantiated to X res");
         }
     }
    
@@ -182,21 +184,21 @@ public class TopIxChoco {
     
     public void initialiseChocoRoomResVars() {
         for (ChocoRoom tempChocoRoom:chocoRoomMap.values()) {
-            logger.info("------------------......................------------------215");
+            //logger.info("------------------......................------------------215");
             tempChocoRoom.setRoomLengthRes(topIxSolver.getVar(tempChocoRoom.getRoomLengthVar()));
-            logger.info(topIxSolver.getVar(tempChocoRoom.getRoomLengthVar()).getVal());
+            //logger.info(topIxSolver.getVar(tempChocoRoom.getRoomLengthVar()).getVal());
             tempChocoRoom.setRoomWidthRes(topIxSolver.getVar(tempChocoRoom.getRoomWidthVar()));
-            logger.info(topIxSolver.getVar(tempChocoRoom.getRoomWidthVar()).getVal());
+            //logger.info(topIxSolver.getVar(tempChocoRoom.getRoomWidthVar()).getVal());
             tempChocoRoom.setRoomHeightRes(topIxSolver.getVar(tempChocoRoom.getRoomHeightVar()));
-            logger.info(topIxSolver.getVar(tempChocoRoom.getRoomHeightVar()).getVal());
+            //logger.info(topIxSolver.getVar(tempChocoRoom.getRoomHeightVar()).getVal());
             
             tempChocoRoom.setRoomXRes(topIxSolver.getVar(tempChocoRoom.getRoomXVar()));
-            logger.info(topIxSolver.getVar(tempChocoRoom.getRoomXVar()).getVal());
+            //logger.info(topIxSolver.getVar(tempChocoRoom.getRoomXVar()).getVal());
             tempChocoRoom.setRoomYRes(topIxSolver.getVar(tempChocoRoom.getRoomYVar()));
-            logger.info(topIxSolver.getVar(tempChocoRoom.getRoomYVar()).getVal());
+            //logger.info(topIxSolver.getVar(tempChocoRoom.getRoomYVar()).getVal());
             tempChocoRoom.setRoomZRes(topIxSolver.getVar(tempChocoRoom.getRoomZVar()));
-            logger.info(topIxSolver.getVar(tempChocoRoom.getRoomZVar()).getVal());
-            logger.info("------------------......................--------END OF----215");
+            //logger.info(topIxSolver.getVar(tempChocoRoom.getRoomZVar()).getVal());
+            //logger.info("------------------......................--------END OF----215");
         }
     }
     
@@ -209,6 +211,8 @@ public class TopIxChoco {
     }
     
     public void reinitializeChocoSystem(){
+        this.chocoHouseMap.clear();
+        this.chocoRoomMap.clear();
         this.topIxModel=new CPModel();
         this.topIxSolver=new CPSolver();
     }

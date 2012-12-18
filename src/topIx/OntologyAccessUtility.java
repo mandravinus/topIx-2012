@@ -301,8 +301,8 @@ public class OntologyAccessUtility //implements Runnable
             
             //assert SolvedHouse individuals and assert Solution->hasSolvedHouse objProperty. also assert the DATA PROPERTIES for each solvedHouse indvidual
             for(OwlSolvedHouse tempSolvedHouse:tempSolution.getSolvedHouses()) {
-                logger.info("373");
-            logger.info(tempSolution.getSolvedHouses().toString());
+                //logger.info("373");
+                //logger.info(tempSolution.getSolvedHouses().toString());
                 OWLClassExpression solvedHouseClassExpression=OWLFactory.getOWLClass(":SolvedHouse", topIxPrefixManager);
                 OWLIndividual tempSolvedHouseIndividual=OWLFactory.getOWLNamedIndividual(":"+tempSolutionID+"_SH_"+tempSolvedHouse.getSolvedHouseHash(), topIxPrefixManager);
                 OWLClassAssertionAxiom tempClassAssAx=OWLFactory.getOWLClassAssertionAxiom(solvedHouseClassExpression, tempSolvedHouseIndividual);
@@ -334,8 +334,8 @@ public class OntologyAccessUtility //implements Runnable
                 tempDataProperty=OWLFactory.getOWLDataProperty(":hasY", topIxPrefixManager);
                 tempDataPropertyAssertionAxiom=OWLFactory.getOWLDataPropertyAssertionAxiom(tempDataProperty, tempSolvedHouseIndividual, tempSolvedHouse.getSolvedHouseY());
                 manager.addAxiom(topIxOnt, tempDataPropertyAssertionAxiom);
-                logger.info("asserts the house");
-                logger.info(tempSolvedHouse.getSolvedHouseLiteral());
+                //logger.info("asserts the house");
+                //logger.info(tempSolvedHouse.getSolvedHouseLiteral());
             }    
 
             //assert SolvedRoom individuals and assert Solution->hasSolvedRoom objProperty. also assert the DATA PROPERTIES for each solvedRoom indvidual

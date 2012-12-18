@@ -52,9 +52,9 @@ public class OwlSite {
     //method poy epistrefei orisma katallhlo gia Root entity sto JTree.
     public String returnSiteNameCompact() {
         if (siteName.length()>20)
-            return (siteName.substring(0, 10)+"..."+siteName.substring((siteName.length()-6), siteName.length()));
+            return (siteName.substring(0, 7)+".."+siteName.substring((siteName.length()-4), siteName.length())+" ("+this.siteLength+"*"+this.siteWidth+")");
         else
-            return (siteName);
+            return (siteName+" ("+this.siteLength+"*"+this.siteWidth+")");
     }
     
     //method poy epistrefei orisma katallhlo gia site entity annotation assertion

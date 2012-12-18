@@ -5,6 +5,7 @@
 
 package topIx;
 
+import choco.kernel.model.constraints.Constraint;
 import java.awt.CardLayout;
 import java.awt.event.*;
 import javax.swing.*;
@@ -943,39 +944,52 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 default:
                     break;
             }
+            this.feedRelationsTextArea();
+            logger.info("__SHALL PRINT ALL THE MODEL CONSTRAINTS__");
+            Iterator it1=guiChoco.getTopIxModel().getConstraintIterator();
+            while (it1.hasNext()){
+                Constraint tempConst=(Constraint)it1.next();
+                logger.info(tempConst.toString());
+            }
             logger.info("registered: -> "+guiChoco.getTopIxModel().getNbConstraints());
         }
         
         //CALCULATE BUTTON----------------------------------------------------//
         if (actionEvent.getSource()==calculateBtn) {
-            logger.info("calculate-a: -> "+guiChoco.getTopIxModel().getNbConstraints());
+            //logger.info("calculate-a: -> "+guiChoco.getTopIxModel().getNbConstraints());
             
             //first insert all the extra (non-overlapping & is-part-of constraitns)
             guiChoco.insertNonOverlappingHousesConstraints();
-            logger.info("calculate-b: -> "+guiChoco.getTopIxModel().getNbConstraints());
+            //logger.info("calculate-b: -> "+guiChoco.getTopIxModel().getNbConstraints());
             guiChoco.insertNonOverlappingRoomsConstraints();
             
-            logger.info("calculate-c: -> "+guiChoco.getTopIxModel().getNbConstraints());
+            //logger.info("calculate-c: -> "+guiChoco.getTopIxModel().getNbConstraints());
             if(compactnessChBox.isSelected()) {
                 guiChoco.insertSiteCompactnessConstraints(currentSite);
             }
-            logger.info("calculate-d: -> "+guiChoco.getTopIxModel().getNbConstraints());
+            //logger.info("calculate-d: -> "+guiChoco.getTopIxModel().getNbConstraints());
             guiChoco.insertHouseVolumeCompactnessConstraints();
-            logger.info("calculate-e: -> "+guiChoco.getTopIxModel().getNbConstraints());
+            //logger.info("calculate-e: -> "+guiChoco.getTopIxModel().getNbConstraints());
             
             boolean lastSolutionFeasible;
             OwlSolution tempSolution;
             guiAccess.getSolutionsList().clear();
             
             //initialise the solver and recall call the solution
-            logger.info("the variables of the model in string");
-            logger.info(guiChoco.getTopIxModel().varsToString());
+            //logger.info("the variables of the model in string");
+            //logger.info(guiChoco.getTopIxModel().varsToString());
+            //logger.info("__SHALL PRINT ALL THE MODEL CONSTRAINTS__from the calculate btn");
+            Iterator it1=guiChoco.getTopIxModel().getConstraintIterator();
+            while (it1.hasNext()){
+                Constraint tempConst=(Constraint)it1.next();
+                //logger.info(tempConst.toString());
+            }
             guiChoco.getTopIxSolver().read(guiChoco.getTopIxModel());
             lastSolutionFeasible=guiChoco.getTopIxSolver().solve();
             
             int solutionCounter=1;
             if(lastSolutionFeasible) {
-                logger.info("solved the first.");
+                //logger.info("solved the first.");
                 
                 guiChoco.initialiseChocoHouseResVars();
                 guiChoco.initialiseChocoRoomResVars();
@@ -985,7 +999,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                         new Integer(currentSite.getSiteWidth()),
                         guiChoco.getChocoHouseMap(),
                         guiChoco.getChocoRoomMap());
-                guiAccess.getSolutionsList().add(tempSolution);
+                this.addTempSolution(tempSolution);
                 tempSolution.toString();
             }
             else {
@@ -1008,7 +1022,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                             new Integer(currentSite.getSiteWidth()),
                             guiChoco.getChocoHouseMap(),
                             guiChoco.getChocoRoomMap()); 
-                    guiAccess.getSolutionsList().add(tempSolution);
+                    this.addTempSolution(tempSolution);
                 }
             }
             
@@ -1043,8 +1057,8 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                         "Less than ten solutions.",
                         JOptionPane.INFORMATION_MESSAGE);
             }
-            else
-            logger.info("THE SOLVER RETURNED!");
+            //else
+            //logger.info("THE SOLVER RETURNED!");
 //            guiAccess.storeSolutions(currentSite.returnSiteNameHash());
 //            int totalSolutionsCounter=1;
 //            while(lastSolutionFeasible && totalSolutionsCounter<=30) {
@@ -1327,6 +1341,7 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             this.guiChoco.getTopIxSolver().clear();
             //returns the view to the site input stuff
             layI_Crd.show(paneI, "Basic Input");
+            roomHashToPropertiesList.clear();
         }
     }
     
@@ -1392,29 +1407,11 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
                 rooms2.addItem(tempHouseNode.getChildAt(i).toString());
             }
             rooms2.removeItem(currentRoom.getSelectedRoomEntry());
+            //the following changes the comboBox2RoomEntry to the newly selected
+            //item, rigth after refreshign the contents of the rooms2 combo box.
+            this.currentRoom.setComboBox2RoomEntry((String)rooms2.getSelectedItem());
             this.manualInputBtn.setEnabled(true);
-            
-            //the following block feeds the text area of the already inserted 
-            //object properties per room
-            String tempRoomHash=currentRoom.returnRoomIndividualHash(
-                    currentSite.getSiteName(),
-                    currentHouse.getSelectedHouseEntry(),
-                    currentRoom.getSelectedRoomEntry());
-            logger.info("from inside the valuechanged method");
-            logger.info(tempRoomHash);
-            relationsTextArea.setText("");
-            if(roomHashToPropertiesList.get(tempRoomHash)!=null){
-                for (String tempRelationString:roomHashToPropertiesList.get(tempRoomHash))
-                {
-                    if(relationsTextArea.getText()==null||relationsTextArea.getText().equals("")){
-                        relationsTextArea.setText(tempRelationString+"\n");
-                    }
-                    else
-                        relationsTextArea.append(tempRelationString+"\n");
-                }
-            }
-            else
-                relationsTextArea.setText("");
+            this.feedRelationsTextArea();
         }
     }
     
@@ -1503,5 +1500,32 @@ public class GUI extends JFrame implements ActionListener, ItemListener, TreeSel
             roomHashToPropertiesList.get(tempRoom1Hash).add(tempRelationObjectString);
             logger.info(roomHashToPropertiesList.get(tempRoom1Hash).toString());
         }
+    }
+    //the following method feeds the text area of the already inserted 
+    //object properties per room. It is called from within the valueChanged method
+    //of the tree and from inside the register button actionPerformed section,
+    //as soon as a new object relation is registered.
+    void feedRelationsTextArea(){
+        String tempRoomHash=currentRoom.returnRoomIndividualHash(
+                currentSite.getSiteName(),
+                currentHouse.getSelectedHouseEntry(),
+                currentRoom.getSelectedRoomEntry());
+        relationsTextArea.setText("");
+        if(roomHashToPropertiesList.get(tempRoomHash)!=null){
+            for (String tempRelationString:roomHashToPropertiesList.get(tempRoomHash))
+            {
+                if(relationsTextArea.getText()==null||relationsTextArea.getText().equals("")){
+                    relationsTextArea.setText(tempRelationString+"\n");
+                }
+                else
+                    relationsTextArea.append(tempRelationString+"\n");
+            }
+        }
+        else
+            relationsTextArea.setText("");
+    }
+    
+    void addTempSolution(OwlSolution tempSolution){
+        this.guiAccess.getSolutionsList().add(tempSolution);
     }
 }

@@ -24,7 +24,7 @@ public class OwlHouse {
     }
 
     public static Integer readHouseIndex(String siteName) {
-        if (houseInstancesPerSite.containsKey(siteName))
+        if (houseInstancesPerSite.containsKey(siteName)&&houseInstancesPerSite.get(siteName)>0)
             return new Integer(houseInstancesPerSite.get(siteName));
         else
             return new Integer(-1); 
@@ -47,7 +47,8 @@ public class OwlHouse {
     }
     
     public static void resetHouseIndex(String siteName){
-        houseInstancesPerSite.put(siteName, 0);
+        houseInstancesPerSite.clear();
+        houseInstancesPerSite.put(siteName, new Integer(0));
     }
 
     //this is used when asserting a new house in the ontology.
